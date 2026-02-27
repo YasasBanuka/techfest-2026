@@ -1,88 +1,70 @@
 import Image from "next/image";
+import FadeInUp from "@/components/ui/fade-in-up";
+import { StaggerContainer, StaggerItem } from "@/components/ui/fade-in-up";
 
-/*
-  Communities section — made more prominent because:
-  - These are the OFFICIAL organizers → deserves visual weight
-  - Small = looks like a footnote → wrong signal
-  - Larger logos + text = authority + trust
-*/
+const COMMUNITIES = [
+  {
+    name: "IEEE TechVerse",
+    role: "Organizing Committee",
+    logo: "/images/logos/techverse.png",
+    caption:
+      "Flagship initiative of the Student Activities Committee of IEEE Sri Lanka Section, dedicated to enlightening and empowering young tech enthusiasts across the nation.",
+  },
+  {
+    name: "SLSAC",
+    role: "Co-Organizing Partner",
+    logo: "/images/logos/slsac.png",
+    caption:
+      "Empowering student engineers to lead and innovate beyond the classroom. Connecting academia, industry, and global tech communities. Turning bold ideas into real-world impact, together.",
+  },
+];
 
 export default function Communities() {
   return (
-    <section className="py-20 px-6 border-y border-black-border bg-black-soft/50">
-      {/*
-        py-20 → More breathing room (was py-16)
-        bg-black-soft/50 → Subtle background tint
-                          Differentiates from Hero's pure black
-                          Creates visual "section separation"
-      */}
+    <section className="py-20 px-6 border-y border-navy-border">
+      <div className="max-w-5xl mx-auto">
 
-      <div className="max-w-5xl mx-auto text-center">
-        {/*
-          max-w-5xl → Wider container than before (was max-w-4xl)
-          Gives the logos more room to breathe
-        */}
+        {/* Title — centered on top */}
+        <FadeInUp className="text-center mb-14">
+          <p className="text-white-dim text-xs uppercase tracking-[0.25em]">
+            A Collaboration By
+          </p>
+        </FadeInUp>
 
-        <p className="text-base text-white-muted uppercase tracking-[0.2em] mb-10 font-medium">
-          {/*
-            text-base → Larger than text-sm
-            tracking-[0.2em] → Wider letter spacing for elegance
-            font-medium → Slightly bolder
-            mb-10 → More space below heading
-          */}
-          A Collaboration By
-        </p>
+        {/* Two community cards side by side */}
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          {COMMUNITIES.map((community) => (
+            <StaggerItem key={community.name}>
+              <div className="flex flex-col items-center text-center bg-navy-card border border-navy-border rounded-2xl p-8 h-full hover:border-gold/30 transition-all duration-300 group">
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-16">
-          {/*
-            gap-16 → More space between orgs (was gap-12)
-            Prevents them from looking cramped
-          */}
+                {/* Logo */}
+                <div className="relative w-36 h-24 mb-6 flex-shrink-0">
+                  <Image
+                    src={community.logo}
+                    alt={`${community.name} logo`}
+                    fill
+                    className="object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
 
-          {/* IEEE TechVerse */}
-          <div className="flex items-center gap-4 group">
-            <Image
-              src="/images/logos/techverse.png"
-              alt="IEEE TechVerse logo"
-              width={64}
-              height={64}
-              className="rounded-xl group-hover:scale-105 transition-transform duration-300"
-            />
-            {/*
-              width/height 64 → Bigger logos (was 48)
-              rounded-xl → Slightly more rounded
-              scale-105 → Subtler hover (was 110, too jumpy for logos)
-            */}
-            <div className="text-left">
-              <p className="text-white font-heading font-bold text-lg">IEEE TechVerse</p>
-              {/*
-                font-bold + text-lg → More prominent name
-              */}
-              <p className="text-white-dim text-sm">Organizing Committee</p>
-            </div>
-          </div>
+                {/* Name */}
+                <h3 className="text-white font-heading font-bold text-xl mb-1">
+                  {community.name}
+                </h3>
 
-          {/* Divider */}
-          <div className="hidden sm:block w-px h-16 bg-black-border" />
-          {/*
-            h-16 → Taller divider (was h-12) to match larger items
-          */}
+                {/* Role badge */}
+                <span className="inline-block text-gold text-xs font-medium uppercase tracking-widest bg-gold/10 border border-gold/20 rounded-full px-3 py-1 mb-4">
+                  {community.role}
+                </span>
 
-          {/* SLSAC */}
-          <div className="flex items-center gap-4 group">
-            <Image
-              src="/images/logos/slsac.png"
-              alt="SLSAC logo"
-              width={64}
-              height={64}
-              className="rounded-xl group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="text-left">
-              <p className="text-white font-heading font-bold text-lg">SLSAC</p>
-              <p className="text-white-dim text-sm">Co-Organizing Partner</p>
-            </div>
-          </div>
-        </div>
+                {/* Caption */}
+                <p className="text-white-dim text-sm leading-relaxed">
+                  {community.caption}
+                </p>
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
       </div>
     </section>
   );

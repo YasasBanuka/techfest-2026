@@ -1,126 +1,147 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
+import PlexusCanvas from "@/components/background/plexus-canvas";
 import Countdown from "./countdown";
 import { EVENT } from "@/data/event";
 
-/*
-  NO "use client" here!
-  ─────────────────────
-  This is a SERVER Component. All the static text
-  (title, tagline, date) renders on the server as HTML.
-  
-  But wait — it imports Countdown which IS a Client Component!
-  
-  That's the pattern:
-  - Server Component renders static HTML (fast, SEO-friendly)
-  - It CAN contain Client Components for interactive parts
-  - Only the Client Component's JS is sent to the browser
-  
-  Result: Best of both worlds!
-*/
+/**
+ * Hero Section — The WOW centerpiece
+ *
+ * Architecture:
+ *   Server Component (this file) → renders static markup on server
+ *   └── PlexusCanvas  (Client)   → animated canvas, mounts in browser
+ *   └── Countdown     (Client)   → live timer, updates every second
+ *
+ * Visual layers (back to front):
+ *   1. Plexus canvas (animated gold network)
+ *   2. Radial gradient overlay (navy vignette)
+ *   3. Hex grid texture
+ *   4. Content (z-10)
+ */
+
+// Framer Motion variants for staggered entrance
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+};
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-      {/*
-        min-h-screen → Full viewport height (100vh)
-        pt-20 → Padding-top = Navbar height (80px)
-                Without this, content hides BEHIND the fixed navbar!
-        overflow-hidden → Prevents any decorative elements from causing scrollbars
-      */}
 
-      {/* ── Background Glow Effect ── */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/*
-          pointer-events-none → Users can click THROUGH this element
-          Without it, the glow would block clicks on buttons underneath
-        */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/5 rounded-full blur-3xl" />
-        {/*
-          What this creates: A large, soft, golden glow in the center
-          bg-gold/5 → 5% opacity gold (very subtle)
-          blur-3xl → Heavy blur (makes it look like a light source)
-          -translate-x/y-1/2 → Centers the circle perfectly
-          
-          This is a PREMIUM design technique used by Apple, Stripe, Linear
-        */}
-      </div>
+      {/* ── Layer 1: Animated Plexus Canvas ── */}
+      <PlexusCanvas />
+
+      {/* ── Layer 2: Radial vignette (navy center, transparent edges) ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 70% at 50% 50%, rgba(6,15,36,0.6) 0%, rgba(6,15,36,0.95) 100%)",
+        }}
+      />
+
+      {/* ── Layer 3: Hex texture overlay ── */}
+      <div className="absolute inset-0 hex-pattern pointer-events-none opacity-30" />
+
+      {/* ── Layer 4: Gold radial glow behind content ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 50% 40% at 50% 45%, rgba(255,203,64,0.06) 0%, transparent 70%)",
+        }}
+      />
 
       {/* ── Content ── */}
-      <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
-        {/*
-          relative z-10 → Sits ABOVE the background glow
-          max-w-4xl → Constrains content width (readable line length)
-          mx-auto → Centers horizontally
-        */}
-
+      <motion.div
+        className="relative z-10 text-center max-w-5xl mx-auto px-6 py-16"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {/* Event Badge */}
-        <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/20 rounded-full px-4 py-1.5 mb-8">
-          <span className="w-2 h-2 bg-gold rounded-full animate-pulse" />
-          {/*
-            animate-pulse → Built-in Tailwind animation
-            Creates a gentle pulsing glow effect
-            Draws attention without being distracting
-          */}
-          <span className="text-gold text-sm font-medium">
-            December 20, 2026
-          </span>
-        </div>
+        <motion.div variants={itemVariants} className="flex justify-center mb-8">
+          <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/25 rounded-full px-5 py-2 backdrop-blur-sm">
+            <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+            <span className="text-gold text-sm font-medium tracking-wide">
+              December 20, 2026 &nbsp;·&nbsp; Trace Expert City, Colombo
+            </span>
+          </div>
+        </motion.div>
 
-        {/* Main Title */}
-        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-heading font-bold mb-6">
-          {/*
-            Responsive font sizes:
-            text-5xl → Mobile (3rem / 48px)
-            sm:text-6xl → Tablet (3.75rem / 60px)  
-            lg:text-7xl → Desktop (4.5rem / 72px)
-            
-            This is "fluid typography" — text scales with screen size!
-          */}
-          <span className="text-white">{EVENT.name}</span>
-          <br />
-          <span className="text-gold">{EVENT.year}</span>
-        </h1>
+        {/* Main Heading */}
+        <motion.h1
+          variants={itemVariants}
+          className="text-5xl sm:text-6xl lg:text-8xl font-heading font-black leading-none mb-6 tracking-tight"
+        >
+          <span className="text-white block">IEEE</span>
+          <span className="gold-gradient-text block">TechFest 2026</span>
+        </motion.h1>
 
         {/* Tagline */}
-        <p className="text-lg sm:text-xl text-white-muted max-w-2xl mx-auto mb-4">
+        <motion.p
+          variants={itemVariants}
+          className="text-lg sm:text-xl text-white-muted max-w-2xl mx-auto mb-3 leading-relaxed"
+        >
           {EVENT.tagline}
-        </p>
+        </motion.p>
 
-        {/* Venue */}
-        <p className="text-sm text-white-dim mb-12">
-          {EVENT.venue} • {EVENT.time}
-        </p>
+        {/* Sub-tagline */}
+        <motion.p
+          variants={itemVariants}
+          className="text-sm text-white-dim mb-12 tracking-wide"
+        >
+          Sri Lanka&apos;s Premier Technology Innovation Festival
+        </motion.p>
 
         {/* Countdown */}
-        <div className="flex justify-center mb-12">
+        <motion.div variants={itemVariants} className="flex justify-center mb-12">
           <Countdown targetDate={EVENT.date} />
-        </div>
+        </motion.div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          {/*
-            flex-col → Stacked on mobile (buttons full-width)
-            sm:flex-row → Side-by-side on tablet+
-          */}
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col sm:flex-row gap-4 justify-center"
+        >
           <Link
             href="/tickets"
-            className="bg-gold text-black-pure font-bold px-8 py-4 rounded-xl text-lg hover:bg-gold-bright hover:shadow-[0_0_30px_rgba(212,175,55,0.3)] transition-all duration-300"
+            className="inline-flex items-center justify-center bg-gold text-navy-deeper font-bold px-10 py-4 rounded-xl text-lg hover:bg-gold-bright hover:shadow-[0_0_40px_rgba(255,203,64,0.35)] transition-all duration-300 tracking-wide"
           >
-            {/*
-              hover:shadow-[...] → Custom gold glow on hover!
-              The [...] syntax = arbitrary value in Tailwind
-              transition-all duration-300 → Smooth 0.3s animation
-            */}
             Get Tickets
           </Link>
           <Link
             href="/about"
-            className="border border-gold/50 text-gold font-semibold px-8 py-4 rounded-xl text-lg hover:bg-gold/10 hover:border-gold transition-all duration-300"
+            className="inline-flex items-center justify-center border border-gold/40 text-gold font-semibold px-10 py-4 rounded-xl text-lg hover:bg-gold/10 hover:border-gold/70 transition-all duration-300"
           >
             Learn More
           </Link>
-        </div>
-      </div>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col items-center mt-16 gap-2 text-white-dim"
+        >
+          <span className="text-xs uppercase tracking-widest">Scroll to explore</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

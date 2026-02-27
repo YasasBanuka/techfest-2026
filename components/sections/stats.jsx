@@ -1,102 +1,64 @@
-import { STATS } from "@/data/event";
+"use client";
 
-/*
-  Server Component (no "use client")
-  
-  WHY Server Component for Stats?
-  ──────────────────────────────
-  Stats are static content. There's no interactivity 
-  (no clicks, no forms, no state changes).
-  
-  Rendering on the server means:
-  - Zero JavaScript sent for this component
-  - Faster page load
-  - Better SEO (search engines see the content immediately)
-  
-  Later, when we add count-up animations, we'll create a 
-  separate SMALL Client Component just for the number animation.
-*/
+import { motion } from "framer-motion";
+import { Users, LayoutGrid, Building2, Mic2 } from "lucide-react";
+import { STATS } from "@/data/event";
+import { StaggerContainer, StaggerItem } from "@/components/ui/fade-in-up";
+import ScrambleNumber from "@/components/ui/scramble-number";
+
+const ICON_MAP = { Users, LayoutGrid, Building2, Mic2 };
 
 export default function Stats() {
   return (
-    <section className="py-24 px-6">
-      {/*
-        py-24 → Generous vertical padding (96px top + bottom)
-        
-        Premium spacing rule:
-        More whitespace = More premium feel
-        Cramped content = Cheap/amateur look
-        
-        Apple.com, Linear.app, Stripe.com → ALL use large padding
-      */}
-
+    <section className="py-20 px-6">
       <div className="max-w-6xl mx-auto">
-        {/*
-          max-w-6xl instead of max-w-7xl (Navbar)
-          → Stats area is slightly narrower than nav
-          → Creates visual "breathing room"
-          → Content doesn't feel edge-to-edge
-        */}
 
-        {/* Section Heading */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-4">
+        {/* Section header */}
+        <motion.div
+          className="text-center mb-14"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <p className="text-gold text-sm uppercase tracking-[0.2em] mb-3 font-medium">
+            By The Numbers
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white">
             Join the Innovation
           </h2>
-          <p className="text-white-muted max-w-xl mx-auto">
-            Be part of Sri Lanka&apos;s premier technology event
+          <p className="text-white-muted mt-3 max-w-xl mx-auto">
+            TechFest 2026 is set to be the biggest yet — uniting Sri Lanka&apos;s sharpest tech minds.
           </p>
-          {/*
-            &apos; → HTML entity for apostrophe (')
-            JSX treats raw ' differently in some cases
-            Using &apos; is the safe, industry-standard way
-          */}
-        </div>
+        </motion.div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {/*
-            grid grid-cols-2 → 2 columns on mobile
-            lg:grid-cols-4 → 4 columns on desktop
-            
-            CSS Grid vs Flexbox:
-            - Grid = 2D layouts (rows AND columns)
-            - Flexbox = 1D layouts (row OR column)
-            
-            Stats = Grid because we need equal-width columns
-            Navbar = Flexbox because it's one row
-          */}
+        {/* Stats grid — staggered entrance */}
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {STATS.map((stat) => {
+            const Icon = ICON_MAP[stat.icon] || Users;
+            return (
+              <StaggerItem key={stat.label}>
+                <div className="group relative bg-navy-card border border-navy-border rounded-2xl p-6 sm:p-8 text-center hover:border-gold/40 hover:shadow-[0_0_30px_rgba(255,203,64,0.08)] transition-all duration-400 overflow-hidden h-full">
 
-          {STATS.map((stat) => (
-            <div
-              key={stat.label}
-              className="bg-black-card border border-black-border rounded-2xl p-8 text-center hover:border-gold/30 transition-colors group"
-            >
-              {/*
-                rounded-2xl → More rounded than rounded-xl (16px vs 12px)
-                             Premium sites use larger border-radius
-                
-                hover:border-gold/30 → Subtle gold border on hover
-                                      30% opacity = visible but not harsh
-                
-                group → Enables group-hover on children
-              */}
+                  {/* Corner glow on hover */}
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gold/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 -translate-y-1/2 translate-x-1/2" />
 
-              <p className="text-4xl sm:text-5xl font-heading font-bold text-gold mb-2 group-hover:scale-110 transition-transform duration-300">
-                {stat.value}
-              </p>
-              {/*
-                group-hover:scale-110 → Number grows 10% when card is hovered
-                transition-transform → Only animates the scale (not color, etc.)
-                duration-300 → 0.3 seconds (sweet spot for micro-interactions)
-              */}
+                  {/* Icon */}
+                  <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center group-hover:bg-gold/15 transition-colors duration-300">
+                    <Icon size={22} className="text-gold" />
+                  </div>
 
-              <p className="text-sm text-white-muted uppercase tracking-wider">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div>
+                  {/* Scramble number — digits scramble then lock in */}
+                  <div className="text-3xl sm:text-4xl font-heading font-black text-gold mb-2 tabular-nums">
+                    <ScrambleNumber value={stat.value} />
+                  </div>
+
+                  <p className="text-white-muted text-sm leading-snug">{stat.label}</p>
+                </div>
+              </StaggerItem>
+            );
+          })}
+        </StaggerContainer>
       </div>
     </section>
   );

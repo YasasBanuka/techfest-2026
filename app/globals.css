@@ -1,36 +1,76 @@
 @import "tailwindcss";
-/* ═══════════════════════════════════════════════════
-   TechFest 2026 — Design Tokens (Gold & Black Theme)
-   ═══════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════
+   TechFest 2026 — Design Tokens
+   Primary: Deep Navy (#0f2b69) + Electric Gold (#ffcb40)
+   ═══════════════════════════════════════════════════════ */
+
 @theme inline {
+  /* ── Navy Palette ── */
+  --color-navy:          #0f2b69;
+  --color-navy-dark:     #091d47;
+  --color-navy-deeper:   #060f24;
+  --color-navy-light:    #1a3d8a;
+  --color-navy-card:     #0d2257;
+  --color-navy-border:   #1e3a7a;
+  --color-navy-surface:  #0a1f50;
+
   /* ── Gold Palette ── */
-  --color-gold: #D4AF37;
-  --color-gold-light: #F4E5C2;
-  --color-gold-dark: #B8941E;
-  --color-gold-bright: #FFD700;
-  --color-gold-muted: #A08520;
-  /* ── Black Palette ── */
-  --color-black-pure: #000000;
-  --color-black-soft: #0A0A0A;
-  --color-black-card: #141414;
-  --color-black-lighter: #1A1A1A;
-  --color-black-border: #2A2A2A;
-  /* ── Text Colors ── */
-  --color-white: #FFFFFF;
-  --color-white-muted: #B0B0B0;
-  --color-white-dim: #808080;
+  --color-gold:          #ffcb40;
+  --color-gold-bright:   #ffd966;
+  --color-gold-dark:     #e6a800;
+  --color-gold-muted:    #c49a00;
+  --color-gold-dim:      #a07800;
+
+  /* ── Text ── */
+  --color-white:         #ffffff;
+  --color-white-muted:   #a8b8d8;
+  --color-white-dim:     #6b7fa3;
+
   /* ── Font Families ── */
   --font-heading: var(--font-outfit), sans-serif;
-  --font-body: var(--font-inter), sans-serif;
+  --font-body:    var(--font-inter), sans-serif;
 }
-/* ═══════════════════════
+
+/* ═══════════════════
    Base Styles
-   ═══════════════════════ */
+   ═══════════════════ */
+
 body {
-  background: var(--color-black-pure);
+  background: var(--color-navy-deeper);
   color: var(--color-white);
   font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
+}
+
+/* ═══════════════════════════
+   Utility: Gold Gradient Text
+   ═══════════════════════════ */
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #ffd966 0%, #ffcb40 50%, #e6a800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ═══════════════════════════
+   Utility: Gold Glow Shadow
+   ═══════════════════════════ */
+
+.gold-glow {
+  box-shadow: 0 0 30px rgba(255, 203, 64, 0.2), 0 0 60px rgba(255, 203, 64, 0.05);
+}
+
+/* ═══════════════════════════
+   Hex Grid Pattern (decorative)
+   ═══════════════════════════ */
+
+.hex-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50V18L28 2l28 16v32L28 66zm0-6l22-12.7V24.7L28 12 6 24.7v22.6L28 60z' fill='%23ffcb40' fill-opacity='0.04'/%3E%3C/svg%3E");
 }

@@ -1,83 +1,74 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
-/*
-  WHY "use client"?
-  ─────────────────
-  This component uses useState + useEffect (browser-only features).
-  The countdown MUST run in the browser because:
-  - Server doesn't know the user's timezone
-  - Server renders once, countdown needs to update every second
-*/
+import { motion, AnimatePresence } from "framer-motion";
 
 function calculateTimeLeft(targetDate) {
-  const difference = new Date(targetDate) - new Date();
-
-  if (difference <= 0) {
-    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-  }
-
+  const diff = new Date(targetDate) - new Date();
+  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
   return {
-    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-    minutes: Math.floor((difference / (1000 * 60)) % 60),
-    seconds: Math.floor((difference / 1000) % 60),
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / (1000 * 60)) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
   };
+}
+
+/** Single animated digit block */
+function CountdownUnit({ value, label }) {
+  const display = String(value).padStart(2, "0");
+
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div className="relative w-16 h-16 sm:w-20 sm:h-20 bg-navy-card border border-navy-border rounded-xl flex items-center justify-center overflow-hidden">
+        {/* Gold top-edge accent line */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gold/40" />
+
+        <AnimatePresence mode="popLayout">
+          <motion.span
+            key={display}
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 20, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="text-2xl sm:text-3xl font-heading font-bold text-gold tabular-nums"
+          >
+            {display}
+          </motion.span>
+        </AnimatePresence>
+      </div>
+      <span className="text-xs sm:text-sm text-white-dim uppercase tracking-widest">
+        {label}
+      </span>
+    </div>
+  );
 }
 
 export default function Countdown({ targetDate }) {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetDate));
 
   useEffect(() => {
-    /*
-      setInterval → Runs a function repeatedly at a fixed interval
-      1000ms = 1 second → Updates countdown every second
-    */
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft(targetDate));
     }, 1000);
-
-    /*
-      CLEANUP FUNCTION:
-      When this component is removed from the page (unmounts),
-      React calls this function to stop the timer.
-      Without this → memory leak (timer runs forever in background)
-    */
     return () => clearInterval(timer);
   }, [targetDate]);
 
-  const timeUnits = [
+  const units = [
     { value: timeLeft.days, label: "Days" },
     { value: timeLeft.hours, label: "Hours" },
-    { value: timeLeft.minutes, label: "Minutes" },
-    { value: timeLeft.seconds, label: "Seconds" },
+    { value: timeLeft.minutes, label: "Mins" },
+    { value: timeLeft.seconds, label: "Secs" },
   ];
 
   return (
-    <div className="flex gap-4 sm:gap-6">
-      {timeUnits.map((unit) => (
-        <div key={unit.label} className="text-center">
-          <div className="bg-black-card border border-black-border rounded-xl w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-2">
-            {/*
-              Why fixed width/height (w-20 h-20)?
-              → Prevents layout shift when numbers change
-              → "12" and "9" take same space
-              This prevents CLS (Cumulative Layout Shift) = better Lighthouse score!
-            */}
-            <span className="text-2xl sm:text-3xl font-heading font-bold text-gold">
-              {String(unit.value).padStart(2, "0")}
-            </span>
-            {/*
-              padStart(2, "0"):
-              9 → "09"  (always 2 digits)
-              12 → "12" (unchanged)
-              Why? Prevents "jumping" when 10 → 9 (2 chars → 1 char)
-            */}
-          </div>
-          <span className="text-xs sm:text-sm text-white-muted uppercase tracking-wider">
-            {unit.label}
-          </span>
+    <div className="flex items-start gap-3 sm:gap-5">
+      {units.map((u, i) => (
+        <div key={u.label} className="flex items-start gap-3 sm:gap-5">
+          <CountdownUnit value={u.value} label={u.label} />
+          {i < units.length - 1 && (
+            <span className="text-gold/60 text-2xl font-bold mt-4 sm:mt-5 select-none">:</span>
+          )}
         </div>
       ))}
     </div>

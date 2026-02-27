@@ -1,0 +1,55 @@
+"use client";
+
+import { useEffect } from "react";
+import Lenis from "lenis";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * SmoothScrollProvider
+ * ─────────────────────
+ * Wraps the entire app with Lenis smooth scrolling.
+ *
+ * What Lenis does:
+ *   → Intercepts native scroll events
+ *   → Replaces them with smooth, physics-based interpolation
+ *   → Result: that buttery "momentum" scroll you see on Awwwards sites
+ *
+ * What the GSAP connection does:
+ *   → lenis.on("scroll", ScrollTrigger.update) keeps GSAP's scroll
+ *     trigger in sync with Lenis's virtual scroll position
+ *   → Without this, ScrollTrigger would use native scroll position
+ *     which lags behind Lenis = broken animations
+ *   → gsap.ticker drives Lenis's RAF loop so both systems share one frame
+ */
+export default function SmoothScrollProvider({ children }) {
+    useEffect(() => {
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo ease
+            smoothWheel: true,
+            wheelMultiplier: 1.0,
+            touchMultiplier: 2.0,
+        });
+
+        // Keep GSAP ScrollTrigger in sync with Lenis scroll position
+        lenis.on("scroll", ScrollTrigger.update);
+
+        // Let GSAP drive Lenis's animation frame (shared RAF loop)
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+
+        // Prevent GSAP from compensating for lag (Lenis handles this)
+        gsap.ticker.lagSmoothing(0);
+
+        return () => {
+            lenis.destroy();
+            gsap.ticker.remove((time) => lenis.raf(time * 1000));
+        };
+    }, []);
+
+    return <>{children}</>;
+}
