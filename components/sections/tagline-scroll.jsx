@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const TAGLINE = "Where Innovation Meets Excellence";
-const SCROLL_DISTANCE = 5500; // total px of pin window
+const SCROLL_DISTANCE = 3000; // px of pin window
 const REVEAL_THRESHOLD = 0.68; // reveal completes at 68% progress
 // → remaining 32% (~1760px) is the "hold" pause
 
