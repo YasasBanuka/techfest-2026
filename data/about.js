@@ -4,10 +4,10 @@
  */
 
 export const MISSION =
-  "To create Sri Lanka's most impactful technology festival — a space where students, professionals, and innovators come together to learn, connect, and build the future.";
+  "To bridge the industry-academia gap by providing actionable knowledge, strategic foresight, and direct mentorship, turning academic potential into tangible technological achievement.";
 
 export const VISION =
-  "A Sri Lanka where every young technologist has access to world-class knowledge, meaningful mentorship, and a community that propels them to global relevance.";
+  "To accelerate Sri Lanka's position as a hub of technological innovation by empowering its next generation of engineers and entrepreneurs with the tools and insights to solve real-world challenges.";
 
 export const VALUES = [
   {
