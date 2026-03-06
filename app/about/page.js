@@ -131,10 +131,10 @@ export default function AboutPage() {
       <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <SectionHeader
-            eyebrow="Since 2022"
+            eyebrow="Since 2025"
             title="Our Story"
             titleGold="Story"
-            subtitle="From a small student gathering to Sri Lanka's biggest tech festival — this is how we got here."
+            subtitle="From a bold debut to Sri Lanka's most anticipated tech festival — this is how it happened."
           />
           <StoryTimeline />
         </div>
