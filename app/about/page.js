@@ -127,18 +127,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── 4. Our Story (Timeline) ── */}
-      <section className="py-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader
-            eyebrow="Since 2025"
-            title="Our Story"
-            titleGold="Story"
-            subtitle="From a bold debut to Sri Lanka's most anticipated tech festival — this is how it happened."
-          />
-          <StoryTimeline />
-        </div>
-      </section>
+      {/* ── 4. Our Story (Full-screen pinned GSAP section) ── */}
+      <StoryTimeline />
 
       {/* ── 5. The Teams Behind It ── */}
       <section className="py-20 px-6 border-t border-navy-border">
