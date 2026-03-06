@@ -21,20 +21,17 @@ export default function StoryTimeline() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        lineRef.current,
-        { scaleY: 0, transformOrigin: "top center" },
-        {
-          scaleY: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: lineRef.current,
-            start: "top 70%",
-            end: "bottom 30%",
-            scrub: 1,
-          },
-        }
-      );
+      gsap.set(lineRef.current, { scaleY: 0, transformOrigin: "top center" });
+      gsap.to(lineRef.current, {
+        scaleY: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: lineRef.current,
+          start: "top 70%",
+          end: "bottom 30%",
+          scrub: 1,
+        },
+      });
     });
     return () => ctx.revert();
   }, []);
@@ -45,7 +42,6 @@ export default function StoryTimeline() {
       <div
         ref={lineRef}
         className="absolute left-6 sm:left-1/2 sm:-translate-x-px top-0 bottom-0 w-px bg-gradient-to-b from-gold/60 via-gold/30 to-transparent"
-        style={{ transformOrigin: "top center", scaleY: 0 }}
       />
 
       <div className="space-y-10">
