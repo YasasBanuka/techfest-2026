@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import PageHero from "@/components/ui/page-hero";
 import StoryTimeline from "@/components/about/story-timeline";
 import CoreValues from "@/components/about/core-values";
+import TeamSection from "@/components/team/team-section";
 import CTA from "@/components/sections/cta";
 import FadeInUp from "@/components/ui/fade-in-up";
 import { StaggerContainer, StaggerItem } from "@/components/ui/fade-in-up";
@@ -165,6 +166,17 @@ export default function AboutPage() {
               </StaggerItem>
             ))}
           </StaggerContainer>
+
+          <div className="mt-20">
+            <SectionHeader
+              eyebrow="The Masterminds"
+              title="Organizing Committee"
+              titleGold="Committee"
+              subtitle="Meet the dedicated individuals working behind the scenes to make TechFest 2026 a reality."
+              center={true}
+            />
+            <TeamSection />
+          </div>
         </div>
       </section>
 

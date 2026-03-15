@@ -5,14 +5,15 @@ import Communities from "@/components/sections/communities";
 import Stats from "@/components/sections/stats";
 import CTA from "@/components/sections/cta";
 import SponsorsCarousel from "@/components/sections/sponsors-carousel";
+import ComingSoon from "@/components/common/coming-soon";
 
 export const metadata = {
-  title: "IEEE TechFest 2026 | Sri Lanka's Premier Tech Innovation Festival",
+  title: "IEEE TechFest 2026 | Coming Soon",
   description:
-    "Join 1000+ innovators at TechFest 2026 — December 20, 2026 at Trace Expert City, Colombo. Organized by IEEE TechVerse.",
+    "The future is loading. Sri Lanka's premier technology innovation festival is coming soon. Stay tuned for TechFest 2026.",
   openGraph: {
-    title: "IEEE TechFest 2026",
-    description: "Sri Lanka's premier technology innovation festival.",
+    title: "IEEE TechFest 2026 | Coming Soon",
+    description: "The future is loading. Join us for TechFest 2026.",
     url: "https://techfest2026.lk",
     siteName: "TechFest 2026",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
@@ -21,27 +22,21 @@ export const metadata = {
 };
 
 export default function Home() {
+  // Toggle this to false to restore the full site
+  const isComingSoon = true;
+
+  if (isComingSoon) {
+    return <ComingSoon />;
+  }
+
   return (
     <main>
-      {/* 1. Hero — plexus canvas, gold gradient title, countdown */}
       <Hero />
-
-      {/* 2. Tagline — pinned, random letter reveal on scroll */}
       <TaglineScroll />
-
-      {/* 3. Event Impact — cinematic 5-scene pinned sequence */}
       <EventImpact />
-
-      {/* 4. Communities — who's behind this */}
       <Communities />
-
-      {/* 5. Stats — scramble animation counters */}
       <Stats />
-
-      {/* 6. CTA — register section */}
       <CTA />
-
-      {/* 7. Sponsors carousel */}
       <SponsorsCarousel />
     </main>
   );
