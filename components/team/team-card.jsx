@@ -117,7 +117,7 @@ export default function TeamCard({ member }) {
     const initials = member.name.substring(0, 2).toUpperCase();
 
     return (
-        <div className="relative pt-[110px] h-[360px] w-full max-w-[280px] mx-auto">
+        <div className="relative pt-[160px] h-[400px] w-full max-w-[280px] mx-auto">
             {/* ── Main Card Base ── */}
             <div
                 ref={cardRef}
@@ -160,7 +160,7 @@ export default function TeamCard({ member }) {
                     {/* ── The OUT-OF-BOUNDS Image ── */}
                     <div
                         ref={imageRef}
-                        className="absolute -top-[110px] left-1/2 -translate-x-1/2 w-[240px] h-[280px] z-10 pointer-events-none drop-shadow-[0_15px_15px_rgba(0,0,0,0.8)] opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+                        className="absolute -top-[160px] left-1/2 -translate-x-1/2 w-[320px] h-[360px] z-10 pointer-events-none drop-shadow-[0_15px_15px_rgba(0,0,0,0.8)] opacity-70 group-hover:opacity-100 transition-opacity duration-300"
                     >
                         {member.image ? (
                             <Image
