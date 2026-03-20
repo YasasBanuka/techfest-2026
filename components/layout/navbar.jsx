@@ -40,7 +40,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3 group">
           <Image
             src="/images/logos/Techfest Logo.png"
-            alt="TechFest 2026 logo"
+            alt="TechFest Sri Lanka 2026 logo"
             width={140}
             height={40}
             className="object-contain"

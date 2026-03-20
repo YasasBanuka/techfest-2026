@@ -5,14 +5,14 @@
  */
 
 export const EVENT = {
-  name: "IEEE TechFest",
+  name: "TechFest Sri Lanka",
   year: "2026",
   tagline: "Where Innovation Meets Excellence",
   description:
     "Sri Lanka's premier technology innovation festival, bringing together the brightest minds in tech, industry leaders, and passionate innovators under one roof.",
-  date: "2026-09-20T09:00:00",
-  time: "09:00 AM – 06:00 PM",
-  venue: "Trace Expert City, Colombo",
+  date: "2026-10-31T09:00:00",
+  time: "TBA",
+  venue: "TBA",
   whatsappChannel: "https://whatsapp.com/channel/placeholder",
   ticketLink: "/tickets",
 };

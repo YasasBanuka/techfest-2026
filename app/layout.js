@@ -15,9 +15,9 @@ const outfit = Outfit({
 
 export const metadata = {
   metadataBase: new URL("https://techfest2026.lk"),
-  title: "IEEE TechFest 2026 | Innovation Festival",
+  title: "TechFest Sri Lanka 2026 | Innovation Festival",
   description:
-    "Join 1000+ innovators at TechFest 2026. December 20, 2026 at Trace Expert City, Colombo.",
+    "Join 1000+ innovators at TechFest 2026. October 31, 2026 at TBA.",
 };
 
 export default function RootLayout({ children }) {

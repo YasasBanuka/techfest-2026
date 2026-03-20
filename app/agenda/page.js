@@ -7,9 +7,9 @@ import { StaggerContainer, StaggerItem } from "@/components/ui/fade-in-up";
 import { AGENDA_DATE, VENUE, TYPE_META } from "@/data/agenda";
 
 export const metadata = {
-  title: "Agenda | IEEE TechFest 2026",
+  title: "Agenda | TechFest Sri Lanka 2026",
   description:
-    "Full schedule for TechFest 2026 — December 20, 2026 at Trace Expert City, Colombo. Keynotes, workshops, panels, competitions, and networking.",
+    "Full schedule for TechFest Sri Lanka 2026 — October 31, 2026 at TBA. Keynotes, workshops, panels, competitions, and networking.",
 };
 
 // Quick-glance event info cards
@@ -27,7 +27,7 @@ export default function AgendaPage() {
     <main>
       {/* ── Page Hero ── */}
       <PageHero
-        eyebrow="December 20, 2026"
+        eyebrow="October 31, 2026"
         title="Event Agenda"
         titleGold="Agenda"
         subtitle="A full day of keynotes, hands-on workshops, panel discussions, and competitions. Filter by track to plan your day."

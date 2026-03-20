@@ -116,8 +116,8 @@ export default function NotFound() {
           variants={item}
           className="text-white-muted text-base leading-relaxed mb-10 max-w-md"
         >
-          This page doesn&apos;t exist — but TechFest 2026 does. Head back and
-          discover what&apos;s waiting for you on December 20.
+          This page doesn&apos;t exist — but TechFest Sri Lanka 2026 does. Head back and
+          discover what&apos;s waiting for you on October 31.
         </motion.p>
 
         {/* Primary CTA */}

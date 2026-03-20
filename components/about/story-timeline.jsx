@@ -123,13 +123,13 @@ export default function StoryTimeline() {
           <div ref={containerRef} className="relative flex flex-col gap-14">
 
             {/* Vertical line */}
-            <div className="absolute left-1/2 -translate-x-px top-0 bottom-0 w-[2px] pointer-events-none overflow-hidden">
+            <div className="absolute left-8 sm:left-1/2 -translate-x-px top-0 bottom-0 w-[2px] pointer-events-none overflow-hidden">
               <div ref={lineRef}
                 className="absolute inset-0 bg-gradient-to-b from-gold/90 via-gold/50 to-gold/20" />
             </div>
 
             {/* Ball — w:0 h:0 so visual centre = GSAP y exactly */}
-            <div ref={ballRef} className="absolute left-1/2 z-30 pointer-events-none"
+            <div ref={ballRef} className="absolute left-8 sm:left-1/2 z-30 pointer-events-none"
               style={{ top: 0, width: 0, height: 0 }}>
               <div className="absolute rounded-full animate-pulse"
                 style={{ width:48, height:48, top:-24, left:-24,
@@ -144,25 +144,25 @@ export default function StoryTimeline() {
 
             {/* 2025 row */}
             <div className="relative flex items-center min-h-[8rem]">
-              <div ref={card2025Ref} className="w-[44%] pr-10">
+              <div ref={card2025Ref} className="w-full pl-16 sm:w-[44%] sm:pr-10 sm:pl-0">
                 <YearCard item={entry2025} align="right" />
               </div>
-              <div className="absolute left-1/2 -translate-x-1/2 z-20">
+              <div className="absolute left-8 sm:left-1/2 -translate-x-1/2 z-20">
                 <div ref={dot2025Ref} style={{ opacity: 0 }}
                   className="w-5 h-5 rounded-full border-2 border-gold/60 bg-navy-deeper" />
               </div>
-              <div className="w-[44%] ml-auto" />
+              <div className="hidden sm:block w-[44%] ml-auto" />
             </div>
 
             {/* 2026 row */}
             <div className="relative flex items-center min-h-[8rem]">
-              <div className="w-[44%]" />
-              <div className="absolute left-1/2 -translate-x-1/2 z-20">
+              <div className="hidden sm:block w-[44%]" />
+              <div className="absolute left-8 sm:left-1/2 -translate-x-1/2 z-20">
                 <div ref={dot2026Ref}
-                  style={{ opacity:0, boxShadow:"0 0 14px rgba(255,203,64,0.9)" }}
-                  className="w-5 h-5 rounded-full border-2 border-gold bg-gold" />
+                  style={{ opacity:0, boxShadow:"0 0 20px rgba(255,203,64,0.4)" }}
+                  className="w-5 h-5 rounded-full border-2 border-gold bg-navy-deeper" />
               </div>
-              <div ref={card2026Ref} className="w-[44%] pl-10 ml-auto">
+              <div ref={card2026Ref} className="w-full pl-16 sm:w-[44%] sm:pl-10 sm:ml-auto">
                 <YearCard item={entry2026} align="left" highlighted />
               </div>
             </div>
@@ -187,10 +187,10 @@ function YearCard({ item, align, highlighted }) {
       }`}>
         {item.year}
       </span>
-      <h4 className={`text-white font-heading font-bold text-xl mb-3 ${align === "right" ? "text-right" : ""}`}>
+      <h4 className={`text-white font-heading font-bold text-xl mb-3 text-left ${align === "right" ? "sm:text-right" : ""}`}>
         {item.title}
       </h4>
-      <p className={`text-white-muted text-sm leading-relaxed ${align === "right" ? "text-right" : ""}`}>
+      <p className={`text-white-muted text-sm leading-relaxed text-left ${align === "right" ? "sm:text-right" : ""}`}>
         {item.description}
       </p>
     </div>
