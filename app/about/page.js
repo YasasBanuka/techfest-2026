@@ -10,9 +10,9 @@ import { StaggerContainer, StaggerItem } from "@/components/ui/fade-in-up";
 import { MISSION, VISION } from "@/data/about";
 
 export const metadata = {
-  title: "About | IEEE TechFest 2026",
+  title: "About | TechFest Sri Lanka 2026",
   description:
-    "Learn about TechFest 2026 — Sri Lanka's premier tech innovation festival organised by IEEE TechVerse. Our story, mission, values, and the community behind the event.",
+    "Learn about TechFest Sri Lanka 2026 — Sri Lanka's premier tech innovation festival organised by IEEE TechVerse. Our story, mission, values, and the community behind the event.",
 };
 
 const COMMUNITIES = [
@@ -172,7 +172,7 @@ export default function AboutPage() {
               eyebrow="The Masterminds"
               title="Organizing Committee"
               titleGold="Committee"
-              subtitle="Meet the dedicated individuals working behind the scenes to make TechFest 2026 a reality."
+              subtitle="Meet the dedicated individuals working behind the scenes to make TechFest Sri Lanka 2026 a reality."
               center={true}
             />
             <TeamSection />

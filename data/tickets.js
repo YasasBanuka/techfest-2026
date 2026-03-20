@@ -4,7 +4,7 @@
  */
 
 export const REGISTRATION_DEADLINE = "November 30, 2026";
-export const EVENT_DATE = "December 20, 2026";
+export const EVENT_DATE = "October 31, 2026";
 
 export const TICKET_TIERS = [
   {
@@ -84,5 +84,5 @@ export const PERKS = [
   { emoji: "🏆", title: "Hackathon & Competitions", desc: "Compete, win prizes, and get noticed by industry." },
   { emoji: "🤝", title: "Networking", desc: "700+ attendees, sponsors, and mentors under one roof." },
   { emoji: "🛍️", title: "30+ Stalls & Exhibits", desc: "Discover projects, products, and companies changing tech." },
-  { emoji: "📍", title: "Prime Venue", desc: "Trace Expert City, Colombo — Sri Lanka's tech hub." },
+  { emoji: "📍", title: "Prime Venue", desc: "TBA — Sri Lanka's tech hub." },
 ];

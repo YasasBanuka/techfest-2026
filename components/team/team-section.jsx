@@ -8,77 +8,51 @@ export default function TeamSection() {
     // Directly use 2026 data as requested
     const currentTeam = TEAM_DATA["2026"] || [];
 
-    // Group members dynamically for the Org Chart tree layout
-    const treeData = TEAM_GROUPS_ORDER.map(groupName => {
-        return {
-            groupName,
-            members: currentTeam.filter((m) => m.team === groupName),
-        };
-    }).filter(group => group.members.length > 0);
+    // Group and sort members for row-based layout
+    const teamGroups = TEAM_GROUPS_ORDER.map(groupName => {
+        const members = currentTeam.filter(m => m.team === groupName);
+        // Sort: featured first (leaders)
+        const sortedMembers = [...members].sort((a, b) => {
+            if (a.featured && !b.featured) return -1;
+            if (!a.featured && b.featured) return 1;
+            return 0;
+        });
+        return { name: groupName, members: sortedMembers };
+    }).filter(g => g.members.length > 0);
 
     return (
         <div className="w-full relative">
-            {/* ── Glowing Abstract Background for the Tree ── */}
+            {/* ── Glowing Abstract Background ── */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold/5 via-navy-deeper/0 to-navy-deeper/0 pointer-events-none" />
 
-            {/* ── Tree Structure Layout (Org Chart Style) ── */}
-            <motion.div
-                initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ duration: 0.5, ease: "easeOut", staggerChildren: 0.1 }}
-                className="relative z-10 pt-10"
-            >
-                {treeData.map((group, groupIdx) => (
-                    <div key={group.groupName} className="mb-20 relative">
-                        {/* Tree connecting lines (Desktop only) */}
-                        {groupIdx !== 0 && (
-                            <div className="hidden md:block absolute -top-16 left-1/2 w-0.5 h-16 bg-gradient-to-b from-gold/30 to-navy-border/20 -translate-x-1/2" />
-                        )}
-                        {groupIdx !== 0 && group.members.length > 1 && (
-                            <div className="hidden md:block absolute -top-8 left-[10%] right-[10%] h-0.5 bg-navy-border/40" />
-                        )}
-
-                        {/* Group Label */}
-                        <div className="flex justify-center mb-16 relative">
-                            {groupIdx !== 0 && (
-                                <div className="hidden md:block absolute -top-12 left-1/2 w-0.5 h-12 bg-gold/30 -translate-x-1/2" />
-                            )}
-                            <span className="relative z-10 px-6 py-2 rounded-full bg-navy-card border border-gold/20 shadow-[0_0_15px_rgba(255,203,64,0.1)] text-gold font-mono text-sm tracking-[0.2em] uppercase font-bold text-center">
-                                {group.groupName === "Core" ? "Executive Board" : `${group.groupName} Team`}
-                            </span>
-                        </div>
-
-                        {/* Members Row */}
-                        <div
-                            className={`grid gap-8 justify-center ${group.members.length === 1
-                                    ? "grid-cols-1 max-w-sm mx-auto"
-                                    : group.members.length === 2
-                                        ? "grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto"
-                                        : group.members.length === 3
-                                            ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto"
-                                            : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto"
-                                }`}
-                        >
-                            {group.members.map((member, idx) => (
+            {/* ── Team Rows ── */}
+            <div className="relative z-10 space-y-8">
+                {teamGroups.map((group, gIdx) => (
+                    <motion.div
+                        key={group.name}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.6, delay: gIdx * 0.05 }}
+                    >
+                        {/* Grid for this specific team row */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12 max-w-7xl mx-auto justify-items-center">
+                            {group.members.map((member, mIdx) => (
                                 <motion.div
-                                    key={`${member.name}-${idx}`}
-                                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                                    transition={{ duration: 0.5, delay: (groupIdx * 0.1) + (idx * 0.05) }}
-                                    className="relative"
+                                    key={`${member.name}-${mIdx}`}
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5, delay: mIdx * 0.1 }}
+                                    className="w-full max-w-[280px]"
                                 >
-                                    {/* Inner tree lines connecting cards to horizontal bar */}
-                                    {groupIdx !== 0 && group.members.length > 1 && (
-                                        <div className="hidden md:block absolute -top-20 left-1/2 w-0.5 h-20 bg-navy-border/40 -translate-x-1/2 -z-10" />
-                                    )}
-
                                     <TeamCard member={member} />
                                 </motion.div>
                             ))}
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
-            </motion.div>
+            </div>
         </div>
     );
 }

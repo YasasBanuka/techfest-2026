@@ -30,7 +30,7 @@ export default function Footer() {
             <div>
               <Link href="/" className="inline-block mb-5">
                 <span className="text-2xl font-heading font-bold gold-gradient-text">
-                  TechFest
+                  TechFest Sri Lanka
                 </span>
                 <span className="text-sm text-white-dim ml-2">2026</span>
               </Link>

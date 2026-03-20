@@ -4,9 +4,9 @@ import CTA from "@/components/sections/cta";
 import FadeInUp from "@/components/ui/fade-in-up";
 
 export const metadata = {
-  title: "Speakers | IEEE TechFest 2026",
+  title: "Speakers | TechFest Sri Lanka 2026",
   description:
-    "Meet the expert speakers at TechFest 2026 — industry leaders delivering keynotes, workshops, panels, and lightning talks on December 20, 2026.",
+    "Meet the expert speakers at TechFest Sri Lanka 2026 — industry leaders delivering keynotes, workshops, panels, and lightning talks on October 31, 2026.",
 };
 
 export default function SpeakersPage() {
@@ -14,7 +14,7 @@ export default function SpeakersPage() {
     <main>
       {/* ── Page Hero ── */}
       <PageHero
-        eyebrow="December 20, 2026"
+        eyebrow="October 31, 2026"
         title="Meet Our Speakers"
         titleGold="Speakers"
         subtitle="10 industry leaders. Keynotes, workshops, panels and lightning talks — crafted to challenge, inspire, and equip you for what's next."
@@ -53,7 +53,7 @@ export default function SpeakersPage() {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-navy-card border border-navy-border rounded-2xl px-7 py-5">
               <div>
                 <p className="text-white font-heading font-semibold">
-                  Want to speak at TechFest 2026?
+                  Want to speak at TechFest Sri Lanka 2026?
                 </p>
                 <p className="text-white-dim text-sm mt-0.5">
                   We welcome proposals from industry professionals and researchers.

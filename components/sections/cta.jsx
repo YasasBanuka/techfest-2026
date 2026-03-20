@@ -40,7 +40,7 @@ export default function CTA() {
                   href="/tickets"
                   className="inline-flex items-center justify-center bg-gold text-navy-deeper font-bold px-10 py-4 rounded-xl text-lg hover:bg-gold-bright hover:shadow-[0_0_40px_rgba(255,203,64,0.3)] transition-all duration-300 tracking-wide"
                 >
-                  Register Now — It&apos;s Free
+                  Register Interest Now
                 </Link>
                 <Link
                   href="/contact"

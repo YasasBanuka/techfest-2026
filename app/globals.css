@@ -7,29 +7,29 @@
 
 @theme inline {
   /* ── Navy Palette ── */
-  --color-navy:          #0f2b69;
-  --color-navy-dark:     #091d47;
-  --color-navy-deeper:   #060f24;
-  --color-navy-light:    #1a3d8a;
-  --color-navy-card:     #0d2257;
-  --color-navy-border:   #1e3a7a;
-  --color-navy-surface:  #0a1f50;
+  --color-navy: #0f2b69;
+  --color-navy-dark: #091d47;
+  --color-navy-deeper: #060f24;
+  --color-navy-light: #1a3d8a;
+  --color-navy-card: #0d2257;
+  --color-navy-border: #1e3a7a;
+  --color-navy-surface: #0a1f50;
 
   /* ── Gold Palette ── */
-  --color-gold:          #ffcb40;
-  --color-gold-bright:   #ffd966;
-  --color-gold-dark:     #e6a800;
-  --color-gold-muted:    #c49a00;
-  --color-gold-dim:      #a07800;
+  --color-gold: #ffcb40;
+  --color-gold-bright: #ffd966;
+  --color-gold-dark: #e6a800;
+  --color-gold-muted: #c49a00;
+  --color-gold-dim: #a07800;
 
   /* ── Text ── */
-  --color-white:         #ffffff;
-  --color-white-muted:   #a8b8d8;
-  --color-white-dim:     #6b7fa3;
+  --color-white: #ffffff;
+  --color-white-muted: #a8b8d8;
+  --color-white-dim: #6b7fa3;
 
   /* ── Font Families ── */
   --font-heading: var(--font-outfit), sans-serif;
-  --font-body:    var(--font-inter), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
 }
 
 /* ═══════════════════
@@ -44,7 +44,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
 }
 

@@ -24,52 +24,17 @@ export default function TeamCard({ member }) {
         const image = imageRef.current;
         if (!card) return;
 
-        // Advanced 3D Parallax Tracker for OOB illusion
+        // Advanced 3D Parallax Tracker removed as per user request (static card feel)
         const onMove = (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            const cx = rect.width / 2;
-            const cy = rect.height / 2;
-
-            // Rotate ±10deg max on each axis for deep 3D effect
-            const rotateY = ((x - cx) / cx) * 10;
-            const rotateX = -((y - cy) / cy) * 10;
-
-            gsap.to(card, {
-                rotateX,
-                rotateY,
-                transformPerspective: 1000,
-                ease: "power2.out",
-                duration: 0.4,
-            });
-
-            // Internal content moves slightly opposite
-            if (content) {
-                gsap.to(content, {
-                    x: ((x - cx) / cx) * -3,
-                    y: ((y - cy) / cy) * -3,
-                    ease: "power2.out",
-                    duration: 0.4,
-                });
-            }
-
-            // The OOB Image moves *more* to enhance the 3D depth perception
-            if (image) {
-                gsap.to(image, {
-                    x: ((x - cx) / cx) * -8,
-                    y: ((y - cy) / cy) * -8,
-                    scale: 1.05,
-                    ease: "power2.out",
-                    duration: 0.4,
-                });
-            }
 
             // Internal ambient glow follows cursor
             if (glow) {
                 gsap.to(glow, {
-                    x: x - 100,
-                    y: y - 100,
+                    x: x - 200, // centered for 400px glow
+                    y: y - 200,
                     opacity: 1,
                     duration: 0.3,
                     ease: "power2.out",
@@ -78,29 +43,6 @@ export default function TeamCard({ member }) {
         };
 
         const onLeave = () => {
-            gsap.to(card, {
-                rotateX: 0,
-                rotateY: 0,
-                ease: "elastic.out(1, 0.4)",
-                duration: 1,
-            });
-            if (content) {
-                gsap.to(content, {
-                    x: 0,
-                    y: 0,
-                    ease: "elastic.out(1, 0.4)",
-                    duration: 1,
-                });
-            }
-            if (image) {
-                gsap.to(image, {
-                    x: 0,
-                    y: 0,
-                    scale: 1,
-                    ease: "elastic.out(1, 0.4)",
-                    duration: 1,
-                });
-            }
             if (glow) {
                 gsap.to(glow, { opacity: 0, duration: 0.5 });
             }
@@ -121,15 +63,13 @@ export default function TeamCard({ member }) {
             {/* ── Main Card Base ── */}
             <div
                 ref={cardRef}
-                className={`relative group bg-[#070e1d]/80 backdrop-blur-xl rounded-2xl h-full flex flex-col p-[1px] cursor-pointer transition-shadow duration-500`}
+                className="relative group bg-[#070e1d]/80 backdrop-blur-xl rounded-2xl h-full flex flex-col p-[1px] cursor-pointer transition-all duration-500 hover:border-gold/40 hover:shadow-[0_0_40px_rgba(255,203,64,0.15)] border-transparent"
                 style={{
                     willChange: "transform",
-                    transformStyle: "preserve-3d",
-                    boxShadow: member.featured ? "0 10px 40px -10px rgba(255,203,64,0.15)" : "0 10px 40px -10px rgba(0,0,0,0.5)",
                 }}
             >
                 {/* Static Border (Fallback) */}
-                <div className={`absolute inset-0 rounded-2xl z-0 ${member.featured ? 'bg-gradient-to-b from-gold/40 to-navy-border/20' : 'bg-gradient-to-b from-white/10 to-transparent'}`} />
+                <div className="absolute inset-0 rounded-2xl z-0 bg-gradient-to-b from-white/10 to-transparent" />
 
                 {/* Inner Card Container Wrapper - No overflow hidden, no styling that clips children */}
                 <div className="relative z-10 h-full flex flex-col">
@@ -142,12 +82,12 @@ export default function TeamCard({ member }) {
                             WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 100%)"
                         }}
                     >
-                        {/* Ambient Cursor Glow inside inner card */}
+                        {/* Ambient Cursor Glow inside inner card - ENHANCED */}
                         <div
                             ref={glowRef}
-                            className="absolute w-[200px] h-[200px] pointer-events-none opacity-0 mix-blend-screen z-0"
+                            className="absolute w-[400px] h-[400px] pointer-events-none opacity-0 mix-blend-screen z-0"
                             style={{
-                                background: "radial-gradient(circle, rgba(255,203,64,0.12) 0%, transparent 70%)",
+                                background: "radial-gradient(circle, rgba(255,203,64,0.2) 0%, transparent 70%)",
                                 transform: "translate(0px, 0px)",
                             }}
                         />
@@ -155,7 +95,7 @@ export default function TeamCard({ member }) {
 
                     {/* Top Accent line (sits behind the OOB image) 
                         Moved down slightly to be visible under the new fade mask */}
-                    <div className={`mt-8 h-[2px] w-full z-20 ${member.featured ? 'bg-gradient-to-r from-gold/20 via-gold to-gold/20' : 'bg-gradient-to-r from-navy-border via-white/20 to-navy-border'}`} />
+                    <div className="mt-8 h-[2px] w-full z-20 bg-gradient-to-r from-navy-border via-white/20 to-navy-border" />
 
                     {/* ── The OUT-OF-BOUNDS Image ── */}
                     <div
@@ -174,10 +114,8 @@ export default function TeamCard({ member }) {
                             // Fallback if no actual image exists
                             <div className="w-40 h-40 absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full overflow-hidden shadow-2xl flex items-center justify-center font-heading font-black text-3xl border-4 border-[#0a1122]"
                                 style={{
-                                    background: member.featured
-                                        ? "linear-gradient(135deg, rgba(255,203,64,0.4), rgba(15,43,105,1))"
-                                        : "linear-gradient(135deg, rgba(30,58,122,0.8), rgba(9,29,71,1))",
-                                    color: member.featured ? "#ffcb40" : "rgba(255,255,255,0.8)",
+                                    background: "linear-gradient(135deg, rgba(30,58,122,0.8), rgba(9,29,71,1))",
+                                    color: "rgba(255,255,255,0.8)",
                                 }}>
                                 {initials}
                             </div>
@@ -193,7 +131,7 @@ export default function TeamCard({ member }) {
                             {member.name}
                         </h3>
 
-                        <p className={`text-sm font-medium tracking-wide mb-3 drop-shadow-md ${member.featured ? "text-gold/90" : "text-white-dim"}`}>
+                        <p className="text-sm font-medium tracking-wide mb-3 drop-shadow-md text-white-dim">
                             {member.role}
                         </p>
 

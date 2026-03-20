@@ -22,7 +22,7 @@ export default function ComingSoon() {
     const particlesRef = useRef(null);
 
     // Target Date: July 15, 2026
-    const targetDate = new Date("2026-07-15T09:00:00").getTime();
+    const targetDate = new Date("2026-10-31T09:00:00").getTime();
 
     useEffect(() => {
         // --- Countdown Logic ---

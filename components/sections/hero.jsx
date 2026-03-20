@@ -72,7 +72,7 @@ export default function Hero() {
           <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/25 rounded-full px-5 py-2 backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
             <span className="text-gold text-sm font-medium tracking-wide">
-              December 20, 2026 &nbsp;·&nbsp; Trace Expert City, Colombo
+              October 31, 2026 &nbsp;·&nbsp; TBA
             </span>
           </div>
         </motion.div>
@@ -80,10 +80,10 @@ export default function Hero() {
         {/* Main Heading */}
         <motion.h1
           variants={itemVariants}
-          className="text-5xl sm:text-6xl lg:text-8xl font-heading font-black leading-none mb-6 tracking-tight"
+          className="text-5xl sm:text-6xl lg:text-8xl font-heading font-black leading-[1.1] mb-6 tracking-wide sm:tracking-widest uppercase"
         >
-          <span className="text-white block">IEEE</span>
-          <span className="gold-gradient-text block">TechFest 2026</span>
+          <span className="text-white block">TechFest</span>
+          <span className="gold-gradient-text block">Sri Lanka</span>
         </motion.h1>
 
         {/* Tagline */}

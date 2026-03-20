@@ -7,7 +7,7 @@ import FadeInUp from "@/components/ui/fade-in-up";
 import { StaggerContainer, StaggerItem } from "@/components/ui/fade-in-up";
 
 export const metadata = {
-  title: "Contact Us | IEEE TechFest 2026",
+  title: "Contact Us | TechFest Sri Lanka 2026",
   description:
     "Get in touch with the TechFest 2026 team. Reach out for sponsorships, speaker proposals, media enquiries, or general questions.",
 };
@@ -16,7 +16,7 @@ const CONTACT_CARDS = [
   {
     icon: MapPin,
     title: "Venue",
-    lines: ["Trace Expert City", "Maradana, Colombo 10", "Sri Lanka"],
+    lines: ["TBA", "Sri Lanka"],
   },
   {
     icon: Mail,
