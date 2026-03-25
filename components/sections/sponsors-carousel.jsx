@@ -91,7 +91,7 @@ export default function SponsorsCarousel() {
         {/* Sponsor CTA */}
         <FadeInUp delay={0.2} className="text-center mt-12">
           <p className="text-white-dim text-sm">
-            Interested in sponsoring TechFest 2026?{" "}
+            Interested in sponsoring TechFest Sri Lanka 2026?{" "}
             <a
               href="mailto:sponsors@techfest2026.lk"
               className="text-gold hover:text-gold-bright transition-colors underline-offset-2 hover:underline"

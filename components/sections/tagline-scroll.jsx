@@ -211,7 +211,7 @@ export default function TaglineScroll() {
                     className="mt-10 text-white-muted text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed opacity-0"
                     style={{ transform: "translateY(24px)" }}
                 >
-                    TechFest 2026 is more than an event — it&apos;s a movement.
+                    TechFest Sri Lanka 2026 is more than an event — it&apos;s a movement.
                     A gathering of the sharpest minds, boldest ideas, and next-generation leaders.
                 </p>
             </div>

@@ -7,21 +7,21 @@
 export const FAQ = [
   {
     id: 1,
-    question: "When and where is TechFest 2026?",
+    question: "When and where is TechFest Sri Lanka 2026?",
     answer:
       "TechFest Sri Lanka 2026 is scheduled for October 31, 2026 at TBA. Doors open at 9:00 AM and the event runs until 6:00 PM.",
   },
   {
     id: 2,
-    question: "Is registration free?",
+    question: "Is there a registration fee?",
     answer:
       "Ticket pricing and tiers for TechFest Sri Lanka 2026 will be announced soon. Simply register your interest online to stay updated. Certain workshops and premium sessions may have a separate fee — details will be shared closer to the event.",
   },
   {
     id: 3,
-    question: "Who can attend TechFest 2026?",
+    question: "Who can attend TechFest Sri Lanka 2026?",
     answer:
-      "TechFest 2026 is open to everyone — university students, professionals, entrepreneurs, and anyone passionate about technology and innovation. We welcome all backgrounds and experience levels.",
+      "TechFest Sri Lanka 2026 is open to everyone — university students, professionals, entrepreneurs, and anyone passionate about technology and innovation. We welcome all backgrounds and experience levels.",
   },
   {
     id: 4,

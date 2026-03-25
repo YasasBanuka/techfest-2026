@@ -23,10 +23,10 @@ export default function GalleryPage() {
     <main>
       {/* ── Page Hero ── */}
       <PageHero
-        eyebrow="TechFest 2025"
+        eyebrow="TechFest Sri Lanka 2025"
         title="Photo Gallery"
         titleGold="Gallery"
-        subtitle="A visual journey through TechFest 2025 — 700+ participants, 10 speakers, 30+ stalls, and memories that last a lifetime."
+        subtitle="A visual journey through TechFest Sri Lanka 2025 — 700+ participants, 10 speakers, 10+ stalls, and memories that last a lifetime."
       />
 
       {/* ── Stats strip ── */}
@@ -104,7 +104,7 @@ export default function GalleryPage() {
                 </p>
                 <p className="text-white-dim text-sm mt-0.5">
                   Share your photos — tag us{" "}
-                  <span className="text-gold">@ieeetek</span> or send them via our contact page.
+                  <span className="text-gold">@techfestlk</span> or send them via our contact page.
                 </p>
               </div>
               <a

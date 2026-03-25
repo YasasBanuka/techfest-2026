@@ -16,7 +16,7 @@ export const IMPACT_STATS = [
         src: "/images/gallery/2025/impact-2.jpg",
     },
     {
-        stat: "30+",
+        stat: "10+",
         label: "Stalls & Exhibits",
         src: "/images/gallery/2025/impact-3.jpg",
     },

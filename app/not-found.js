@@ -81,7 +81,7 @@ export default function NotFound() {
           variants={item}
           className="text-gold text-xs uppercase tracking-[0.3em] mb-8 font-medium"
         >
-          TechFest 2026 · Page Not Found
+          TechFest Sri Lanka 2026 · Page Not Found
         </motion.p>
 
         {/* Glitch 404 */}

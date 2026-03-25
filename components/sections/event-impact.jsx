@@ -177,7 +177,7 @@ export default function EventImpact() {
                     className="absolute top-12 left-1/2 -translate-x-1/2 z-20 opacity-0"
                 >
                     <span className="text-gold/50 text-xs uppercase tracking-[0.35em] font-medium">
-                        TechFest 2025
+                        TechFest Sri Lanka 2025
                     </span>
                 </div>
 
@@ -214,7 +214,7 @@ export default function EventImpact() {
                         {/* Real photo */}
                         <img
                             src={impact.src}
-                            alt={`TechFest 2025 — ${impact.label}`}
+                            alt={`TechFest Sri Lanka 2025 — ${impact.label}`}
                             className="absolute inset-0 w-full h-full object-cover"
                         />
 
@@ -280,7 +280,7 @@ export default function EventImpact() {
                     {/* Gallery overlay text */}
                     <div className="absolute inset-0 flex items-end justify-center pb-10 z-20">
                         <p className="text-white/50 text-xs uppercase tracking-[0.3em]">
-                            TechFest 2025 — Memories
+                            TechFest Sri Lanka 2025 — Memories
                         </p>
                     </div>
                 </div>

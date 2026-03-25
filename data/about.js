@@ -20,9 +20,9 @@ export const VALUES = [
   {
     id: 2,
     icon: "Users",
-    title: "Community",
+    title: "TechFest Sri Lanka",
     description:
-      "We believe the most powerful technology is built by people who lift each other up. TechFest exists to forge lasting connections.",
+      "We believe the most powerful technology is built by people who lift each other up. TechFest Sri Lanka exists to forge lasting connections.",
   },
   {
     id: 3,
@@ -45,13 +45,13 @@ export const TIMELINE = [
     year: "2025",
     title: "Where It All Began",
     description:
-      "TechFest was born in 2025 — Sri Lanka's first student-led technology innovation festival of its kind. 700+ participants, 10 expert speakers, and 30+ stalls set the benchmark for what was possible.",
+      "TechFest Sri Lanka was born in 2025 — Sri Lanka's first student-led technology innovation festival of its kind. 700+ participants, 10 expert speakers, and 10+ stalls set the benchmark for what was possible.",
   },
   {
     year: "2026",
     title: "The Second Chapter",
     description:
-      "Building on the momentum of a landmark debut, TechFest 2026 aims higher — more speakers, new competition tracks, expanded workshops, and 1000+ innovators under one roof on October 31st.",
+      "Building on the momentum of a landmark debut, TechFest Sri Lanka 2026 aims higher — more speakers, new competition tracks, expanded workshops, and 1000+ innovators under one roof on October 31st.",
     highlight: true,
   },
 ];

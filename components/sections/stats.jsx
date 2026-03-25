@@ -28,7 +28,7 @@ export default function Stats() {
             Join the Innovation
           </h2>
           <p className="text-white-muted mt-3 max-w-xl mx-auto">
-            TechFest 2026 is set to be the biggest yet — uniting Sri Lanka&apos;s sharpest tech minds.
+            TechFest Sri Lanka 2026 is set to be the biggest yet — uniting Sri Lanka&apos;s sharpest tech minds.
           </p>
         </motion.div>
 

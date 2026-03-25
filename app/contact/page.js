@@ -9,7 +9,7 @@ import { StaggerContainer, StaggerItem } from "@/components/ui/fade-in-up";
 export const metadata = {
   title: "Contact Us | TechFest Sri Lanka 2026",
   description:
-    "Get in touch with the TechFest 2026 team. Reach out for sponsorships, speaker proposals, media enquiries, or general questions.",
+    "Get in touch with the TechFest Sri Lanka 2026 team. Reach out for sponsorships, speaker proposals, media enquiries, or general questions.",
 };
 
 const CONTACT_CARDS = [
@@ -41,7 +41,7 @@ export default function ContactPage() {
         eyebrow="Get In Touch"
         title="Contact Us"
         titleGold="Us"
-        subtitle="Have a question, a partnership idea, or want to be part of TechFest 2026? We'd love to hear from you."
+        subtitle="Have a question, a partnership idea, or want to be part of TechFest Sri Lanka 2026? We'd love to hear from you."
       />
 
       {/* ── Contact Info Cards ── */}

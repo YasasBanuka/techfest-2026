@@ -7,7 +7,7 @@
 export const EVENT = {
   name: "TechFest Sri Lanka",
   year: "2026",
-  tagline: "Where Innovation Meets Excellence",
+  tagline: "Innovate, Inspire, Impact",
   description:
     "Sri Lanka's premier technology innovation festival, bringing together the brightest minds in tech, industry leaders, and passionate innovators under one roof.",
   date: "2026-10-31T09:00:00",

@@ -14,9 +14,9 @@ export const metadata = {
 
 // Quick-glance event info cards
 const EVENT_INFO = [
-  { icon: Calendar, label: "Date",  value: AGENDA_DATE },
-  { icon: Clock,    label: "Time",  value: "9:00 AM – 6:00 PM" },
-  { icon: MapPin,   label: "Venue", value: VENUE },
+  { icon: Calendar, label: "Date", value: AGENDA_DATE },
+  { icon: Clock, label: "Time", value: "9:00 AM – 6:00 PM" },
+  { icon: MapPin, label: "Venue", value: VENUE },
 ];
 
 // Legend for session type colors shown above the schedule
@@ -30,7 +30,7 @@ export default function AgendaPage() {
         eyebrow="October 31, 2026"
         title="Event Agenda"
         titleGold="Agenda"
-        subtitle="A full day of keynotes, hands-on workshops, panel discussions, and competitions. Filter by track to plan your day."
+        subtitle="Experience a day full of keynotes, hands-on workshops, panel discussions, and competitions."
       />
 
       {/* ── Event Info Strip ── */}

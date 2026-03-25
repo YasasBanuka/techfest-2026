@@ -31,7 +31,7 @@ export default function CTA() {
               </h2>
 
               <p className="text-white-muted text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-                Secure your spot at TechFest 2026. Network with industry leaders,
+                Secure your spot at TechFest Sri Lanka 2026. Network with industry leaders,
                 explore cutting-edge tech, and be inspired by the brightest minds in Sri Lanka.
               </p>
 

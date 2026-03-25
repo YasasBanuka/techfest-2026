@@ -64,9 +64,9 @@ export default function AboutPage() {
       {/* ── 1. Page Hero ── */}
       <PageHero
         eyebrow="Who We Are"
-        title="About TechFest"
+        title="About TechFest Sri Lanka"
         titleGold="TechFest"
-        subtitle="Born from passion, built by community. TechFest is Sri Lanka's platform for the next generation of technology leaders."
+        subtitle="Innovate, Inspire, Impact. TechFest Sri Lanka is the platform for the next generation of technology leaders."
       />
 
       {/* ── 2. Mission & Vision ── */}
@@ -136,7 +136,7 @@ export default function AboutPage() {
         <div className="max-w-5xl mx-auto">
           <SectionHeader
             eyebrow="The Organizers"
-            title="Who's Behind TechFest"
+            title="Who's Behind TechFest Sri Lanka 2026"
             titleGold="TechFest"
             subtitle="Two student organizations united by a shared belief in Sri Lanka's tech future."
           />
