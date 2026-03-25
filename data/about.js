@@ -20,7 +20,7 @@ export const VALUES = [
   {
     id: 2,
     icon: "Users",
-    title: "TechFest Sri Lanka",
+    title: "Community",
     description:
       "We believe the most powerful technology is built by people who lift each other up. TechFest Sri Lanka exists to forge lasting connections.",
   },
