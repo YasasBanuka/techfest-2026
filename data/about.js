@@ -51,7 +51,7 @@ export const TIMELINE = [
     year: "2026",
     title: "The Second Chapter",
     description:
-      "Building on the momentum of a landmark debut, TechFest Sri Lanka 2026 aims higher — more speakers, new competition tracks, expanded workshops, and 1000+ innovators under one roof on October 31st.",
+      "Building on the momentum of a landmark debut, TechFest Sri Lanka 2026 aims higher — more speakers, new competition tracks, expanded workshops, and 1500+ innovators under one roof on October 31st.",
     highlight: true,
   },
 ];

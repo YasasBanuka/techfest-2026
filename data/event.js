@@ -18,7 +18,7 @@ export const EVENT = {
 };
 
 export const STATS = [
-  { value: "1000+", label: "Expected Attendees", icon: "Users" },
+  { value: "1500+", label: "Expected Attendees", icon: "Users" },
   { value: "30+", label: "Tech Stalls", icon: "LayoutGrid" },
   { value: "25+", label: "Companies", icon: "Building2" },
   { value: "15+", label: "Speakers", icon: "Mic2" },

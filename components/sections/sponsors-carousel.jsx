@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import FadeInUp from "@/components/ui/fade-in-up";
+import Modal from "@/components/ui/modal";
+import SponsorForm from "@/components/sections/sponsor-form";
 import { SPONSORS } from "@/data/sponsors";
 
 /**
@@ -44,6 +47,8 @@ function SponsorTile({ name, role, logo }) {
 }
 
 export default function SponsorsCarousel() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Duplicate list so the infinite scroll looks seamless
   const items = [...SPONSORS, ...SPONSORS];
 
@@ -92,14 +97,23 @@ export default function SponsorsCarousel() {
         <FadeInUp delay={0.2} className="text-center mt-12">
           <p className="text-white-dim text-sm">
             Interested in sponsoring TechFest Sri Lanka 2026?{" "}
-            <a
-              href="mailto:sponsors@techfest2026.lk"
-              className="text-gold hover:text-gold-bright transition-colors underline-offset-2 hover:underline"
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="text-gold hover:text-gold-bright transition-all underline-offset-8 hover:underline font-semibold tracking-wide cursor-pointer"
             >
               Get in touch →
-            </a>
+            </button>
           </p>
         </FadeInUp>
+
+        {/* Sponsorship Interest Modal */}
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          title="Sponsorship & Partnership Inquiry"
+        >
+          <SponsorForm />
+        </Modal>
       </div>
     </section>
   );

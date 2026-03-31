@@ -82,7 +82,7 @@ export const PERKS = [
   { emoji: "🎤", title: "World-Class Speakers", desc: "10+ industry leaders across keynotes, panels and workshops." },
   { emoji: "🛠️", title: "Hands-On Workshops", desc: "Cloud, security, design, startups — learn by doing." },
   { emoji: "🏆", title: "Hackathon & Competitions", desc: "Compete, win prizes, and get noticed by industry." },
-  { emoji: "🤝", title: "Networking", desc: "700+ attendees, sponsors, and mentors under one roof." },
+  { emoji: "🤝", title: "Networking", desc: "1500+ attendees, sponsors, and mentors under one roof." },
   { emoji: "🛍️", title: "30+ Stalls & Exhibits", desc: "Discover projects, products, and companies changing tech." },
   { emoji: "📍", title: "Prime Venue", desc: "TBA — Sri Lanka's tech hub." },
 ];
