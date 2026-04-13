@@ -32,7 +32,7 @@ export default function ScrollFillText({ text, className = "" }) {
                 chars,
                 { color: "rgba(255, 255, 255, 0.12)" },
                 {
-                    color: "#ffcb40",
+                    color: "#FFB300",
                     stagger: 0.04,
                     ease: "none",
                     scrollTrigger: {

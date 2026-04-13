@@ -4,8 +4,8 @@
   "description": "Sri Lanka's premier technology and innovation festival.",
   "start_url": "/dashboard",
   "display": "standalone",
-  "background_color": "#000B1A",
-  "theme_color": "#FFD700",
+  "background_color": "#0a0d10",
+  "theme_color": "#FFB300",
   "icons": [
     {
       "src": "/icons/icon-192x192.png",

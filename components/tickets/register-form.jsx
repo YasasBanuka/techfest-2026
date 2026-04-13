@@ -43,7 +43,7 @@ export default function RegisterForm() {
   };
 
   const inputBase =
-    "w-full bg-navy-surface border rounded-xl px-4 py-3 text-white text-sm placeholder:text-white-dim outline-none transition-all duration-200 focus:border-gold/60 focus:shadow-[0_0_0_3px_rgba(255,203,64,0.08)]";
+    "w-full bg-navy-surface border rounded-xl px-4 py-3 text-white text-sm placeholder:text-white-dim outline-none transition-all duration-200 focus:border-gold/60 focus:shadow-[0_0_0_3px_rgba(255,179,0,0.08)]";
   const field = (name) => `${inputBase} ${errors[name] ? "border-red-500/60" : "border-navy-border"}`;
 
   if (status === "success") {
@@ -54,7 +54,7 @@ export default function RegisterForm() {
         className="flex flex-col items-center justify-center py-14 text-center gap-4"
       >
         <div className="w-16 h-16 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="#ffcb40" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="#FFB300" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
             <path d="M20 6 9 17l-5-5" />
           </svg>
         </div>
@@ -113,7 +113,7 @@ export default function RegisterForm() {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="w-full bg-gold text-navy-deeper font-heading font-black py-4 rounded-xl text-sm hover:bg-gold-bright hover:shadow-[0_0_30px_rgba(255,203,64,0.3)] transition-all duration-300 disabled:opacity-60 flex items-center justify-center gap-2"
+          className="w-full bg-gold text-navy-deeper font-heading font-black py-4 rounded-xl text-sm hover:bg-gold-bright hover:shadow-[0_0_30px_rgba(255,179,0,0.3)] transition-all duration-300 disabled:opacity-60 flex items-center justify-center gap-2"
         >
           {status === "sending" ? (
             <>

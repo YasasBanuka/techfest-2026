@@ -6,26 +6,26 @@
    ═══════════════════════════════════════════════════════ */
 
 @theme inline {
-  /* ── Navy Palette ── */
-  --color-navy: #0f2b69;
-  --color-navy-dark: #091d47;
-  --color-navy-deeper: #060f24;
-  --color-navy-light: #1a3d8a;
-  --color-navy-card: #0d2257;
-  --color-navy-border: #1e3a7a;
-  --color-navy-surface: #0a1f50;
+  /* ── Deep Theme Palette ── */
+  --color-navy: #12171C;
+  --color-navy-dark: #0e1217;
+  --color-navy-deeper: #0a0d10;
+  --color-navy-light: #1a1f26;
+  --color-navy-card: #161b22;
+  --color-navy-border: #21262d;
+  --color-navy-surface: #1b2129;
 
-  /* ── Gold Palette ── */
-  --color-gold: #ffcb40;
-  --color-gold-bright: #ffd966;
-  --color-gold-dark: #e6a800;
-  --color-gold-muted: #c49a00;
-  --color-gold-dim: #a07800;
+  /* ── Accent Palette (Amber/Orange) ── */
+  --color-gold: #FFB300;
+  --color-gold-bright: #FFD166;
+  --color-gold-dark: #e6a100;
+  --color-gold-muted: #cc8f00;
+  --color-gold-dim: #b37d00;
 
   /* ── Text ── */
   --color-white: #ffffff;
-  --color-white-muted: #a8b8d8;
-  --color-white-dim: #6b7fa3;
+  --color-white-muted: #6B737C;
+  --color-white-dim: #4b535d;
 
   /* ── Font Families ── */
   --font-heading: var(--font-outfit), sans-serif;
@@ -58,7 +58,7 @@ h6 {
    ═══════════════════════════ */
 
 .gold-gradient-text {
-  background: linear-gradient(135deg, #ffd966 0%, #ffcb40 50%, #e6a800 100%);
+  background: linear-gradient(135deg, #FFB300 0%, #FF8C00 50%, #FF5E00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -69,7 +69,7 @@ h6 {
    ═══════════════════════════ */
 
 .gold-glow {
-  box-shadow: 0 0 30px rgba(255, 203, 64, 0.2), 0 0 60px rgba(255, 203, 64, 0.05);
+  box-shadow: 0 0 30px rgba(255, 179, 0, 0.2), 0 0 60px rgba(255, 179, 0, 0.05);
 }
 
 /* ═══════════════════════════

@@ -152,7 +152,7 @@ export default function TaglineScroll() {
                     className="absolute inset-0"
                     style={{
                         background:
-                            "radial-gradient(ellipse 75% 65% at 50% 50%, rgba(15,43,105,0.4) 0%, transparent 80%)",
+                            "radial-gradient(ellipse 75% 65% at 50% 50%, rgba(18,23,28,0.4) 0%, transparent 80%)",
                     }}
                 />
                 <div className="absolute inset-0 hex-pattern opacity-10" />
@@ -185,7 +185,7 @@ export default function TaglineScroll() {
                                     className="inline-block"
                                     style={{
                                         opacity: 0,
-                                        color: "#ffcb40",
+                                        color: "#FFB300",
                                         transition: "opacity 0.1s ease, transform 0.1s ease",
                                         transform: "scale(0.6) translateY(10px)",
                                     }}

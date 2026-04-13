@@ -88,8 +88,8 @@ export default function SpeakerCard({ speaker }) {
       className="relative bg-navy-card border rounded-2xl overflow-hidden h-full transition-colors duration-300 cursor-default"
       style={{
         borderColor: speaker.featured
-          ? "rgba(255,203,64,0.35)"
-          : "rgba(30,58,122,1)",
+          ? "#FFB300"
+          : "#21262D",
         willChange: "transform",
         transformStyle: "preserve-3d",
       }}
@@ -104,7 +104,7 @@ export default function SpeakerCard({ speaker }) {
         ref={glowRef}
         className="absolute w-40 h-40 rounded-full pointer-events-none opacity-0"
         style={{
-          background: "radial-gradient(circle, rgba(255,203,64,0.12) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(255,179,0,0.12) 0%, transparent 70%)",
           transform: "translate(0px, 0px)",
         }}
       />
@@ -126,10 +126,10 @@ export default function SpeakerCard({ speaker }) {
                 className="w-full h-full flex items-center justify-center font-heading font-black text-lg"
                 style={{
                   background: speaker.featured
-                    ? "linear-gradient(135deg, rgba(255,203,64,0.2), rgba(15,43,105,0.8))"
-                    : "linear-gradient(135deg, rgba(30,58,122,0.8), rgba(9,29,71,0.9))",
-                  color: speaker.featured ? "#ffcb40" : "rgba(255,255,255,0.6)",
-                  border: "1px solid rgba(30,58,122,0.8)",
+                    ? "linear-gradient(135deg, rgba(255,179,0,0.2), rgba(18,23,28,0.8))"
+                    : "linear-gradient(135deg, rgba(33,38,45,0.8), rgba(10,13,16,0.9))",
+                  color: speaker.featured ? "#FFB300" : "rgba(255,255,255,0.6)",
+                  border: "1px solid rgba(33,38,45,0.8)",
                 }}
               >
                 {speaker.initials}

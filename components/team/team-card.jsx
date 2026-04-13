@@ -63,7 +63,7 @@ export default function TeamCard({ member }) {
             {/* ── Main Card Base ── */}
             <div
                 ref={cardRef}
-                className="relative group bg-[#070e1d]/80 backdrop-blur-xl rounded-2xl h-full flex flex-col p-[1px] cursor-pointer transition-all duration-500 hover:border-gold/40 hover:shadow-[0_0_40px_rgba(255,203,64,0.15)] border-transparent"
+                className="relative group bg-[#12171C]/80 backdrop-blur-xl rounded-2xl h-full flex flex-col p-[1px] cursor-pointer transition-all duration-500 hover:border-gold/40 hover:shadow-[0_0_40px_rgba(255,179,0,0.15)] border-transparent"
                 style={{
                     willChange: "transform",
                 }}
@@ -76,7 +76,7 @@ export default function TeamCard({ member }) {
 
                     {/* The masked background layer to create the fade effect */}
                     <div
-                        className="absolute inset-0 bg-[#0a1122] rounded-[15px] z-0"
+                        className="absolute inset-0 bg-[#12171C] rounded-[15px] z-0"
                         style={{
                             maskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 100%)",
                             WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 100%)"
@@ -87,7 +87,7 @@ export default function TeamCard({ member }) {
                             ref={glowRef}
                             className="absolute w-[400px] h-[400px] pointer-events-none opacity-0 mix-blend-screen z-0"
                             style={{
-                                background: "radial-gradient(circle, rgba(255,203,64,0.2) 0%, transparent 70%)",
+                                background: "radial-gradient(circle, rgba(255,179,0,0.2) 0%, transparent 70%)",
                                 transform: "translate(0px, 0px)",
                             }}
                         />
@@ -112,9 +112,9 @@ export default function TeamCard({ member }) {
                             />
                         ) : (
                             // Fallback if no actual image exists
-                            <div className="w-40 h-40 absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full overflow-hidden shadow-2xl flex items-center justify-center font-heading font-black text-3xl border-4 border-[#0a1122]"
+                            <div className="w-40 h-40 absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full overflow-hidden shadow-2xl flex items-center justify-center font-heading font-black text-3xl border-4 border-[#12171C]"
                                 style={{
-                                    background: "linear-gradient(135deg, rgba(30,58,122,0.8), rgba(9,29,71,1))",
+                                    background: "linear-gradient(135deg, rgba(18,23,28,0.8), rgba(10,13,16,1))",
                                     color: "rgba(255,255,255,0.8)",
                                 }}>
                                 {initials}
@@ -123,7 +123,7 @@ export default function TeamCard({ member }) {
                     </div>
 
                     {/* Subtle gradient overlay to ensure text is readable over the image */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a1122] via-[#0a1122]/80 to-transparent z-10 pointer-events-none rounded-[15px]" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#12171C] via-[#12171C]/80 to-transparent z-10 pointer-events-none rounded-[15px]" />
 
                     {/* Content Wrapper */}
                     <div ref={contentRef} className="relative flex flex-col items-center flex-1 pt-12 pb-6 px-4 text-center z-20">
@@ -148,7 +148,7 @@ export default function TeamCard({ member }) {
                             href={member.linkedin || "#"}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 py-4 w-full text-white-dim hover:text-[#0a66c2] transition-colors duration-300"
+                            className="flex items-center justify-center gap-2 py-4 w-full text-white-dim hover:text-gold transition-colors duration-300"
                             aria-label={`LinkedIn profile for ${member.name}`}
                         >
                             <Linkedin size={16} className="opacity-70 group-hover:opacity-100 transition-opacity" />

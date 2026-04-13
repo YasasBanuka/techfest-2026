@@ -153,7 +153,7 @@ export const SPEAKER_TYPES = ["All", "keynote", "workshop", "panel", "lightning"
 
 export const TYPE_LABELS = {
   keynote:   { label: "Keynote",   color: "bg-gold/15 text-gold border-gold/30" },
-  workshop:  { label: "Workshop",  color: "bg-blue-500/15 text-blue-300 border-blue-500/30" },
-  panel:     { label: "Panel",     color: "bg-purple-500/15 text-purple-300 border-purple-500/30" },
-  lightning: { label: "Lightning", color: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30" },
+  workshop:  { label: "Workshop",  color: "bg-orange-500/15 text-orange-400 border-orange-500/30" },
+  panel:     { label: "Panel",     color: "bg-amber-500/15 text-amber-400 border-amber-500/30" },
+  lightning: { label: "Lightning", color: "bg-white/5 text-white-muted border-white/10" },
 };

@@ -97,7 +97,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           <Link
             href="/tickets"
-            className="inline-flex items-center bg-gold text-navy-deeper font-bold text-xs px-5 py-2.5 rounded-lg hover:bg-gold-bright transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,203,64,0.4)] tracking-wider uppercase"
+            className="inline-flex items-center bg-gold text-navy-deeper font-bold text-xs px-5 py-2.5 rounded-lg hover:bg-gold-bright transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,179,0,0.4)] tracking-wider uppercase"
           >
             Get Tickets
           </Link>
