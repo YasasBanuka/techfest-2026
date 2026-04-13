@@ -17,7 +17,7 @@ export const metadata = {
   metadataBase: new URL("https://techfest2026.lk"),
   title: "TechFest Sri Lanka 2026 | Innovation Festival",
   description:
-    "Join 1000+ innovators at TechFest Sri Lanka 2026. October 31, 2026 at TBA.",
+    "Join 1500+ innovators at TechFest Sri Lanka 2026. November 07, 2026 at TBA.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,

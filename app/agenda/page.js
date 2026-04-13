@@ -9,7 +9,7 @@ import { AGENDA_DATE, VENUE, TYPE_META } from "@/data/agenda";
 export const metadata = {
   title: "Agenda | TechFest Sri Lanka 2026",
   description:
-    "Full schedule for TechFest Sri Lanka 2026 — October 31, 2026 at TBA. Keynotes, workshops, panels, competitions, and networking.",
+    "Full schedule for TechFest Sri Lanka 2026 — November 07, 2026 at TBA. Keynotes, workshops, panels, competitions, and networking.",
 };
 
 // Quick-glance event info cards
@@ -27,7 +27,7 @@ export default function AgendaPage() {
     <main>
       {/* ── Page Hero ── */}
       <PageHero
-        eyebrow="October 31, 2026"
+        eyebrow="November 07, 2026"
         title="Event Agenda"
         titleGold="Agenda"
         subtitle="Experience a day full of keynotes, hands-on workshops, panel discussions, and competitions."

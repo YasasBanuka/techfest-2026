@@ -72,7 +72,7 @@ export default function Hero() {
           <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/25 rounded-full px-5 py-2 backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
             <span className="text-gold text-sm font-medium tracking-wide">
-              October 31, 2026 &nbsp;·&nbsp; TBA
+              November 07, 2026 &nbsp;·&nbsp; TBA
             </span>
           </div>
         </motion.div>

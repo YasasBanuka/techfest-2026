@@ -9,7 +9,7 @@ export const FAQ = [
     id: 1,
     question: "When and where is TechFest Sri Lanka 2026?",
     answer:
-      "TechFest Sri Lanka 2026 is scheduled for October 31, 2026 at TBA. Doors open at 9:00 AM and the event runs until 6:00 PM.",
+      "TechFest Sri Lanka 2026 is scheduled for November 07, 2026 at TBA. Doors open at 9:00 AM and the event runs until 6:00 PM.",
   },
   {
     id: 2,

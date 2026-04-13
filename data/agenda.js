@@ -1,13 +1,13 @@
 /**
  * data/agenda.js
- * Full day schedule for TechFest Sri Lanka 2026 — October 31, 2026.
+ * Full day schedule for TechFest Sri Lanka 2026 — November 07, 2026.
  * Replace with real sessions when confirmed.
  *
  * Session types: "keynote" | "workshop" | "panel" | "competition" | "break" | "ceremony"
  * Tracks:        "Main Stage" | "Workshop A" | "Workshop B" | "Competition Arena"
  */
 
-export const AGENDA_DATE = "October 31, 2026";
+export const AGENDA_DATE = "November 07, 2026";
 export const VENUE = "TBA";
 
 export const SESSIONS = [

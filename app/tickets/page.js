@@ -9,7 +9,7 @@ import { TICKET_TIERS, PERKS, REGISTRATION_DEADLINE, EVENT_DATE } from "@/data/t
 export const metadata = {
   title: "Register | TechFest Sri Lanka 2026",
   description:
-    "Get your ticket for TechFest Sri Lanka 2026 — October 31, 2026 at TBA. Ticket pricing and tiers will be announced soon. Register your interest now.",
+    "Get your ticket for TechFest Sri Lanka 2026 — November 07, 2026 at TBA. Ticket pricing and tiers will be announced soon. Register your interest now.",
 };
 
 export default function TicketsPage() {
@@ -17,7 +17,7 @@ export default function TicketsPage() {
     <main>
       {/* ── Page Hero ── */}
       <PageHero
-        eyebrow="October 31, 2026 · Tickets Available Soon"
+        eyebrow="November 07, 2026 · Tickets Available Soon"
         title="Get Your Ticket"
         titleGold="Ticket"
         subtitle={`Secure your place at TechFest Sri Lanka 2026 before ${REGISTRATION_DEADLINE}. Ticket pricing and tiers will be announced soon.`}

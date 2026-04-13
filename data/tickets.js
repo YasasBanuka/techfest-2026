@@ -4,7 +4,7 @@
  */
 
 export const REGISTRATION_DEADLINE = "November 30, 2026";
-export const EVENT_DATE = "October 31, 2026";
+export const EVENT_DATE = "November 07, 2026";
 
 export const TICKET_TIERS = [
   {

@@ -7,7 +7,7 @@ import SpeakerProposalNudge from "@/components/sections/speaker-proposal-nudge";
 export const metadata = {
   title: "Speakers | TechFest Sri Lanka 2026",
   description:
-    "Meet the expert speakers at TechFest Sri Lanka 2026 — industry leaders delivering keynotes, workshops, panels, and lightning talks on October 31, 2026.",
+    "Meet the expert speakers at TechFest Sri Lanka 2026 — industry leaders delivering keynotes, workshops, panels, and lightning talks on November 07, 2026.",
 };
 
 export default function SpeakersPage() {
@@ -15,7 +15,7 @@ export default function SpeakersPage() {
     <main>
       {/* ── Page Hero ── */}
       <PageHero
-        eyebrow="October 31, 2026"
+        eyebrow="November 07, 2026"
         title="Meet Our Speakers"
         titleGold="Speakers"
         subtitle="10 industry leaders. Keynotes, workshops, panels and lightning talks — crafted to challenge, inspire, and equip you for what's next."

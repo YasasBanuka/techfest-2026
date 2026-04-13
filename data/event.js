@@ -10,7 +10,7 @@ export const EVENT = {
   tagline: "Innovate, Inspire, Impact",
   description:
     "Sri Lanka's premier technology innovation festival, bringing together the brightest minds in tech, industry leaders, and passionate innovators under one roof.",
-  date: "2026-10-31T09:00:00",
+  date: "2026-11-07T09:00:00",
   time: "TBA",
   venue: "TBA",
   whatsappChannel: "https://whatsapp.com/channel/placeholder",

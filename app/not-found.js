@@ -117,7 +117,7 @@ export default function NotFound() {
           className="text-white-muted text-base leading-relaxed mb-10 max-w-md"
         >
           This page doesn&apos;t exist — but TechFest Sri Lanka 2026 does. Head back and
-          discover what&apos;s waiting for you on October 31.
+          discover what&apos;s waiting for you on November 07.
         </motion.p>
 
         {/* Primary CTA */}
