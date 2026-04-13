@@ -3,6 +3,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { createClient } from "@/lib/supabase/client";
+import { User, LogOut, LayoutDashboard } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -16,6 +19,34 @@ const navLinks = [
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
+  const supabase = createClient();
+  const router = useRouter();
+
+  // ── Auth state ──
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+      setLoading(false);
+    };
+
+    getUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [supabase.auth]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push("/");
+    router.refresh();
+  };
 
   // ── Scroll detection ──
   // At top: transparent. On scroll: navy glassmorphism.
@@ -62,13 +93,44 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* ── CTA Button ── */}
-        <Link
-          href="/tickets"
-          className="hidden md:inline-flex items-center bg-gold text-navy-deeper font-bold text-sm px-6 py-2.5 rounded-lg hover:bg-gold-bright transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,203,64,0.4)] tracking-wide"
-        >
-          Get Tickets
-        </Link>
+        {/* ── Desktop CTAs ── */}
+        <div className="hidden md:flex items-center gap-4">
+          <Link
+            href="/tickets"
+            className="inline-flex items-center bg-gold text-navy-deeper font-bold text-xs px-5 py-2.5 rounded-lg hover:bg-gold-bright transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,203,64,0.4)] tracking-wider uppercase"
+          >
+            Get Tickets
+          </Link>
+
+          {!loading && (
+            user ? (
+              <div className="flex items-center gap-3 ml-2 pl-4 border-l border-navy-border">
+                <Link
+                  href="/dashboard"
+                  className="text-white-muted hover:text-gold transition-colors flex items-center gap-2 text-xs font-bold uppercase tracking-widest"
+                >
+                  <LayoutDashboard size={14} />
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-white-dim hover:text-red-400 transition-colors p-2"
+                  title="Logout"
+                >
+                  <LogOut size={16} />
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/auth/login"
+                className="text-white-muted hover:text-gold transition-colors text-xs font-bold uppercase tracking-widest ml-4 flex items-center gap-2"
+              >
+                <User size={14} />
+                Login
+              </Link>
+            )
+          )}
+        </div>
 
         {/* ── Mobile Hamburger ── */}
         <button
@@ -104,7 +166,7 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
-            <li className="pt-4 border-t border-navy-border">
+            <li className="pt-4 border-t border-navy-border flex flex-col gap-3">
               <Link
                 href="/tickets"
                 className="block text-center bg-gold text-navy-deeper font-bold py-3 rounded-lg hover:bg-gold-bright transition-all duration-300"
@@ -112,6 +174,34 @@ export default function Navbar() {
               >
                 Get Tickets
               </Link>
+              
+              {!loading && (
+                user ? (
+                  <>
+                    <Link
+                      href="/dashboard"
+                      className="block text-center border border-navy-border text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <LayoutDashboard size={18} /> Dashboard
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="text-white-dim hover:text-red-400 py-2 text-sm uppercase tracking-widest font-black"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/auth/login"
+                    className="block text-center border border-navy-border text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <User size={18} /> Login / Register
+                  </Link>
+                )
+              )}
             </li>
           </ul>
         </div>

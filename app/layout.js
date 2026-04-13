@@ -18,6 +18,13 @@ export const metadata = {
   title: "TechFest Sri Lanka 2026 | Innovation Festival",
   description:
     "Join 1000+ innovators at TechFest Sri Lanka 2026. October 31, 2026 at TBA.",
+  manifest: "/manifest.json",
+  themeColor: "#000B1A",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "TechFest 2026",
+  },
 };
 
 export default function RootLayout({ children }) {

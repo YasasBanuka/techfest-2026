@@ -89,7 +89,20 @@ export default function TicketCard({ tier, index }) {
           </ul>
 
           {/* CTA button */}
-          {tier.ctaLink.startsWith("/") ? (
+          {tier.external ? (
+            <a
+              href={tier.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`w-full py-3.5 rounded-xl font-heading font-bold text-sm text-center transition-all duration-300 ${
+                tier.featured
+                  ? "bg-gold text-navy-deeper hover:bg-gold-bright hover:shadow-[0_0_25px_rgba(255,203,64,0.35)]"
+                  : "bg-white/5 border border-navy-border text-white hover:bg-white/10 hover:border-gold/30"
+              }`}
+            >
+              {tier.cta}
+            </a>
+          ) : tier.ctaLink.startsWith("/") ? (
             <Link
               href={tier.ctaLink}
               className={`w-full py-3.5 rounded-xl font-heading font-bold text-sm text-center transition-all duration-300 ${

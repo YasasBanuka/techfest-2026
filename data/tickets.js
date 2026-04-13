@@ -16,6 +16,8 @@ export const TICKET_TIERS = [
     featured: true,
     cta: "Register Interest",
     ctaLink: "#register",
+    external: false,
+    url: "https://forms.google.com/your-form-here",
     description: "Full access to the main event — everything TechFest Sri Lanka has to offer.",
     features: [
       { text: "All keynote sessions", included: true },
@@ -37,6 +39,8 @@ export const TICKET_TIERS = [
     featured: false,
     cta: "Join Waitlist",
     ctaLink: "#register",
+    external: false,
+    url: "https://forms.google.com/your-form-here",
     description: "Everything in General Admission, plus access to hands-on workshop sessions with industry experts.",
     features: [
       { text: "All keynote sessions", included: true },
@@ -58,6 +62,8 @@ export const TICKET_TIERS = [
     featured: false,
     cta: "Express Interest",
     ctaLink: "/contact",
+    external: false,
+    url: "https://forms.google.com/your-form-here",
     description: "The full premium TechFest Sri Lanka experience — front-row seats, workshops, exclusive speaker access, and swag.",
     features: [
       { text: "All keynote sessions (front row)", included: true },
