@@ -1,10 +1,10 @@
 /**
  * data/speakers.js
  * Speaker profiles for TechFest 2026.
- * Replace photo paths with real headshots when available.
  *
- * type: "keynote" | "workshop" | "panel" | "lightning"
+ * REVEAL_SPEAKERS: Toggle this to false to hide dummy data behind high-tech placeholders.
  */
+export const REVEAL_SPEAKERS = false;
 
 export const SPEAKERS = [
   {

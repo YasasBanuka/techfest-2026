@@ -2,8 +2,8 @@
 
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
-import { Linkedin, Twitter } from "lucide-react";
-import { TYPE_LABELS } from "@/data/speakers";
+import { Linkedin, Twitter, UserX } from "lucide-react";
+import { TYPE_LABELS, REVEAL_SPEAKERS } from "@/data/speakers";
 
 /**
  * SpeakerCard
@@ -120,9 +120,16 @@ export default function SpeakerCard({ speaker, onClick }) {
       <div className="p-6 flex flex-col h-full relative z-10">
         {/* Avatar + type badge */}
         <div className="flex items-start justify-between mb-5">
-          {/* Avatar */}
-          <div className="relative w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0">
-            {speaker.photo ? (
+          {/* Avatar Area */}
+          <div className="relative w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0 group-hover:scale-110 transition-transform duration-700">
+            {!REVEAL_SPEAKERS ? (
+              // The 'Ghostly Entity' Replacement
+              <div className="w-full h-full bg-navy-deeper border border-white/5 flex items-center justify-center relative">
+                 <UserX size={24} className="text-gold/20 animate-pulse" />
+                 {/* Scanning Scanning Overlay */}
+                 <div className="absolute inset-x-0 h-[1px] bg-gold/40 animate-scan" style={{ top: '50%' }} />
+              </div>
+            ) : speaker.photo ? (
               <img
                 src={speaker.photo}
                 alt={speaker.name}
@@ -152,30 +159,37 @@ export default function SpeakerCard({ speaker, onClick }) {
         </div>
 
         {/* Name + role */}
-        <div className="mb-3">
-          <h3 className="text-white font-heading font-bold text-lg leading-snug">
-            {speaker.name}
+        <div className="mb-4">
+          <h3 className="text-white font-heading font-black text-2xl leading-tight uppercase tracking-tight">
+            {REVEAL_SPEAKERS || speaker.id === 'tba' ? speaker.name : `ENTITY_0x0${speaker.id} // TBA`}
           </h3>
-          <p className="text-white-dim text-sm mt-0.5">
+          <p className="text-gold text-[12px] mt-2 uppercase font-black tracking-[0.2em] leading-none">
             {speaker.role}
-            <span className="text-white-dim/50"> · </span>
-            <span className="text-gold/80 text-xs">{speaker.company}</span>
+            <span className="text-white-dim block sm:inline sm:ml-2 mt-1 sm:mt-0 opacity-60">[{speaker.company}]</span>
           </p>
         </div>
 
         {/* Topic */}
-        <p className="text-white-muted text-xs leading-relaxed mb-4 flex-1">
-          <span className="text-white-dim/50 uppercase tracking-wider text-[10px]">Topic: </span>
-          {speaker.topic}
-        </p>
+        <div className="mb-6 flex-1">
+            <p className="text-white-muted text-[11px] leading-relaxed font-medium">
+                <span className="text-gold/60 uppercase tracking-widest font-black block mb-1 text-[10px]">Transmission Summary</span>
+                {REVEAL_SPEAKERS || speaker.id === 'tba' ? speaker.topic : "LOCKED_ENTITY_RECONSTRUCTION_IN_PROGRESS"}
+            </p>
+        </div>
 
         {/* Bio — truncated */}
-        <p className="text-white-dim/70 text-xs leading-relaxed line-clamp-3 mb-5">
+        <p className={`text-white-dim/70 text-sm leading-relaxed line-clamp-3 mb-8 ${(!REVEAL_SPEAKERS && speaker.id !== 'tba') && 'blur-[2px] opacity-30 select-none'}`}>
           {speaker.bio}
         </p>
 
         {/* Social links (z-40 to stay clickable above the card overlay) */}
-        <div className="flex items-center gap-2 mt-auto pt-4 border-t border-navy-border relative z-40">
+        {!REVEAL_SPEAKERS ? (
+            <div className="pt-4 border-t border-white/5 relative z-40">
+                <span className="text-[10px] font-mono text-cyan-400/20 uppercase tracking-[0.4em]">Signal_Pending...</span>
+            </div>
+        ) : (
+            <div className="flex items-center gap-2 mt-auto pt-4 border-t border-navy-border relative z-40">
+                {/* linkedin/twitter buttons */}
           {speaker.linkedin && (
             <a
               href={speaker.linkedin}
@@ -199,7 +213,8 @@ export default function SpeakerCard({ speaker, onClick }) {
             </a>
           )}
         </div>
-      </div>
-    </button>
-  );
+      )}
+    </div>
+  </button>
+);
 }

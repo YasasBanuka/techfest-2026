@@ -10,7 +10,13 @@ export const metadata = {
     "Meet the expert speakers at TechFest Sri Lanka 2026 — industry leaders delivering keynotes, workshops, panels, and lightning talks on November 07, 2026.",
 };
 
+import { REVEAL_SPEAKERS } from "@/data/speakers";
+
 export default function SpeakersPage() {
+  const subtitle = REVEAL_SPEAKERS 
+    ? "10 industry leaders. Keynotes, workshops, panels and lightning talks — crafted to challenge, inspire, and equip you for what's next."
+    : "Our visionaries are aligning. 10 industry leaders are being processed for reveal. Stay connected as we synthesize the flagship lineup for November 07.";
+
   return (
     <main>
       {/* ── Page Hero ── */}
@@ -18,7 +24,7 @@ export default function SpeakersPage() {
         eyebrow="November 07, 2026"
         title="Meet Our Speakers"
         titleGold="Speakers"
-        subtitle="10 industry leaders. Keynotes, workshops, panels and lightning talks — crafted to challenge, inspire, and equip you for what's next."
+        subtitle={subtitle}
       />
 
       {/* ── Speaker count strip ── */}
