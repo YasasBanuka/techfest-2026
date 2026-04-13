@@ -30,7 +30,7 @@
   /* ── Cyber Noir Tokens ── */
   --glow-amber: 0 0 20px rgba(255, 179, 0, 0.4);
   --glow-amber-strong: 0 0 40px rgba(255, 179, 0, 0.6);
-  --noise-opacity: 0.05;
+  --noise-opacity: 0.02;
 
   /* ── Font Families ── */
   --font-heading: var(--font-outfit), sans-serif;
