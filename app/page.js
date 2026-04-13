@@ -6,6 +6,7 @@ import Stats from "@/components/sections/stats";
 import CTA from "@/components/sections/cta";
 import SponsorsCarousel from "@/components/sections/sponsors-carousel";
 import ComingSoon from "@/components/common/coming-soon";
+import IgnitionWrapper from "@/components/ui/ignition-wrapper";
 
 export const metadata = {
   title: "TechFest Sri Lanka 2026 | Coming Soon",
@@ -30,14 +31,32 @@ export default function Home() {
   }
 
   return (
-    <main>
+    <main className="relative">
       <Hero />
-      <TaglineScroll />
-      <EventImpact />
-      <Communities />
-      <Stats />
-      <CTA />
-      <SponsorsCarousel />
+      
+      <IgnitionWrapper>
+        <TaglineScroll />
+      </IgnitionWrapper>
+
+      <IgnitionWrapper>
+        <EventImpact />
+      </IgnitionWrapper>
+
+      <IgnitionWrapper>
+        <Communities />
+      </IgnitionWrapper>
+
+      <IgnitionWrapper>
+        <Stats />
+      </IgnitionWrapper>
+
+      <IgnitionWrapper>
+        <CTA />
+      </IgnitionWrapper>
+
+      <IgnitionWrapper>
+        <SponsorsCarousel />
+      </IgnitionWrapper>
     </main>
   );
 }

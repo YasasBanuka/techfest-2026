@@ -3,6 +3,9 @@ import "./globals.css";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import SmoothScrollProvider from "@/components/providers/smooth-scroll";
+import NoiseOverlay from "@/components/ui/noise-overlay";
+import SparkCursor from "@/components/ui/spark-cursor";
+import CyberGlitch from "@/components/ui/cyber-glitch";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -35,6 +38,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${inter.variable} ${outfit.variable} antialiased`}>
         <SmoothScrollProvider>
+          <NoiseOverlay />
+          <SparkCursor />
+          <CyberGlitch />
           <Navbar />
           {children}
           <Footer />

@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
-import { User, LogOut, LayoutDashboard } from "lucide-react";
+import { User, LogOut, LayoutDashboard, Volume2, VolumeX } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
+import AmbientAudio from "@/components/audio/ambient-audio";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -21,6 +23,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const audioRef = useRef(null);
   
   const supabase = createClient();
   const router = useRouter();
@@ -101,6 +105,19 @@ export default function Navbar() {
           >
             Get Tickets
           </Link>
+
+          {/* ── Audio Toggle ── */}
+          <button
+            onClick={() => {
+              audioRef.current?.toggle();
+              setIsAudioPlaying(!isAudioPlaying);
+            }}
+            className="p-2 text-white-dim hover:text-gold transition-colors mr-2 border-r border-navy-border pr-5"
+            title={isAudioPlaying ? "Turn off atmosphere" : "Turn on atmosphere"}
+          >
+            {isAudioPlaying ? <Volume2 size={16} /> : <VolumeX size={16} />}
+          </button>
+          <AmbientAudio ref={audioRef} />
 
           {!loading && (
             user ? (

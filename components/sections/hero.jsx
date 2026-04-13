@@ -8,17 +8,8 @@ import { EVENT } from "@/data/event";
 
 /**
  * Hero Section — The WOW centerpiece
- *
- * Architecture:
- *   Server Component (this file) → renders static markup on server
- *   └── PlexusCanvas  (Client)   → animated canvas, mounts in browser
- *   └── Countdown     (Client)   → live timer, updates every second
- *
- * Visual layers (back to front):
- *   1. Plexus canvas (animated gold network)
- *   2. Radial gradient overlay (navy vignette)
- *   3. Hex grid texture
- *   4. Content (z-10)
+ * ─────────────────────────────────
+ * Transforming the experience into a 'Surreal Cyber-Noir' journey.
  */
 
 // Framer Motion variants for staggered entrance
@@ -36,29 +27,52 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
 
-      {/* ── Layer 1: Animated Plexus Canvas ── */}
-      <PlexusCanvas />
-
-      {/* ── Layer 2: Radial vignette (navy center, transparent edges) ── */}
-      <div
+      {/* ── Layer 1: Animated Plexus Canvas (Parallax) ── */}
+      <motion.div 
         className="absolute inset-0 pointer-events-none"
+        style={{ scale: 1.1 }}
+        animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      >
+        <PlexusCanvas />
+      </motion.div>
+
+      {/* ── Layer 2: Deep Cyber-Noir Vignette ── */}
+      <div
+        className="absolute inset-0 pointer-events-none z-[2]"
         style={{
           background:
-            "radial-gradient(ellipse 80% 70% at 50% 50%, rgba(6,15,36,0.6) 0%, rgba(6,15,36,0.95) 100%)",
+            "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(10,13,16,0.3) 0%, rgba(10,13,16,0.98) 100%)",
         }}
       />
 
-      {/* ── Layer 3: Hex texture overlay ── */}
-      <div className="absolute inset-0 hex-pattern pointer-events-none opacity-30" />
+      {/* ── Layer 3: Hex texture overlay (Parallax) ── */}
+      <motion.div 
+        className="absolute inset-0 hex-pattern pointer-events-none opacity-20 z-[1]"
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-      {/* ── Layer 4: Gold radial glow behind content ── */}
+      {/* ── Layer 4: Intense Gold Light Flare ── */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none z-[3]"
         style={{
           background:
-            "radial-gradient(ellipse 50% 40% at 50% 45%, rgba(255,203,64,0.06) 0%, transparent 70%)",
+            "radial-gradient(circle at 50% 45%, rgba(255,179,0,0.1) 0%, transparent 60%)",
         }}
       />
+
+      {/* ── Technical Annotations (Surreal Detail) ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[5]">
+          {/* Coordinates Top Left */}
+          <div className="absolute top-32 left-10 text-[10px] font-mono text-gold/30 uppercase tracking-[0.2em] opacity-40 animate-pulse">
+            LAT: 6.9271° N <br /> LNG: 79.8612° E
+          </div>
+          {/* Status Bottom Right */}
+          <div className="absolute bottom-32 right-10 text-[10px] font-mono text-gold/30 uppercase tracking-[0.2em] opacity-40">
+             SYS_STATUS: [0x7A_OPTIMAL] <br /> NOISE_LVL: {">"} 0.05RMS
+          </div>
+      </div>
 
       {/* ── Content ── */}
       <motion.div
@@ -69,75 +83,84 @@ export default function Hero() {
       >
         {/* Event Badge */}
         <motion.div variants={itemVariants} className="flex justify-center mb-8">
-          <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/25 rounded-full px-5 py-2 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/25 rounded-full px-5 py-2 backdrop-blur-sm shadow-[0_0_20px_rgba(255,179,0,0.15)]">
             <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-            <span className="text-gold text-sm font-medium tracking-wide">
-              November 07, 2026 &nbsp;·&nbsp; TBA
+            <span className="text-gold text-xs font-bold tracking-[0.2em] uppercase">
+              November 07, 2026 &nbsp;·&nbsp; Sri Lanka
             </span>
           </div>
         </motion.div>
 
-        {/* Main Heading */}
+        {/* Main Heading (Glow effect) */}
         <motion.h1
           variants={itemVariants}
-          className="text-5xl sm:text-6xl lg:text-8xl font-heading font-black leading-[1.1] mb-6 tracking-wide sm:tracking-widest uppercase"
+          className="text-6xl sm:text-7xl lg:text-9xl font-heading font-black leading-[1] mb-6 tracking-tight uppercase"
         >
-          <span className="text-white block">TechFest</span>
-          <span className="gold-gradient-text block">Sri Lanka</span>
+          <span className="text-white block drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">TechFest</span>
+          <span className="gold-gradient-text block drop-shadow-[0_0_50px_rgba(255,179,0,0.3)]">Sri Lanka</span>
         </motion.h1>
 
         {/* Tagline */}
         <motion.p
           variants={itemVariants}
-          className="text-lg sm:text-xl text-white-muted max-w-2xl mx-auto mb-3 leading-relaxed"
+          className="text-lg sm:text-2xl text-white-muted max-w-3xl mx-auto mb-4 leading-relaxed font-light tracking-wide italic"
         >
           {EVENT.tagline}
         </motion.p>
 
-        {/* Sub-tagline */}
-        <motion.p
-          variants={itemVariants}
-          className="text-sm text-white-dim mb-12 tracking-wide"
+        {/* Sub-tagline with cyber styling */}
+        <motion.div
+           variants={itemVariants}
+           className="flex items-center justify-center gap-4 mb-14"
         >
-          Sri Lanka&apos;s Premier Technology Innovation Festival
-        </motion.p>
+           <div className="h-px w-12 bg-gold/20" />
+           <p className="text-xs text-white-dim uppercase tracking-[0.4em]">
+             The Second Chapter of Innovation
+           </p>
+           <div className="h-px w-12 bg-gold/20" />
+        </motion.div>
 
-        {/* Countdown */}
-        <motion.div variants={itemVariants} className="flex justify-center mb-12">
+        {/* Countdown - with glow */}
+        <motion.div variants={itemVariants} className="flex justify-center mb-16 scale-90 sm:scale-110">
           <Countdown targetDate={EVENT.date} />
         </motion.div>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons - Aggressive Energy */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex flex-col sm:flex-row gap-5 justify-center"
         >
           <Link
             href="/tickets"
-            className="inline-flex items-center justify-center bg-gold text-navy-deeper font-bold px-10 py-4 rounded-xl text-lg hover:bg-gold-bright hover:shadow-[0_0_40px_rgba(255,203,64,0.35)] transition-all duration-300 tracking-wide"
+            className="group relative inline-flex items-center justify-center bg-gold text-navy-deeper font-black px-12 py-5 rounded-2xl text-lg hover:bg-gold-bright transition-all duration-500 hover:shadow-[0_0_50px_rgba(255,179,0,0.5)] tracking-tighter uppercase overflow-hidden"
           >
-            Get Tickets
+            <span className="relative z-10 flex items-center gap-2">
+               Get Your Access
+               <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1 }}>→</motion.span>
+            </span>
+            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
           </Link>
           <Link
             href="/about"
-            className="inline-flex items-center justify-center border border-gold/40 text-gold font-semibold px-10 py-4 rounded-xl text-lg hover:bg-gold/10 hover:border-gold/70 transition-all duration-300"
+            className="inline-flex items-center justify-center border-2 border-gold/20 text-gold font-bold px-12 py-5 rounded-2xl text-lg hover:bg-gold/5 hover:border-gold/60 transition-all duration-500 backdrop-blur-sm"
           >
-            Learn More
+            Explore the Vision
           </Link>
         </motion.div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator with surreal pulse */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-col items-center mt-16 gap-2 text-white-dim"
+          className="flex flex-col items-center mt-20 gap-3 text-white-dim"
         >
-          <span className="text-xs uppercase tracking-widest">Scroll to explore</span>
+          <span className="text-[10px] uppercase tracking-[0.5em] font-black opacity-40">Surfing Atmosphere</span>
           <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            animate={{ y: [0, 10, 0], opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="text-gold"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m6 9 6 6 6-6" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m7 13 5 5 5-5M7 6l5 5 5-5" />
             </svg>
           </motion.div>
         </motion.div>

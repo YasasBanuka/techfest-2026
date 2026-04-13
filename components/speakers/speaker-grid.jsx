@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SPEAKERS, SPEAKER_TYPES, TYPE_LABELS } from "@/data/speakers";
 import SpeakerCard from "@/components/speakers/speaker-card";
+import SpeakerDetails from "@/components/speakers/speaker-details";
 import FadeInUp from "@/components/ui/fade-in-up";
 
 /**
@@ -16,6 +17,7 @@ import FadeInUp from "@/components/ui/fade-in-up";
  */
 export default function SpeakerGrid() {
   const [activeType, setActiveType] = useState("All");
+  const [selectedSpeaker, setSelectedSpeaker] = useState(null);
 
   const filtered = (
     activeType === "All"
@@ -64,11 +66,20 @@ export default function SpeakerGrid() {
               transition={{ duration: 0.4, delay: i * 0.06, ease: "easeOut" }}
               className="h-full"
             >
-              <SpeakerCard speaker={speaker} />
+              <SpeakerCard
+                speaker={speaker}
+                onClick={() => setSelectedSpeaker(speaker)}
+              />
             </motion.div>
           ))}
         </motion.div>
       </AnimatePresence>
+
+      <SpeakerDetails
+        speaker={selectedSpeaker}
+        isOpen={!!selectedSpeaker}
+        onClose={() => setSelectedSpeaker(null)}
+      />
 
       {/* Empty state */}
       {filtered.length === 0 && (

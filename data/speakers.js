@@ -15,7 +15,7 @@ export const SPEAKERS = [
     topic: "The Future of AI in Sri Lanka",
     type: "keynote",
     bio: "Dr. Ashan leads applied AI research at LSEG, focusing on NLP and time-series forecasting for financial markets. PhD in Machine Learning from University of Moratuwa.",
-    photo: null,
+    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop",
     initials: "AF",
     linkedin: "#",
     twitter: "#",

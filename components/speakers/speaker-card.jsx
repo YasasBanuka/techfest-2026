@@ -19,7 +19,7 @@ import { TYPE_LABELS } from "@/data/speakers";
  * - Social links reveal on hover
  * - Gold top accent for featured speakers
  */
-export default function SpeakerCard({ speaker }) {
+export default function SpeakerCard({ speaker, onClick }) {
   const cardRef = useRef(null);
   const glowRef = useRef(null);
 
@@ -83,9 +83,10 @@ export default function SpeakerCard({ speaker }) {
   const meta = TYPE_LABELS[speaker.type];
 
   return (
-    <div
+    <button
       ref={cardRef}
-      className="relative bg-navy-card border rounded-2xl overflow-hidden h-full transition-colors duration-300 cursor-default"
+      onClick={onClick}
+      className="relative w-full text-left bg-navy-card border rounded-2xl overflow-hidden h-full transition-all duration-500 cursor-pointer group/card"
       style={{
         borderColor: speaker.featured
           ? "#FFB300"
@@ -108,6 +109,13 @@ export default function SpeakerCard({ speaker }) {
           transform: "translate(0px, 0px)",
         }}
       />
+
+      {/* View Profile Hover Overlay */}
+      <div className="absolute inset-0 bg-navy-deeper/40 backdrop-blur-[2px] opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 z-30 flex items-center justify-center">
+         <span className="bg-gold text-navy-deeper px-4 py-2 rounded-lg font-heading font-black text-[10px] uppercase tracking-widest translate-y-4 group-hover/card:translate-y-0 transition-transform duration-500 shadow-2xl">
+           View Profile
+         </span>
+      </div>
 
       <div className="p-6 flex flex-col h-full relative z-10">
         {/* Avatar + type badge */}
@@ -166,13 +174,14 @@ export default function SpeakerCard({ speaker }) {
           {speaker.bio}
         </p>
 
-        {/* Social links */}
-        <div className="flex items-center gap-2 mt-auto pt-4 border-t border-navy-border">
+        {/* Social links (z-40 to stay clickable above the card overlay) */}
+        <div className="flex items-center gap-2 mt-auto pt-4 border-t border-navy-border relative z-40">
           {speaker.linkedin && (
             <a
               href={speaker.linkedin}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
               className="w-8 h-8 rounded-lg border border-navy-border flex items-center justify-center text-white-dim hover:text-gold hover:border-gold/40 transition-all duration-200"
             >
               <Linkedin size={14} />
@@ -183,6 +192,7 @@ export default function SpeakerCard({ speaker }) {
               href={speaker.twitter}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
               className="w-8 h-8 rounded-lg border border-navy-border flex items-center justify-center text-white-dim hover:text-gold hover:border-gold/40 transition-all duration-200"
             >
               <Twitter size={14} />
@@ -190,6 +200,6 @@ export default function SpeakerCard({ speaker }) {
           )}
         </div>
       </div>
-    </div>
+    </button>
   );
 }
