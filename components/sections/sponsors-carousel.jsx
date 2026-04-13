@@ -8,6 +8,8 @@ import Modal from "@/components/ui/modal";
 import SponsorForm from "@/components/sections/sponsor-form";
 import { SPONSORS } from "@/data/sponsors";
 
+import CyberModule from "@/components/ui/cyber-module";
+
 /**
  * SponsorTile — shows real logo image, falls back to name text
  * Logo displayed on a dark card with brightness filter so
@@ -15,33 +17,35 @@ import { SPONSORS } from "@/data/sponsors";
  */
 function SponsorTile({ name, role, logo }) {
   return (
-    <div className="flex-shrink-0 w-64 h-56 bg-navy-card border border-navy-border rounded-2xl flex flex-col items-center justify-center gap-4 px-6 hover:border-gold/40 hover:bg-navy-surface transition-all duration-300 group">
+    <div className="flex-shrink-0 w-72 h-64 p-2 group">
+      <CyberModule className="h-full flex flex-col items-center justify-center p-6 text-center">
+        {/* Logo with Surreal Manifestation */}
+        <div className="relative w-44 h-20 mb-6 flex items-center justify-center group-hover:scale-105 transition-all duration-500">
+          {logo ? (
+            <Image
+              src={logo}
+              alt={`${name} logo`}
+              fill
+              className="object-contain grayscale contrast-125 opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:drop-shadow-[0_0_15px_rgba(255,179,0,0.2)] transition-all duration-700"
+            />
+          ) : (
+            <span className="text-gold/40 font-heading font-black text-sm uppercase tracking-widest text-center">
+              {name}
+            </span>
+          )}
+        </div>
 
-      {/* Logo */}
-      <div className="relative w-40 h-16 flex items-center justify-center">
-        {logo ? (
-          <Image
-            src={logo}
-            alt={`${name} logo`}
-            fill
-            className="object-contain brightness-90 group-hover:brightness-110 transition-all duration-300"
-          />
-        ) : (
-          <span className="text-gold/50 font-heading font-bold text-sm text-center">
+        {/* Name + Role */}
+        <div className="relative">
+          <p className="text-white font-heading font-black text-sm tracking-tight mb-1 uppercase">
             {name}
-          </span>
-        )}
-      </div>
-
-      {/* Name + Role */}
-      <div className="text-center">
-        <p className="text-white font-heading font-semibold text-sm leading-snug">
-          {name}
-        </p>
-        <p className="text-white-dim text-xs mt-1 leading-snug">
-          {role}
-        </p>
-      </div>
+          </p>
+          <div className="h-px w-8 bg-gold/30 mx-auto mb-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <p className="text-gold/60 text-[10px] uppercase tracking-[0.3em] font-black">
+            {role}
+          </p>
+        </div>
+      </CyberModule>
     </div>
   );
 }

@@ -6,7 +6,7 @@
 // 3 impact scenes shown one-by-one with zoom + stat overlay
 export const IMPACT_STATS = [
     {
-        stat: "700+",
+        stat: "500+",
         label: "Participants",
         src: "/images/gallery/2025/impact-1.jpg",
     },

@@ -1,6 +1,5 @@
 import Hero from "@/components/sections/hero";
-import TaglineScroll from "@/components/sections/tagline-scroll";
-import EventImpact from "@/components/sections/event-impact";
+import MemoryArchive from "@/components/sections/memory-archive";
 import Communities from "@/components/sections/communities";
 import Stats from "@/components/sections/stats";
 import CTA from "@/components/sections/cta";
@@ -9,11 +8,11 @@ import ComingSoon from "@/components/common/coming-soon";
 import IgnitionWrapper from "@/components/ui/ignition-wrapper";
 
 export const metadata = {
-  title: "TechFest Sri Lanka 2026 | Coming Soon",
+  title: "TechFest Sri Lanka 2026 | Innovate, Inspire, Impact",
   description:
-    "The future is loading. Sri Lanka's premier technology innovation festival is coming soon. Stay tuned for TechFest Sri Lanka 2026.",
+    "The future is loading. Sri Lanka's premier technology innovation festival. Dive into the Memory Archive and explore the vision for TechFest 2026.",
   openGraph: {
-    title: "TechFest Sri Lanka 2026 | Coming Soon",
+    title: "TechFest Sri Lanka 2026 | Innovate, Inspire, Impact",
     description: "The future is loading. Join us for TechFest Sri Lanka 2026.",
     url: "https://techfest2026.lk",
     siteName: "TechFest Sri Lanka 2026",
@@ -21,6 +20,8 @@ export const metadata = {
     type: "website",
   },
 };
+
+import AmbientHUD from "@/components/ui/ambient-hud";
 
 export default function Home() {
   // Toggle this to false to restore the full site
@@ -31,32 +32,31 @@ export default function Home() {
   }
 
   return (
-    <main className="relative">
+    <main className="relative bg-navy-deeper">
+      {/* Global High-Tech Atmosphere */}
+      <AmbientHUD />
+
       <Hero />
       
-      <IgnitionWrapper>
-        <TaglineScroll />
-      </IgnitionWrapper>
+      <MemoryArchive />
 
-      <IgnitionWrapper>
-        <EventImpact />
-      </IgnitionWrapper>
+      <div className="relative z-10">
+        <IgnitionWrapper>
+          <Communities />
+        </IgnitionWrapper>
 
-      <IgnitionWrapper>
-        <Communities />
-      </IgnitionWrapper>
+        <IgnitionWrapper>
+          <Stats />
+        </IgnitionWrapper>
 
-      <IgnitionWrapper>
-        <Stats />
-      </IgnitionWrapper>
+        <IgnitionWrapper>
+          <CTA />
+        </IgnitionWrapper>
 
-      <IgnitionWrapper>
-        <CTA />
-      </IgnitionWrapper>
-
-      <IgnitionWrapper>
-        <SponsorsCarousel />
-      </IgnitionWrapper>
+        <IgnitionWrapper>
+          <SponsorsCarousel />
+        </IgnitionWrapper>
+      </div>
     </main>
   );
 }

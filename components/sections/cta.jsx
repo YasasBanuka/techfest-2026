@@ -1,7 +1,30 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import FadeInUp from "@/components/ui/fade-in-up";
 
+const PHRASES = [
+  "Something Big?",
+  "The Next Chapter?",
+  "The Evolution?",
+  "The Inner Circle?",
+  "The Revolution?",
+  "The Visionary Movement?",
+  "The Tech Frontier?"
+];
+
 export default function CTA() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % PHRASES.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="py-24 px-6">
       <div className="max-w-4xl mx-auto">
@@ -25,9 +48,22 @@ export default function CTA() {
                 Don&apos;t Miss Out
               </p>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-white mb-5 leading-tight">
-                Ready to Be Part of{" "}
-                <span className="gold-gradient-text">Something Big?</span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-white mb-5 leading-tight flex flex-wrap justify-center items-center gap-x-3">
+                <span>Ready to Be Part of</span>
+                <span className="relative inline-block min-w-[300px] text-center">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={PHRASES[index]}
+                      initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
+                      animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                      exit={{ opacity: 0, filter: "blur(10px)", y: -10 }}
+                      transition={{ duration: 0.8 }}
+                      className="gold-gradient-text block"
+                    >
+                      {PHRASES[index]}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
               </h2>
 
               <p className="text-white-muted text-lg max-w-2xl mx-auto mb-10 leading-relaxed">

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import PlexusCanvas from "@/components/background/plexus-canvas";
+import EtherealVoid from "@/components/background/ethereal-void";
 import Countdown from "./countdown";
 import { EVENT } from "@/data/event";
 
@@ -27,15 +27,10 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
 
-      {/* ── Layer 1: Animated Plexus Canvas (Parallax) ── */}
-      <motion.div 
-        className="absolute inset-0 pointer-events-none"
-        style={{ scale: 1.1 }}
-        animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-      >
-        <PlexusCanvas />
-      </motion.div>
+      {/* ── Layer 1: Ethereal Data Void (New Background) ── */}
+      <div className="absolute inset-0 z-[1]">
+        <EtherealVoid />
+      </div>
 
       {/* ── Layer 2: Deep Cyber-Noir Vignette ── */}
       <div
@@ -47,7 +42,7 @@ export default function Hero() {
       />
 
       {/* ── Layer 3: Hex texture overlay (Parallax) ── */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 hex-pattern pointer-events-none opacity-20 z-[1]"
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
@@ -64,14 +59,14 @@ export default function Hero() {
 
       {/* ── Technical Annotations (Surreal Detail) ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-[5]">
-          {/* Coordinates Top Left */}
-          <div className="absolute top-32 left-10 text-[10px] font-mono text-gold/30 uppercase tracking-[0.2em] opacity-40 animate-pulse">
-            LAT: 6.9271° N <br /> LNG: 79.8612° E
-          </div>
-          {/* Status Bottom Right */}
-          <div className="absolute bottom-32 right-10 text-[10px] font-mono text-gold/30 uppercase tracking-[0.2em] opacity-40">
-             SYS_STATUS: [0x7A_OPTIMAL] <br /> NOISE_LVL: {">"} 0.05RMS
-          </div>
+        {/* Coordinates Top Left */}
+        <div className="absolute top-32 left-10 text-[10px] font-mono text-gold/30 uppercase tracking-[0.2em] opacity-40 animate-pulse">
+          LAT: 6.9271° N <br /> LNG: 79.8612° E
+        </div>
+        {/* Status Bottom Right */}
+        <div className="absolute bottom-32 right-10 text-[10px] font-mono text-gold/30 uppercase tracking-[0.2em] opacity-40">
+          SYS_STATUS: [0x7A_OPTIMAL] <br /> NOISE_LVL: {">"} 0.05RMS
+        </div>
       </div>
 
       {/* ── Content ── */}
@@ -110,14 +105,14 @@ export default function Hero() {
 
         {/* Sub-tagline with cyber styling */}
         <motion.div
-           variants={itemVariants}
-           className="flex items-center justify-center gap-4 mb-14"
+          variants={itemVariants}
+          className="flex items-center justify-center gap-4 mb-14"
         >
-           <div className="h-px w-12 bg-gold/20" />
-           <p className="text-xs text-white-dim uppercase tracking-[0.4em]">
-             The Second Chapter of Innovation
-           </p>
-           <div className="h-px w-12 bg-gold/20" />
+          <div className="h-px w-12 bg-gold/20" />
+          <p className="text-xs text-white-dim uppercase tracking-[0.4em]">
+            The Second Chapter of Innovation
+          </p>
+          <div className="h-px w-12 bg-gold/20" />
         </motion.div>
 
         {/* Countdown - with glow */}
@@ -135,8 +130,8 @@ export default function Hero() {
             className="group relative inline-flex items-center justify-center bg-gold text-navy-deeper font-black px-12 py-5 rounded-2xl text-lg hover:bg-gold-bright transition-all duration-500 hover:shadow-[0_0_50px_rgba(255,179,0,0.5)] tracking-tighter uppercase overflow-hidden"
           >
             <span className="relative z-10 flex items-center gap-2">
-               Get Your Access
-               <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1 }}>→</motion.span>
+              Get Your Access
+              <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1 }}>→</motion.span>
             </span>
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
           </Link>

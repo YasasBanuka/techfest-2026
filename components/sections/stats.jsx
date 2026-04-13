@@ -4,57 +4,74 @@ import { motion } from "framer-motion";
 import { Users, LayoutGrid, Building2, Mic2 } from "lucide-react";
 import { STATS } from "@/data/event";
 import { StaggerContainer, StaggerItem } from "@/components/ui/fade-in-up";
-import ScrambleNumber from "@/components/ui/scramble-number";
+import GlitchCounter from "@/components/ui/glitch-counter";
+
+import CyberModule from "@/components/ui/cyber-module";
 
 const ICON_MAP = { Users, LayoutGrid, Building2, Mic2 };
 
 export default function Stats() {
   return (
-    <section className="py-20 px-6">
+    <section className="py-24 px-6 relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
 
         {/* Section header */}
         <motion.div
-          className="text-center mb-14"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+           className="text-center mb-16"
+           initial={{ opacity: 0, y: 30 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true, margin: "-60px" }}
+           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <p className="text-gold text-sm uppercase tracking-[0.2em] mb-3 font-medium">
-            By The Numbers
+          <p className="text-gold text-xs uppercase tracking-[0.5em] mb-4 font-black opacity-60">
+            Real-Time Metrics
           </p>
-          <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white">
-            Join the Innovation
+          <h2 className="text-4xl sm:text-5xl font-heading font-black text-white uppercase tracking-tight">
+            The Digital Footprint
           </h2>
-          <p className="text-white-muted mt-3 max-w-xl mx-auto">
-            TechFest Sri Lanka 2026 is set to be the biggest yet — uniting Sri Lanka&apos;s sharpest tech minds.
-          </p>
+          <div className="h-px w-32 bg-gold/20 mx-auto mt-6" />
         </motion.div>
 
         {/* Stats grid — staggered entrance */}
-        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {STATS.map((stat) => {
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+          {STATS.map((stat, i) => {
             const Icon = ICON_MAP[stat.icon] || Users;
             return (
               <StaggerItem key={stat.label}>
-                <div className="group relative bg-navy-card border border-navy-border rounded-2xl p-6 sm:p-8 text-center hover:border-gold/40 hover:shadow-[0_0_30px_rgba(255,203,64,0.08)] transition-all duration-400 overflow-hidden h-full">
-
-                  {/* Corner glow on hover */}
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gold/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 -translate-y-1/2 translate-x-1/2" />
-
-                  {/* Icon */}
-                  <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center group-hover:bg-gold/15 transition-colors duration-300">
-                    <Icon size={22} className="text-gold" />
+                <CyberModule className="items-center text-center p-6 sm:p-10">
+                  
+                  {/* Subtle Hex/Data Background */}
+                  <div className="absolute inset-0 opacity-[0.05] pointer-events-none overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-full hex-pattern scale-150" />
                   </div>
 
-                  {/* Scramble number — digits scramble then lock in */}
-                  <div className="text-3xl sm:text-4xl font-heading font-black text-gold mb-2 tabular-nums">
-                    <ScrambleNumber value={stat.value} />
+                  {/* Icon Frame */}
+                  <div className="relative w-14 h-14 mx-auto mb-6 rounded-2xl bg-gold/10 border border-gold/20 flex items-center justify-center group-hover:bg-gold/20 group-hover:border-gold/40 transition-all duration-500 shadow-[0_0_20px_rgba(255,179,0,0.1)]">
+                    <Icon size={24} className="text-gold" />
+                    {/* Pulsing corner dot */}
+                    <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-gold animate-pulse" />
                   </div>
 
-                  <p className="text-white-muted text-sm leading-snug">{stat.label}</p>
-                </div>
+                  {/* Glitch counter with HUD brackets */}
+                  <div className="flex items-center justify-center gap-2 text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-white tabular-nums mb-3">
+                    <span className="text-gold/20 font-light">[</span>
+                    <GlitchCounter 
+                      fromValue={stat.previousValue} 
+                      toValue={stat.value} 
+                      delay={i * 200} 
+                    />
+                    <span className="text-gold/20 font-light">]</span>
+                  </div>
+
+                  <p className="text-white-dim text-[10px] sm:text-xs uppercase tracking-[0.3em] font-black leading-snug max-w-[120px] mx-auto">
+                    {stat.label}
+                  </p>
+
+                  {/* Bottom Archival ID */}
+                  <span className="mt-8 text-[8px] font-mono text-cyan-400/20 uppercase tracking-widest">
+                     TF26_METRIC_0x{i+10}
+                  </span>
+                </CyberModule>
               </StaggerItem>
             );
           })}

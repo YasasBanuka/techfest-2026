@@ -18,10 +18,10 @@ export const EVENT = {
 };
 
 export const STATS = [
-  { value: "1500+", label: "Expected Attendees", icon: "Users" },
-  { value: "30+", label: "Tech Stalls", icon: "LayoutGrid" },
-  { value: "25+", label: "Companies", icon: "Building2" },
-  { value: "15+", label: "Speakers", icon: "Mic2" },
+  { value: "1500+", previousValue: "500", label: "Expected Attendees", icon: "Users" },
+  { value: "30+", previousValue: "10+", label: "Tech Stalls", icon: "LayoutGrid" },
+  { value: "25+", previousValue: "10+", label: "Companies", icon: "Building2" },
+  { value: "15+", previousValue: "10", label: "Speakers", icon: "Mic2" },
 ];
 
 export const COMMUNITIES = [
