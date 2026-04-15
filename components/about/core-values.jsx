@@ -1,41 +1,54 @@
-import { Lightbulb, Users, Star, Zap } from "lucide-react";
+"use client";
+
+import { Lightbulb, Users, Star, Zap, Terminal, Shield } from "lucide-react";
 import { VALUES } from "@/data/about";
 import { StaggerContainer, StaggerItem } from "@/components/ui/fade-in-up";
+import CyberModule from "@/components/ui/cyber-module";
 
 const ICON_MAP = { Lightbulb, Users, Star, Zap };
 
 /**
- * CoreValues — 4-card grid of TechFest's guiding principles.
- * Staggered scroll entrance via StaggerContainer.
+ * CoreValues — 'Fundamental Protocols'
+ * ──────────────────────────────────────
+ * Key principles presented as high-tech manifest nodes.
  */
 export default function CoreValues() {
   return (
-    <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {VALUES.map((value) => {
         const Icon = ICON_MAP[value.icon] || Zap;
         return (
           <StaggerItem key={value.id}>
-            <div className="group bg-navy-card border border-navy-border rounded-2xl p-6 h-full hover:border-gold/40 hover:shadow-[0_0_30px_rgba(255,203,64,0.07)] transition-all duration-300 relative overflow-hidden">
-              {/* Hover glow */}
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gold/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 -translate-y-1/2 translate-x-1/2" />
+            <CyberModule className="group h-full !p-0 bg-white/[0.01] border-white/5 overflow-hidden transition-all duration-700 hover:border-gold/30">
+               
+               {/* Metadata Header */}
+               <div className="px-6 py-3 border-b border-white/5 flex items-center justify-between opacity-20">
+                  <span className="text-[7px] font-mono uppercase tracking-[0.4em]">Val_Ref: 0x0{value.id}</span>
+                  <div className="w-1 h-1 rounded-full bg-white animate-pulse" />
+               </div>
 
-              {/* Icon */}
-              <div className="w-11 h-11 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center mb-5 group-hover:bg-gold/15 transition-colors duration-300">
-                <Icon size={20} className="text-gold" />
-              </div>
+               <div className="p-8">
+                  {/* Icon */}
+                  <div className="w-12 h-12 rounded-full bg-white/[0.03] border border-white/5 flex items-center justify-center mb-6 group-hover:border-gold/30 transition-all duration-700">
+                    <Icon size={18} className="text-white/40 group-hover:text-gold transition-colors duration-700" />
+                  </div>
 
-              {/* Value number */}
-              <span className="text-gold/30 text-xs font-mono font-bold tracking-widest mb-2 block">
-                0{value.id}
-              </span>
+                  <h3 className="text-white font-heading font-black text-lg uppercase tracking-tight mb-4 group-hover:gold-gradient-text transition-all duration-700">
+                    {value.title}
+                  </h3>
 
-              <h3 className="text-white font-heading font-bold text-lg mb-2">
-                {value.title}
-              </h3>
-              <p className="text-white-muted text-sm leading-relaxed">
-                {value.description}
-              </p>
-            </div>
+                  {/* Misty Manifestation Description */}
+                  <p className="text-white-dim text-sm leading-relaxed font-light italic transition-all duration-700 blur-[0.5px] opacity-60 group-hover:blur-0 group-hover:opacity-100">
+                    {value.description}
+                  </p>
+
+                  {/* Footer Annotation */}
+                  <div className="mt-8 flex items-center gap-2 opacity-10">
+                     <Shield size={10} />
+                     <span className="text-[8px] font-mono uppercase tracking-widest leading-none">Status: Integral</span>
+                  </div>
+               </div>
+            </CyberModule>
           </StaggerItem>
         );
       })}

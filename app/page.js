@@ -6,6 +6,7 @@ import CTA from "@/components/sections/cta";
 import SponsorsCarousel from "@/components/sections/sponsors-carousel";
 import ComingSoon from "@/components/common/coming-soon";
 import IgnitionWrapper from "@/components/ui/ignition-wrapper";
+import SpeakerAnnouncementTeaser from "@/components/sections/speaker-announcement-teaser";
 
 export const metadata = {
   title: "TechFest Sri Lanka 2026 | Innovate, Inspire, Impact",
@@ -41,6 +42,10 @@ export default function Home() {
       <MemoryArchive />
 
       <div className="relative z-10">
+        <IgnitionWrapper>
+          <SpeakerAnnouncementTeaser />
+        </IgnitionWrapper>
+
         <IgnitionWrapper>
           <Communities />
         </IgnitionWrapper>

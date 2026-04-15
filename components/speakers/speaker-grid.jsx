@@ -2,22 +2,25 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { SPEAKERS, SPEAKER_TYPES, TYPE_LABELS } from "@/data/speakers";
+import { SPEAKERS, SPEAKER_TYPES, TYPE_LABELS, IS_REVEALED } from "@/data/speakers";
 import SpeakerCard from "@/components/speakers/speaker-card";
 import SpeakerDetails from "@/components/speakers/speaker-details";
 import FadeInUp from "@/components/ui/fade-in-up";
+import SpeakerPlaceholder from "@/components/speakers/speaker-placeholder";
 
 /**
  * SpeakerGrid
  * ────────────
- * Filter tabs (All / Keynote / Workshop / Panel / Lightning)
- * + staggered card grid with AnimatePresence on filter change.
- *
- * Featured speakers (keynotes) always show first via sort.
+ * Filter tabs + staggered grid.
+ * If IS_REVEALED is false (from data/speakers.js), shows the SpeakerPlaceholder instead.
  */
 export default function SpeakerGrid() {
   const [activeType, setActiveType] = useState("All");
   const [selectedSpeaker, setSelectedSpeaker] = useState(null);
+
+  if (!IS_REVEALED) {
+    return <SpeakerPlaceholder />;
+  }
 
   const filtered = (
     activeType === "All"

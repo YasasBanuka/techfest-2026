@@ -4,91 +4,76 @@ import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TIMELINE } from "@/data/about";
+import { Terminal, Database, Shield, Radio } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * StoryTimeline — Sticky scroll (not GSAP pin)
- * ─────────────────────────────────────────────
- * The outer <section> is 300vh tall — the browser scrollbar moves naturally,
- * giving the "screen scrolls with the ball" feel the user wants.
- *
- * The inner sticky div stays fixed at top:0 while the outer section
- * scrolls through the viewport, animating the ball via ScrollTrigger scrub.
- *
- * Journey (scrubbed over 300vh of scroll):
- *  0%→28%   Ball travels top → 2025 dot. Dot pops in.
- *  28%→48%  DWELL. Card25 slides in.
- *  48%→55%  Card25 exits. Ball departs.
- *  55%→83%  Ball travels 2025 → 2026. Dot pops in.
- *  83%→100% DWELL. Card26 slides in.
+ * StoryTimeline — 'The Temporal Descent'
+ * ──────────────────────────────────────
+ * Cinematic GSAP journey through TechFest history.
+ * Features ethereal wisps, archived monochrome states, 
+ * and manifestation animations.
  */
 export default function StoryTimeline() {
-  const outerRef     = useRef(null); // 300vh scroll trigger target
-  const stickyRef    = useRef(null); // sticky inner (visible area)
-  const containerRef = useRef(null); // ball's positioned parent
-  const lineRef      = useRef(null);
-  const ballRef      = useRef(null);
-  const dot2025Ref   = useRef(null);
-  const dot2026Ref   = useRef(null);
-  const card2025Ref  = useRef(null);
-  const card2026Ref  = useRef(null);
+  const outerRef = useRef(null);
+  const stickyRef = useRef(null);
+  const containerRef = useRef(null);
+  const lineRef = useRef(null);
+  const ballRef = useRef(null);
+  const dot2025Ref = useRef(null);
+  const dot2026Ref = useRef(null);
+  const card2025Ref = useRef(null);
+  const card2026Ref = useRef(null);
 
   const [entry2025, entry2026] = TIMELINE;
 
   useEffect(() => {
     const raf = requestAnimationFrame(() => {
       const ctx = gsap.context(() => {
-        const outer    = outerRef.current;
-        const container= containerRef.current;
-        const line     = lineRef.current;
-        const ball     = ballRef.current;
-        const dot25    = dot2025Ref.current;
-        const dot26    = dot2026Ref.current;
-        const card25   = card2025Ref.current;
-        const card26   = card2026Ref.current;
+        const outer = outerRef.current;
+        const container = containerRef.current;
+        const line = lineRef.current;
+        const ball = ballRef.current;
+        const dot25 = dot2025Ref.current;
+        const dot26 = dot2026Ref.current;
+        const card25 = card2025Ref.current;
+        const card26 = card2026Ref.current;
         if (!outer || !container || !dot25 || !dot26) return;
 
-        // Positions relative to containerRef (ball's positioned ancestor)
-        const cTop    = container.getBoundingClientRect().top;
+        const cTop = container.getBoundingClientRect().top;
         const dot25cy = dot25.getBoundingClientRect().top - cTop + dot25.offsetHeight / 2;
         const dot26cy = dot26.getBoundingClientRect().top - cTop + dot26.offsetHeight / 2;
 
-        // Initial states
-        gsap.set(ball,   { y: 0 });
-        gsap.set(line,   { scaleY: 0, transformOrigin: "top center" });
-        gsap.set(dot25,  { opacity: 0, scale: 0, transformOrigin: "center center" });
-        gsap.set(dot26,  { opacity: 0, scale: 0, transformOrigin: "center center" });
-        gsap.set(card25, { opacity: 0, x: -60 });
-        gsap.set(card26, { opacity: 0, x:  60 });
+        // Initial states — Noir (monochrome/dimmed)
+        gsap.set(ball, { y: 0, opacity: 0 });
+        gsap.set(line, { scaleY: 0, transformOrigin: "top center", opacity: 0.1 });
+        gsap.set(dot25, { opacity: 0.2, scale: 0.8, filter: "grayscale(1)" });
+        gsap.set(dot26, { opacity: 0.2, scale: 0.8, filter: "grayscale(1)" });
+        gsap.set(card25, { opacity: 0.3, x: -40, filter: "grayscale(1) blur(2px)" });
+        gsap.set(card26, { opacity: 0.3, x: 40, filter: "grayscale(1) blur(2px)" });
 
-        // Scrubbed timeline on the OUTER tall section (no pin — sticky CSS handles it)
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: outer,        // 300vh outer
+            trigger: outer,
             start: "top top",
-            end: "bottom bottom",  // natural scroll, no pin
-            scrub: 1.5,
+            end: "bottom bottom",
+            scrub: 1,
           },
         });
 
-        // Phase 1 — travel to 2025
-        tl.to(ball, { y: dot25cy, ease: "power2.inOut", duration: 1.5 })
-          .to(line,  { scaleY: 0.5, ease: "none", duration: 1.5 }, "<")
-          .to(dot25, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" })
+        // Phase 1 — Manifest 2025
+        tl.to(ball, { opacity: 1, duration: 0.2 })
+          .to(ball, { y: dot25cy, ease: "power2.inOut", duration: 1.5 })
+          .to(line, { scaleY: 0.5, opacity: 0.4, ease: "none", duration: 1.5 }, "<")
+          .to(dot25, { opacity: 1, scale: 1.2, filter: "grayscale(0)", duration: 0.4 })
+          .to(card25, { opacity: 1, x: 0, filter: "grayscale(0) blur(0px)", duration: 0.8, ease: "power3.out" }, "-=1.2")
 
-          // Dwell at 2025
-          .to(ball, { y: dot25cy, ease: "none", duration: 1.5 })
-          .to(card25, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, "-=1.1")
-
-          // Phase 2 — travel to 2026 (card25 stays visible)
+          // Phase 2 — Manifest 2026
           .to(ball, { y: dot26cy, ease: "power2.inOut", duration: 1.5 })
-          .to(line,  { scaleY: 1, ease: "none", duration: 1.5 }, "<")
-          .to(dot26, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" })
-
-          // Dwell at 2026
-          .to(ball, { y: dot26cy, ease: "none", duration: 1.5 })
-          .to(card26, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, "-=1.1");
+          .to(line, { scaleY: 1, opacity: 1, ease: "none", duration: 1.5 }, "<")
+          .to(dot26, { opacity: 1, scale: 1.2, filter: "grayscale(0)", duration: 0.4 })
+          .to(card26, { opacity: 1, x: 0, filter: "grayscale(0) blur(0px)", duration: 0.8, ease: "power3.out" }, "-=1.2");
 
       }, outerRef);
       return () => ctx.revert();
@@ -97,73 +82,83 @@ export default function StoryTimeline() {
   }, []);
 
   return (
-    /* Outer: 300vh — browser scrollbar actually moves through this */
-    <section ref={outerRef} style={{ height: "300vh" }}>
-
-      {/* Sticky inner — stays in viewport as outer scrolls */}
+    <section ref={outerRef} style={{ height: "300vh" }} className="relative">
       <div
         ref={stickyRef}
-        className="sticky top-0 w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-navy-deeper px-6 py-20"
+        className="sticky top-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden px-6"
       >
-        {/* Background */}
-        <div className="absolute inset-0 hex-pattern opacity-[0.06] pointer-events-none" />
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(15,43,105,0.4) 0%, transparent 70%)" }} />
+        {/* HUD Annotations */}
+        <div className="absolute inset-x-0 top-1/4 pointer-events-none opacity-20 flex justify-between px-10">
+          <div className="flex flex-col gap-2">
+            <span className="text-[8px] font-mono text-gold tracking-widest uppercase">Temporal_Sequence: Active</span>
+            <div className="w-12 h-px bg-gold/30" />
+          </div>
+          <div className="flex flex-col items-end gap-2">
+            <span className="text-[8px] font-mono text-gold tracking-widest uppercase">Depth_Measure: [0x7F]</span>
+            <div className="w-12 h-px bg-gold/30" />
+          </div>
+        </div>
 
         {/* Heading */}
-        <div className="relative z-10 text-center mb-16 shrink-0">
-          <p className="text-gold text-xs uppercase tracking-[0.3em] mb-3 font-medium">Since 2025</p>
-          <h2 className="text-4xl sm:text-5xl font-heading font-bold text-white">
-            Our <span className="gold-gradient-text">Story</span>
+        <div className="relative z-10 text-center mb-24">
+          <div className="flex items-center justify-center gap-2 mb-4 opacity-40">
+            <Terminal size={12} className="text-gold" />
+            <p className="text-[10px] font-mono text-white/60 tracking-[0.4em] uppercase">Historical_Manifestation</p>
+          </div>
+          <h2 className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter italic">
+            Our <span className="gold-gradient-text">Origin</span>
           </h2>
         </div>
 
-        {/* Timeline */}
-        <div className="relative z-10 w-full max-w-4xl mx-auto">
-          <div ref={containerRef} className="relative flex flex-col gap-14">
+        {/* Timeline Container */}
+        <div className="relative z-10 w-full max-w-5xl mx-auto">
+          <div ref={containerRef} className="relative flex flex-col gap-20">
 
-            {/* Vertical line */}
-            <div className="absolute left-8 sm:left-1/2 -translate-x-px top-0 bottom-0 w-[2px] pointer-events-none overflow-hidden">
-              <div ref={lineRef}
-                className="absolute inset-0 bg-gradient-to-b from-gold/90 via-gold/50 to-gold/20" />
+            {/* The Pulse Stream (Vertical line) */}
+            <div className="absolute left-8 sm:left-1/2 -translate-x-px top-0 bottom-0 w-px pointer-events-none overflow-hidden">
+              <div ref={lineRef} className="absolute inset-0 bg-gradient-to-b from- gold via-gold/40 to-transparent" />
             </div>
 
-            {/* Ball — w:0 h:0 so visual centre = GSAP y exactly */}
-            <div ref={ballRef} className="absolute left-8 sm:left-1/2 z-30 pointer-events-none"
-              style={{ top: 0, width: 0, height: 0 }}>
-              <div className="absolute rounded-full animate-pulse"
-                style={{ width:48, height:48, top:-24, left:-24,
-                  background:"radial-gradient(circle,rgba(255,203,64,0.25) 0%,transparent 70%)", filter:"blur(8px)" }} />
+            {/* The Temporal Wisp (Ball) */}
+            <div ref={ballRef} className="absolute left-8 sm:left-1/2 z-30 pointer-events-none" style={{ top: 0, width: 0, height: 0 }}>
+              {/* Misty Glow */}
               <div className="absolute rounded-full"
-                style={{ width:28, height:28, top:-14, left:-14,
-                  background:"radial-gradient(circle,rgba(255,203,64,0.4) 0%,transparent 70%)", filter:"blur(4px)" }} />
-              <div className="absolute rounded-full bg-gold border-2 border-white/60"
-                style={{ width:18, height:18, top:-9, left:-9,
-                  boxShadow:"0 0 0 4px rgba(255,203,64,0.2),0 0 20px rgba(255,203,64,1),0 0 50px rgba(255,203,64,0.6)" }} />
+                style={{
+                  width: 120, height: 120, top: -60, left: -60,
+                  background: "radial-gradient(circle, rgba(255,203,64,0.1) 0%, transparent 80%)", filter: "blur(20px)"
+                }} />
+              <div className="absolute rounded-full animate-pulse"
+                style={{
+                  width: 40, height: 40, top: -20, left: -20,
+                  background: "radial-gradient(circle, rgba(255,203,64,0.4) 0%, transparent 70%)", filter: "blur(4px)"
+                }} />
+              {/* Core Node */}
+              <div className="absolute rounded-full bg-navy-deeper border border-gold"
+                style={{
+                  width: 12, height: 12, top: -6, left: -6,
+                  boxShadow: "0 0 20px rgba(255,179,0,0.8)"
+                }} />
             </div>
 
-            {/* 2025 row */}
-            <div className="relative flex items-center min-h-[8rem]">
-              <div ref={card2025Ref} className="w-full pl-16 sm:w-[44%] sm:pr-10 sm:pl-0">
-                <YearCard item={entry2025} align="right" />
+            {/* 2025 Fragment */}
+            <div className="relative flex items-center">
+              <div ref={card2025Ref} className="w-full pl-20 sm:w-[42%] sm:pr-14 sm:pl-0 sm:text-right">
+                <YearCard item={entry2025} align="right" status="Archived" />
               </div>
               <div className="absolute left-8 sm:left-1/2 -translate-x-1/2 z-20">
-                <div ref={dot2025Ref} style={{ opacity: 0 }}
-                  className="w-5 h-5 rounded-full border-2 border-gold/60 bg-navy-deeper" />
+                <div ref={dot2025Ref} className="w-4 h-4 rounded-full border border-white/10 bg-navy-deeper" />
               </div>
-              <div className="hidden sm:block w-[44%] ml-auto" />
+              <div className="hidden sm:block w-[42%] ml-auto" />
             </div>
 
-            {/* 2026 row */}
-            <div className="relative flex items-center min-h-[8rem]">
-              <div className="hidden sm:block w-[44%]" />
+            {/* 2026 Fragment */}
+            <div className="relative flex items-center">
+              <div className="hidden sm:block w-[42%]" />
               <div className="absolute left-8 sm:left-1/2 -translate-x-1/2 z-20">
-                <div ref={dot2026Ref}
-                  style={{ opacity:0, boxShadow:"0 0 20px rgba(255,203,64,0.4)" }}
-                  className="w-5 h-5 rounded-full border-2 border-gold bg-navy-deeper" />
+                <div ref={dot2026Ref} className="w-4 h-4 rounded-full border border-gold/40 bg-navy-deeper shadow-[0_0_10px_rgba(255,179,0,0.2)]" />
               </div>
-              <div ref={card2026Ref} className="w-full pl-16 sm:w-[44%] sm:pl-10 sm:ml-auto">
-                <YearCard item={entry2026} align="left" highlighted />
+              <div ref={card2026Ref} className="w-full pl-20 sm:w-[42%] sm:pl-14 sm:ml-auto">
+                <YearCard item={entry2026} align="left" status="Manifesting" highlighted />
               </div>
             </div>
 
@@ -174,25 +169,34 @@ export default function StoryTimeline() {
   );
 }
 
-function YearCard({ item, align, highlighted }) {
+function YearCard({ item, align, status, highlighted }) {
   return (
-    <div className={`relative bg-navy-card border rounded-2xl p-7 ${
-      highlighted ? "border-gold/50 shadow-[0_0_40px_rgba(255,203,64,0.1)]" : "border-navy-border"
-    }`}>
-      {highlighted && (
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent rounded-t-2xl" />
-      )}
-      <span className={`inline-block text-xs font-mono font-black tracking-[0.25em] px-3 py-1 rounded-full border mb-4 ${
-        highlighted ? "bg-gold/15 text-gold border-gold/40" : "bg-white/5 text-gold/60 border-navy-border"
-      }`}>
-        {item.year}
-      </span>
-      <h4 className={`text-white font-heading font-bold text-xl mb-3 text-left ${align === "right" ? "sm:text-right" : ""}`}>
-        {item.title}
-      </h4>
-      <p className={`text-white-muted text-sm leading-relaxed text-left ${align === "right" ? "sm:text-right" : ""}`}>
-        {item.description}
-      </p>
+    <div className="relative group">
+      {/* HUD Record Label */}
+      <div className={`flex items-center gap-3 mb-4 opacity-40 ${align === "right" ? "sm:justify-end" : ""}`}>
+        <Database size={10} className="text-white" />
+        <span className="text-[8px] font-mono text-white tracking-[0.4em] uppercase">Record_TF_2{item.year.slice(2)}</span>
+      </div>
+
+      <div className={`p-8 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-sm transition-all duration-700 
+         ${highlighted ? "border-gold/20 shadow-[0_0_40px_rgba(255,179,0,0.05)]" : "hover:border-white/10"}`}>
+
+        <div className="flex items-center gap-4 mb-4">
+          <span className="text-2xl font-heading font-black text-gold italic">{item.year}</span>
+          <div className="h-px flex-1 bg-white/5" />
+          <div className="flex items-center gap-2 px-2 py-0.5 bg-white/5 border border-white/10 rounded-sm">
+            <div className={`w-1 h-1 rounded-full ${highlighted ? "bg-gold animate-pulse" : "bg-white/20"}`} />
+            <span className="text-[7px] font-mono text-white/40 uppercase tracking-widest">{status}</span>
+          </div>
+        </div>
+
+        <h4 className="text-white font-heading font-black text-lg uppercase tracking-tight mb-3">
+          {item.title}
+        </h4>
+        <p className="text-white-dim text-xs leading-relaxed font-light italic">
+          {item.description}
+        </p>
+      </div>
     </div>
   );
 }

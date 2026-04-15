@@ -1,206 +1,83 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-import { gsap } from "gsap";
-import { isTouchDevice } from "@/lib/utils";
-import { Linkedin, Twitter } from "lucide-react";
-import { TYPE_LABELS } from "@/data/speakers";
+import { motion } from "framer-motion";
+import { Linkedin, Twitter, ExternalLink, ChevronRight } from "lucide-react";
+import CyberModule from "@/components/ui/cyber-module";
 
 /**
- * SpeakerCard
- * ────────────
- * Premium speaker card with GSAP 3D tilt on hover (desktop).
- * On mouse move: the card rotates subtly on X and Y axes,
- * creating a depth/parallax feel — used by Stripe, Linear, etc.
- *
- * Features:
- * - Avatar: photo if available, elegant initials placeholder if not
- * - Type badge (Keynote/Workshop/Panel/Lightning)
- * - Name, role, company, topic
- * - Social links reveal on hover
- * - Gold top accent for featured speakers
+ * SpeakerCard — The Ethereal Dossier
+ * ─────────────────────────────────
+ * A minimalist, atmospheric card that reveals details through 
+ * soft glows and misty transitions.
  */
 export default function SpeakerCard({ speaker, onClick }) {
-  const cardRef = useRef(null);
-  const glowRef = useRef(null);
-
-  useEffect(() => {
-    const card = cardRef.current;
-    const glow = glowRef.current;
-    if (!card || isTouchDevice()) return;
-
-    // 3D tilt effect — only on devices that support hover
-    const onMove = (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left; // mouse X relative to card
-      const y = e.clientY - rect.top;  // mouse Y relative to card
-      const cx = rect.width / 2;
-      const cy = rect.height / 2;
-
-      // Rotate ±8deg max on each axis
-      const rotateY =  ((x - cx) / cx) * 8;
-      const rotateX = -((y - cy) / cy) * 8;
-
-      gsap.to(card, {
-        rotateX,
-        rotateY,
-        transformPerspective: 800,
-        ease: "power1.out",
-        duration: 0.3,
-      });
-
-      // Move the radial glow to follow the cursor
-      if (glow) {
-        gsap.to(glow, {
-          x: x - 80,
-          y: y - 80,
-          opacity: 1,
-          duration: 0.3,
-          ease: "power1.out",
-        });
-      }
-    };
-
-    const onLeave = () => {
-      gsap.to(card, {
-        rotateX: 0,
-        rotateY: 0,
-        ease: "elastic.out(1, 0.5)",
-        duration: 0.8,
-      });
-      if (glow) {
-        gsap.to(glow, { opacity: 0, duration: 0.3 });
-      }
-    };
-
-    card.addEventListener("mousemove", onMove);
-    card.addEventListener("mouseleave", onLeave);
-    return () => {
-      card.removeEventListener("mousemove", onMove);
-      card.removeEventListener("mouseleave", onLeave);
-    };
-  }, []);
-
-  const meta = TYPE_LABELS[speaker.type];
+  if (!speaker) return null;
 
   return (
-    <button
-      ref={cardRef}
+    <motion.div
+      whileHover={{ y: -4 }}
       onClick={onClick}
-      className="relative w-full text-left bg-navy-card border rounded-2xl overflow-hidden h-full transition-all duration-500 cursor-pointer group/card"
-      style={{
-        borderColor: speaker.featured
-          ? "#FFB300"
-          : "#21262D",
-        willChange: "transform",
-        transformStyle: "preserve-3d",
-      }}
+      className="group relative h-full cursor-pointer"
     >
-      {/* Featured gold top accent */}
-      {speaker.featured && (
-        <div className="h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
-      )}
-
-      {/* Cursor-tracking radial glow — stays inside card */}
-      <div
-        ref={glowRef}
-        className="absolute w-40 h-40 rounded-full pointer-events-none opacity-0"
-        style={{
-          background: "radial-gradient(circle, rgba(255,179,0,0.12) 0%, transparent 70%)",
-          transform: "translate(0px, 0px)",
-        }}
-      />
-
-      {/* View Profile Hover Overlay */}
-      <div className="absolute inset-0 bg-navy-deeper/40 backdrop-blur-[2px] opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 z-30 flex items-center justify-center">
-         <span className="bg-gold text-navy-deeper px-4 py-2 rounded-lg font-heading font-black text-[10px] uppercase tracking-widest translate-y-4 group-hover/card:translate-y-0 transition-transform duration-500 shadow-2xl">
-           View Profile
-         </span>
-      </div>
-
-      <div className="p-6 flex flex-col h-full relative z-10">
-        {/* Avatar + type badge */}
-        <div className="flex items-start justify-between mb-5">
-          {/* Avatar */}
-          <div className="relative w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0">
-            {speaker.photo ? (
-              <img
-                src={speaker.photo}
-                alt={speaker.name}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              // Initials placeholder
-              <div
-                className="w-full h-full flex items-center justify-center font-heading font-black text-lg"
-                style={{
-                  background: speaker.featured
-                    ? "linear-gradient(135deg, rgba(255,179,0,0.2), rgba(18,23,28,0.8))"
-                    : "linear-gradient(135deg, rgba(33,38,45,0.8), rgba(10,13,16,0.9))",
-                  color: speaker.featured ? "#FFB300" : "rgba(255,255,255,0.6)",
-                  border: "1px solid rgba(33,38,45,0.8)",
-                }}
-              >
+      <CyberModule className="h-full !p-0 overflow-hidden bg-navy-card/40 border-white/5 group-hover:border-gold/20 transition-colors duration-700">
+        
+        {/* ── Avatar Frame ── */}
+        <div className="relative aspect-[4/5] overflow-hidden">
+          {speaker.photo ? (
+            <motion.img
+              src={speaker.photo}
+              alt={speaker.name}
+              className="w-full h-full object-cover grayscale brightness-[0.7] group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000 ease-soft"
+              whileHover={{ scale: 1.05 }}
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-navy-surface">
+              <span className="text-4xl font-heading font-black text-white/5 uppercase select-none">
                 {speaker.initials}
-              </div>
-            )}
+              </span>
+            </div>
+          )}
+
+          {/* Misty Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-deeper via-transparent to-transparent opacity-80" />
+          <div className="absolute inset-0 border-t border-white/5" />
+          
+          {/* Subtle Annotations */}
+          <div className="absolute top-4 left-4 text-[9px] font-mono text-white/20 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+            ASSET_REF: TF_0{speaker.id}
+          </div>
+        </div>
+
+        {/* ── Content ── */}
+        <div className="p-6 relative">
+          <div className="mb-4">
+            <p className="text-gold/60 text-[10px] uppercase tracking-[0.3em] font-extrabold mb-1">
+              {speaker.type}
+            </p>
+            <h3 className="text-2xl font-heading font-black text-white leading-tight mb-1 group-hover:text-gold transition-colors duration-500">
+              {speaker.name}
+            </h3>
+            <p className="text-white-dim text-xs font-medium uppercase tracking-widest">
+              {speaker.role}
+            </p>
           </div>
 
-          {/* Type badge */}
-          <span className={`text-xs font-medium border rounded-full px-2.5 py-0.5 ${meta.color}`}>
-            {meta.label}
-          </span>
-        </div>
-
-        {/* Name + role */}
-        <div className="mb-3">
-          <h3 className="text-white font-heading font-bold text-lg leading-snug">
-            {speaker.name}
-          </h3>
-          <p className="text-white-dim text-sm mt-0.5">
-            {speaker.role}
-            <span className="text-white-dim/50"> · </span>
-            <span className="text-gold/80 text-xs">{speaker.company}</span>
-          </p>
-        </div>
-
-        {/* Topic */}
-        <p className="text-white-muted text-xs leading-relaxed mb-4 flex-1">
-          <span className="text-white-dim/50 uppercase tracking-wider text-[10px]">Topic: </span>
-          {speaker.topic}
-        </p>
-
-        {/* Bio — truncated */}
-        <p className="text-white-dim/70 text-xs leading-relaxed line-clamp-3 mb-5">
-          {speaker.bio}
-        </p>
-
-        {/* Social links (z-40 to stay clickable above the card overlay) */}
-        <div className="flex items-center gap-2 mt-auto pt-4 border-t border-navy-border relative z-40">
-          {speaker.linkedin && (
-            <a
-              href={speaker.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="w-8 h-8 rounded-lg border border-navy-border flex items-center justify-center text-white-dim hover:text-gold hover:border-gold/40 transition-all duration-200"
+          <div className="flex items-center justify-between pt-4 border-t border-white/5">
+            <span className="text-[10px] text-white/20 font-mono group-hover:text-gold/40 transition-colors">
+              {speaker.company}
+            </span>
+            <motion.div 
+              className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/40 group-hover:border-gold/50 group-hover:text-gold transition-all duration-500"
+              whileHover={{ rotate: 90 }}
             >
-              <Linkedin size={14} />
-            </a>
-          )}
-          {speaker.twitter && (
-            <a
-              href={speaker.twitter}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="w-8 h-8 rounded-lg border border-navy-border flex items-center justify-center text-white-dim hover:text-gold hover:border-gold/40 transition-all duration-200"
-            >
-              <Twitter size={14} />
-            </a>
-          )}
+              <ChevronRight size={16} />
+            </motion.div>
+          </div>
         </div>
-      </div>
-    </button>
+
+        {/* Ethereal Glow Footprint (Desktop Only) */}
+        <div className="absolute -inset-px bg-gradient-to-br from-gold/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+      </CyberModule>
+    </motion.div>
   );
 }
