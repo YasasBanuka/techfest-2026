@@ -73,11 +73,11 @@ export default function MemoryArchive() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          pin: true,
-          pinSpacing: true,
+          pin: isMobile ? false : true, // Disable expensive pinning on mobile
+          pinSpacing: isMobile ? false : true,
           start: "top top",
-          end: `+=${SCROLL_DISTANCE}`,
-          scrub: isMobile ? 1 : 2, // Quicker response on mobile to feel 'lighter'
+          end: isMobile ? "+=3000" : `+=${SCROLL_DISTANCE}`, // Much shorter scroll requirement on mobile
+          scrub: isMobile ? 0.5 : 2, 
           onEnter: initAudio,
         }
       });
@@ -216,7 +216,7 @@ export default function MemoryArchive() {
         className="absolute inset-0 z-[100] pointer-events-none opacity-0 mix-blend-overlay bg-gold/20"
       />
 
-      <div ref={pinRef} className="relative h-screen flex items-center justify-center">
+      <div ref={pinRef} className={`relative ${isMobile ? "min-h-[150vh]" : "h-screen"} flex items-center justify-center`}>
 
         {/* Scene 1: Tagline */}
         <div ref={taglineRef} className="absolute inset-0 flex flex-col items-center justify-center z-[50]">
@@ -309,7 +309,7 @@ export default function MemoryArchive() {
         {/* Scene 4: Mosaic Dissolve */}
         <div ref={mosaicRef} className="absolute inset-0 flex flex-col items-center justify-center z-2 opacity-0 pointer-events-none px-6">
           <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-1 w-full max-w-7xl">
-            {GALLERY_2025.slice(0, 16).map((img, i) => (
+            {GALLERY_2025.slice(0, isMobile ? 8 : 16).map((img, i) => (
               <div key={i} className="aspect-square overflow-hidden border border-white/5 bg-white/5">
                 <img src={img.src} alt="" className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity grayscale active-grayscale-none" />
               </div>

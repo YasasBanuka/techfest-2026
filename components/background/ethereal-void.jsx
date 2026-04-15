@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 export default function EtherealVoid() {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: -1000, y: -1000 });
-  const [isClicking, setIsClicking] = useState(false);
+  const isClickingRef = useRef(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -21,8 +21,12 @@ export default function EtherealVoid() {
 
     let animationFrameId;
     let particles = [];
-    const particleCount = 100;
-    const mouseRadius = 250; // More localized interaction
+    
+    // Performance optimization for mobile
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 40 : 100;
+    const mouseRadius = isMobile ? 180 : 250; 
+    const useShadows = !isMobile; // Disable expensive shadows on mobile
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -38,24 +42,20 @@ export default function EtherealVoid() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
         this.size = Math.random() * 2 + 1.2;
-        // Base drift speed (Natural motion)
         this.baseVx = (Math.random() - 0.5) * 0.4;
         this.baseVy = (Math.random() - 0.5) * 0.4;
         this.vx = this.baseVx;
         this.vy = this.baseVy;
         this.opacity = Math.random() * 0.6 + 0.4;
-        this.color = "255, 179, 0"; // Amber/Orange
+        this.color = "255, 179, 0"; 
       }
 
       update(mouse, clicking) {
-        // Calculate distance to mouse
         const dx = mouse.x - this.x;
         const dy = mouse.y - this.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < mouseRadius) {
-            // BEHAVIOR: Localized Attraction
-            // Using quadratic falloff for a 'sharper' catch near the center
             const force = Math.pow((mouseRadius - distance) / mouseRadius, 2);
             const directionX = (dx / distance) * force * 0.6;
             const directionY = (dy / distance) * force * 0.6;
@@ -63,7 +63,6 @@ export default function EtherealVoid() {
             this.vx += directionX;
             this.vy += directionY;
 
-            // BEHAVIOR: Shockwave (On Click)
             if (clicking && distance < 180) {
                const pushForce = Math.pow((180 - distance) / 180, 2) * 15;
                this.vx -= (dx / distance) * pushForce;
@@ -71,18 +70,13 @@ export default function EtherealVoid() {
             }
         }
 
-        // Apply Friction to keep movement elegant
         this.vx *= 0.95;
         this.vy *= 0.95;
-
-        // Add back a bit of base drift so they never fully stop
         this.vx += this.baseVx * 0.05;
         this.vy += this.baseVy * 0.05;
-        
         this.x += this.vx;
         this.y += this.vy;
 
-        // Wrap around screen
         if (this.x < 0) this.x = canvas.width;
         if (this.x > canvas.width) this.x = 0;
         if (this.y < 0) this.y = canvas.height;
@@ -91,11 +85,19 @@ export default function EtherealVoid() {
 
       draw() {
         ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
-        ctx.shadowBlur = 20; // More intense glow
-        ctx.shadowColor = `rgb(${this.color})`;
+        
+        if (useShadows) {
+          ctx.shadowBlur = 15;
+          ctx.shadowColor = `rgb(${this.color})`;
+        }
+
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
+
+        if (useShadows) {
+          ctx.shadowBlur = 0; // Reset for performance
+        }
       }
     }
 
@@ -110,23 +112,27 @@ export default function EtherealVoid() {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach((p) => {
-        p.update(mouseRef.current, isClicking);
+        p.update(mouseRef.current, isClickingRef.current);
         p.draw();
       });
       animationFrameId = requestAnimationFrame(animate);
     };
 
     const handleMouseMove = (e) => {
-        mouseRef.current = { x: e.clientX, y: e.clientY };
+        if (!isMobile) {
+            mouseRef.current = { x: e.clientX, y: e.clientY };
+        }
     };
 
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
+    const handleMouseDown = () => { if (!isMobile) isClickingRef.current = true; };
+    const handleMouseUp = () => { if (!isMobile) isClickingRef.current = false; };
 
     window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp);
+    if (!isMobile) {
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mousedown", handleMouseDown);
+        window.addEventListener("mouseup", handleMouseUp);
+    }
 
     init();
     animate();
@@ -138,7 +144,7 @@ export default function EtherealVoid() {
       window.removeEventListener("mouseup", handleMouseUp);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [isClicking]);
+  }, []);
 
   return (
     <div className="absolute inset-0 pointer-events-auto z-[1] overflow-hidden bg-navy-deeper">
