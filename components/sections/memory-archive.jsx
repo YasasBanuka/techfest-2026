@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { IMPACT_STATS, GALLERY_2025 } from "@/data/gallery-2025";
+import { isTouchDevice } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,11 +15,16 @@ gsap.registerPlugin(ScrollTrigger);
  * and transitions into the future through high-tech surrealism.
  */
 
-const SCROLL_DISTANCE = 22000; // Massively increased for ultra-smooth buttery scroll
-
 export default function MemoryArchive() {
   const containerRef = useRef(null);
   const pinRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(isTouchDevice());
+  }, []);
+
+  const SCROLL_DISTANCE = isMobile ? 8000 : 22000;
 
   // Scene Refs
   const taglineRef = useRef(null);
@@ -71,7 +77,7 @@ export default function MemoryArchive() {
           pinSpacing: true,
           start: "top top",
           end: `+=${SCROLL_DISTANCE}`,
-          scrub: 2, // Increased scrub for smoother, slightly laggy cinematic feel
+          scrub: isMobile ? 1 : 2, // Quicker response on mobile to feel 'lighter'
           onEnter: initAudio,
         }
       });
@@ -167,37 +173,39 @@ export default function MemoryArchive() {
           "<0.3"
         );
 
-        tl.to({}, { duration: 5 });
+        tl.to({}, { duration: isMobile ? 2 : 5 });
 
         // Dissolve stat
         tl.to([photo, statWrapper], { opacity: 0, y: -40, duration: 1.2, ease: "power2.in" });
       });
 
       // ─────────────────────────────────────────────────────
-      // ACT 4: Mosaic Dissolution
+      // ACT 4: Mosaic Dissolution (Desktop Only for Performance)
       // ─────────────────────────────────────────────────────
-      tl.set(mosaicRef.current, { opacity: 1, zIndex: 80, pointerEvents: "auto" });
-      tl.fromTo(mosaicRef.current,
-        { opacity: 0, scale: 0.8 },
-        { opacity: 1, scale: 1, duration: 2.5, ease: "power4.out" }
-      );
+      if (!isMobile) {
+        tl.set(mosaicRef.current, { opacity: 1, zIndex: 80, pointerEvents: "auto" });
+        tl.fromTo(mosaicRef.current,
+          { opacity: 0, scale: 0.8 },
+          { opacity: 1, scale: 1, duration: 2.5, ease: "power4.out" }
+        );
 
-      tl.to({}, { duration: 5 });
+        tl.to({}, { duration: 5 });
 
-      tl.to(mosaicRef.current, {
-        opacity: 0,
-        filter: "blur(40px) brightness(4)",
-        scale: 1.5,
-        rotateX: 15, // Adding a slight 3D drift
-        duration: 2.5,
-        ease: "power2.in",
-        onStart: () => playCrunch(200, "sawtooth"),
-      });
+        tl.to(mosaicRef.current, {
+          opacity: 0,
+          filter: "blur(40px) brightness(4)",
+          scale: 1.5,
+          rotateX: 15,
+          duration: 2.5,
+          ease: "power2.in",
+          onStart: () => playCrunch(200, "sawtooth"),
+        });
+      }
 
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   return (
     <section ref={containerRef} className="relative w-full overflow-hidden bg-navy-deeper border-y border-white/5">

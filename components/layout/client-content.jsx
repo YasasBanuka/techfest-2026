@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { AnimatePresence } from "framer-motion";
 import GhostLoader from "@/components/ui/ghost-loader";
 import Navbar from "@/components/layout/navbar";

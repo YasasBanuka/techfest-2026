@@ -18,6 +18,11 @@ export default function PlexusCanvas() {
         if (!canvas) return;
         const ctx = canvas.getContext("2d");
 
+        // Dynamic particle count for performance
+        const isMobile = window.innerWidth < 768;
+        const count = isMobile ? 35 : PARTICLE_COUNT;
+        const maxDist = isMobile ? 100 : MAX_DISTANCE;
+
         function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -25,7 +30,7 @@ export default function PlexusCanvas() {
         resize();
         window.addEventListener("resize", resize);
 
-        particlesRef.current = Array.from({ length: PARTICLE_COUNT }, () => ({
+        particlesRef.current = Array.from({ length: count }, () => ({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
             vx: (Math.random() - 0.5) * SPEED * 2,
@@ -47,15 +52,15 @@ export default function PlexusCanvas() {
                 if (p.y > height) p.y = 0;
             }
 
-            // Draw connecting lines — higher opacity for visibility
+            // Draw connecting lines
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (dist < MAX_DISTANCE) {
-                        const opacity = (1 - dist / MAX_DISTANCE) * 0.55; // was 0.25
+                    if (dist < maxDist) {
+                        const opacity = (1 - dist / maxDist) * 0.55;
                         ctx.beginPath();
                         ctx.strokeStyle = `rgba(${COLOR}, ${opacity})`;
                         ctx.lineWidth = 1;
