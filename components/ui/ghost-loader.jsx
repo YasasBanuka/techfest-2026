@@ -39,15 +39,15 @@ export default function GhostLoader({ onComplete }) {
         "-=0.5"
       );
 
-      // Persistent focus wavering (Ghosty feel)
-      tl.to(fragments, {
+      // Persistent focus wavering (Ghosty feel) - Independent of the main sequence
+      gsap.to(fragments, {
         filter: "blur(2px)",
         repeat: -1,
         yoyo: true,
         duration: 2,
         stagger: 0.3,
         ease: "sine.inOut"
-      }, "+=0.2");
+      });
 
       // ACT 3: The Elegant Dissolve
       tl.to(containerRef.current, {

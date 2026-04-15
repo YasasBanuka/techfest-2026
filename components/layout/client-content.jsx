@@ -26,17 +26,17 @@ export default function ClientContent({ children }) {
   // Manage body scroll lock
   useEffect(() => {
     if (isLoading) {
-      document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
+      document.body.style.height = "100%"; // Prevent scroll-through
     } else {
-      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
+      document.body.style.height = "";
       // Force a resize event for Lenis/GSAP to recalculate
       window.dispatchEvent(new Event('resize'));
     }
     return () => {
-      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
+      document.body.style.height = "";
     };
   }, [isLoading]);
 

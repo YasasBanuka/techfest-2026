@@ -26,28 +26,41 @@ gsap.registerPlugin(ScrollTrigger);
  */
 export default function SmoothScrollProvider({ children }) {
     useEffect(() => {
+        // Only initialize Lenis on non-touch devices
+        // Mobile/Tablet browsers have high-quality native momentum scroll
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        if (isTouchDevice) {
+            console.log("Smooth scroll disabled for touch device");
+            return;
+        }
+
         const lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo ease
             smoothWheel: true,
             wheelMultiplier: 1.0,
             touchMultiplier: 2.0,
+            smoothTouch: false, // Ensure native touch scroll is untouched
         });
 
         // Keep GSAP ScrollTrigger in sync with Lenis scroll position
         lenis.on("scroll", ScrollTrigger.update);
 
-        // Let GSAP drive Lenis's animation frame (shared RAF loop)
-        gsap.ticker.add((time) => {
+        // Define ticker function to ensure it can be removed properly
+        const updateLenis = (time) => {
             lenis.raf(time * 1000);
-        });
+        };
+
+        // Let GSAP drive Lenis's animation frame (shared RAF loop)
+        gsap.ticker.add(updateLenis);
 
         // Prevent GSAP from compensating for lag (Lenis handles this)
         gsap.ticker.lagSmoothing(0);
 
         return () => {
             lenis.destroy();
-            gsap.ticker.remove((time) => lenis.raf(time * 1000));
+            gsap.ticker.remove(updateLenis);
         };
     }, []);
 
