@@ -26,7 +26,7 @@ function SponsorTile({ name, role, logo }) {
               src={logo}
               alt={`${name} logo`}
               fill
-              className="object-contain grayscale contrast-125 opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:drop-shadow-[0_0_15px_rgba(255,179,0,0.2)] transition-all duration-700"
+              className="object-contain grayscale contrast-125 opacity-70 transition-all duration-700 md:group-hover:grayscale-0 md:group-hover:opacity-100 md:group-hover:drop-shadow-[0_0_15px_rgba(255,179,0,0.2)] touch:grayscale-0 touch:opacity-100"
             />
           ) : (
             <span className="text-gold/40 font-heading font-black text-sm uppercase tracking-widest text-center">

@@ -2,6 +2,7 @@
 
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
+import { isTouchDevice } from "@/lib/utils";
 import { Linkedin, Twitter } from "lucide-react";
 import { TYPE_LABELS } from "@/data/speakers";
 
@@ -26,7 +27,7 @@ export default function SpeakerCard({ speaker, onClick }) {
   useEffect(() => {
     const card = cardRef.current;
     const glow = glowRef.current;
-    if (!card) return;
+    if (!card || isTouchDevice()) return;
 
     // 3D tilt effect — only on devices that support hover
     const onMove = (e) => {

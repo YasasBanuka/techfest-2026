@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@variant touch (@media (hover: none));
 
 /* ═══════════════════════════════════════════════════════
    TechFest 2026 — Design Tokens
@@ -47,6 +48,30 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent blue highlight on tap for mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ═══════════════════════════
+   Touch Support Optimization
+   ═══════════════════════════ */
+
+/* Global hover prevention for touch-only devices */
+@media (hover: none) {
+  /* Disable hover effects that causes 'sticky' state on mobile */
+  .hover\:text-gold:hover {
+    color: inherit;
+  }
+  .hover\:bg-gold:hover {
+    background-color: inherit;
+  }
+}
+
+/* Active state for tactile feedback on touch */
+button:active, a:active {
+  opacity: 0.7;
+  transform: scale(0.98);
+  transition: transform 0.1s;
 }
 
 h1,
