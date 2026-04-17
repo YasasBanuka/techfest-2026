@@ -114,7 +114,7 @@ function SessionCard({ session, index, isHovered, onHover }) {
                         transition={{ duration: 0.5, ease: "easeOut" }}
                         className="overflow-hidden"
                       >
-                        <p className="text-white-dim text-sm leading-relaxed mt-6 pt-6 border-t border-white/5 font-light italic">
+                        <p className="text-white/70 text-lg leading-relaxed italic border-l-2 border-gold/10 pl-6 mt-6">
                           {session.description}
                         </p>
                         

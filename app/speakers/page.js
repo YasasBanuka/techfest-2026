@@ -47,7 +47,7 @@ export default function SpeakersPage() {
                 <h1 className="text-5xl md:text-8xl font-heading font-black text-white uppercase tracking-tighter leading-[0.85] mb-6">
                   The <span className="gold-gradient-text">Assembly</span>
                 </h1>
-                <p className="text-white-dim text-lg font-light leading-relaxed italic">
+                <p className="text-white/70 text-lg leading-relaxed italic border-l-2 border-gold/10 pl-6">
                   {IS_REVEALED 
                     ? "Meet the industry leaders and visionaries crafting the next chapter of innovation at TechFest 2026."
                     : "The decrypted dossiers of our speakers will be revealed soon. The assembly is currently being finalized."

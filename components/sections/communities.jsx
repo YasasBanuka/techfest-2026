@@ -66,7 +66,7 @@ export default function Communities() {
                 </span>
 
                 {/* Caption */}
-                <p className="text-white-dim text-sm leading-relaxed max-w-sm">
+                <p className="text-white/70 text-sm leading-relaxed max-w-sm">
                   {community.caption}
                 </p>
 

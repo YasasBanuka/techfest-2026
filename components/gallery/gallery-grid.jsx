@@ -169,7 +169,7 @@ export default function GalleryGrid({ photos }) {
                          <h3 className="text-xl font-heading font-black text-white uppercase tracking-tight leading-none mb-2">
                             {selectedPhoto.caption}
                          </h3>
-                         <p className="text-white-dim text-xs font-light italic leading-relaxed">
+                         <p className="text-white/60 text-xs italic leading-relaxed">
                             Captured during the peak transformation protocol of TechFest 2026.
                          </p>
                       </motion.div>

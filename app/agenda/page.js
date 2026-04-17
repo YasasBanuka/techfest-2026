@@ -40,9 +40,9 @@ export default function AgendaPage() {
                   </p>
                 </div>
                 <h1 className="text-5xl md:text-8xl font-heading font-black text-white uppercase tracking-tighter leading-[0.85] mb-6">
-                  The <span className="gold-gradient-text">Chronicle</span>
+                  The <span className="gold-gradient-text">Schedule</span>
                 </h1>
-                <p className="text-white-dim text-lg font-light leading-relaxed italic border-l-2 border-gold/10 pl-6">
+                <p className="text-white/70 text-lg leading-relaxed italic border-l-2 border-gold/10 pl-6">
                   Deciphering the temporal flow of TechFest 2026. A structured manifestation of keynotes, workshops, 
                   and innovation protocols organized by sequence and metadata.
                 </p>

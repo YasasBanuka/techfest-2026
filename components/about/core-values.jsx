@@ -38,7 +38,7 @@ export default function CoreValues() {
                   </h3>
 
                   {/* Misty Manifestation Description */}
-                  <p className="text-white-dim text-sm leading-relaxed font-light italic transition-all duration-700 blur-[0.5px] opacity-60 group-hover:blur-0 group-hover:opacity-100">
+                  <p className="text-white/70 text-sm leading-relaxed font-normal transition-all duration-700 group-hover:text-white">
                     {value.description}
                   </p>
 

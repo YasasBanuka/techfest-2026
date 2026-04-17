@@ -85,7 +85,7 @@ export default function StoryTimeline() {
     <section ref={outerRef} style={{ height: "300vh" }} className="relative">
       <div
         ref={stickyRef}
-        className="sticky top-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden px-6"
+        className="sticky top-0 w-full h-screen flex flex-col items-center justify-center overflow-visible px-6"
       >
         {/* HUD Annotations */}
         <div className="absolute inset-x-0 top-1/4 pointer-events-none opacity-20 flex justify-between px-10">
@@ -100,12 +100,12 @@ export default function StoryTimeline() {
         </div>
 
         {/* Heading */}
-        <div className="relative z-10 text-center mb-24">
+        <div className="relative z-10 text-center mb-24 pt-12">
           <div className="flex items-center justify-center gap-2 mb-4 opacity-40">
             <Terminal size={12} className="text-gold" />
             <p className="text-[10px] font-mono text-white/60 tracking-[0.4em] uppercase">Historical_Manifestation</p>
           </div>
-          <h2 className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter italic">
+          <h2 className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter italic pr-4">
             Our <span className="gold-gradient-text">Origin</span>
           </h2>
         </div>
@@ -193,7 +193,7 @@ function YearCard({ item, align, status, highlighted }) {
         <h4 className="text-white font-heading font-black text-lg uppercase tracking-tight mb-3">
           {item.title}
         </h4>
-        <p className="text-white-dim text-xs leading-relaxed font-light italic">
+        <p className="text-white/60 text-sm leading-relaxed font-medium">
           {item.description}
         </p>
       </div>

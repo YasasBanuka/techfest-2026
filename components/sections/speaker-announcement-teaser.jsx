@@ -37,7 +37,7 @@ export default function SpeakerAnnouncementTeaser() {
                 The <span className="gold-gradient-text">Assembly</span> <br />
                 Manifesto
               </h2>
-              <p className="text-white-dim text-lg md:text-xl font-light italic leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0">
+              <p className="text-white/60 text-lg md:text-xl italic leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0">
                 A gathering of the industry&apos;s most influential figures is being finalized. 
                 Individual dossiers are currently undergoing decryption.
               </p>

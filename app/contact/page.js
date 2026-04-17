@@ -74,7 +74,7 @@ export default function ContactPage() {
                 <h1 className="text-5xl md:text-8xl font-heading font-black text-white uppercase tracking-tighter leading-[0.85] mb-6">
                   Contact <span className="gold-gradient-text">Us</span>
                 </h1>
-                <p className="text-white-dim text-lg font-light leading-relaxed italic border-l-2 border-gold/10 pl-6">
+                <p className="text-white/70 text-lg leading-relaxed italic border-l-2 border-gold/10 pl-6">
                   Establishing secure multi-channel support. Reach out for sponsorships, speaker proposals, 
                   or general questions. Every message is processed with priority.
                 </p>

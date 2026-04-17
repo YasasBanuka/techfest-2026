@@ -52,6 +52,25 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* ══════════════════════════════════════════
+   Noir 'Sentinel' Cursor Global Hide
+   ──────────────────────────────────────────
+   Hides system cursor only on devices that 
+   support hover (Desktop/Laptop).
+   ══════════════════════════════════════════ */
+@media (hover: hover) {
+  body, 
+  body *,
+  a, 
+  button, 
+  input, 
+  select, 
+  textarea, 
+  [role="button"] {
+    cursor: none !important;
+  }
+}
+
 /* ═══════════════════════════
    Touch Support Optimization
    ═══════════════════════════ */

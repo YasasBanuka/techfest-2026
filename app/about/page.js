@@ -47,7 +47,7 @@ export default function AboutPage() {
       <SpeakerBackground />
 
       {/* ── Layer 2: HUD Decorative Annotations ── */}
-      <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden opacity-30 font-mono text-[8px] uppercase tracking-[0.4em] text-gold/40">
+      <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden opacity-30 font-mono text-[8px] uppercase tracking-[0.4em] text-gold/40 hidden md:block">
         <div className="absolute top-60 left-10 rotate-90 origin-left">
           ORIGIN_PROTOCOL: [0x7A_MANIFEST]
         </div>
@@ -68,30 +68,20 @@ export default function AboutPage() {
                        System Genesis
                     </p>
                  </div>
-                 <h1 className="text-6xl md:text-9xl font-heading font-black text-white uppercase tracking-tighter leading-[0.8] mb-10">
-                    The <span className="gold-gradient-text">Movement</span>
-                 </h1>
-                 <div className="max-w-2xl border-l-2 border-gold/10 pl-8">
-                    <p className="text-white-dim text-xl font-light leading-relaxed italic mb-8">
+                  <h1 className="text-5xl sm:text-7xl md:text-8xl font-heading font-black text-white uppercase tracking-tighter leading-none mt-6 mb-10 pr-4">
+                     Our <span className="gold-gradient-text">Identity</span>
+                  </h1>
+                 <div className="max-w-2xl">
+                    <p className="text-white/70 text-lg leading-relaxed italic border-l-2 border-gold/10 pl-6">
                        TechFest Sri Lanka isn't just an event; it's a platform for the next generation of technology leaders to manifest their ideas into reality.
                     </p>
-                    <div className="flex items-center gap-8 opacity-40">
-                       <div className="flex items-center gap-2">
-                          <Search size={14} className="text-white" />
-                          <span className="text-[9px] font-mono text-white uppercase tracking-widest">Protocol: Established</span>
-                       </div>
-                       <div className="flex items-center gap-2">
-                          <Database size={14} className="text-white" />
-                          <span className="text-[9px] font-mono text-white uppercase tracking-widest">Archive: 2.3TB</span>
-                       </div>
-                    </div>
                  </div>
               </FadeInUp>
            </div>
         </section>
 
         {/* ── 2. Dual-Core Manifestation (Mission & Vision) ── */}
-        <section className="py-24 px-6">
+        <section className="py-20 md:py-32 px-6">
            <div className="max-w-6xl mx-auto">
               <div className="flex flex-col md:flex-row gap-12">
                  {/* Mission: The Spark */}
@@ -130,14 +120,14 @@ export default function AboutPage() {
         </section>
 
         {/* ── 3. Fundamental Protocols (Core Values) ── */}
-        <section className="py-24 px-6 relative">
+        <section className="py-20 md:py-32 px-6 relative">
           <div className="max-w-6xl mx-auto">
             <FadeInUp className="mb-16">
                <div className="flex items-center gap-3 mb-4">
                   <Shield size={14} className="text-gold/60" />
                   <p className="text-white/40 text-[9px] font-mono uppercase tracking-[0.4em]">Core_Guiding_Principles</p>
                </div>
-               <h3 className="text-4xl md:text-5xl font-heading font-black text-white uppercase tracking-tighter italic">
+               <h3 className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter italic pr-4">
                   Fundamental <span className="gold-gradient-text italic">Protocols</span>
                </h3>
             </FadeInUp>
@@ -149,15 +139,15 @@ export default function AboutPage() {
         <StoryTimeline />
 
         {/* ── 5. Participating Nodes (Organizers) ── */}
-        <section className="py-32 px-6">
+        <section className="py-20 md:py-32 px-6">
           <div className="max-w-6xl mx-auto">
             <FadeInUp className="mb-20">
                <div className="flex items-center gap-3 mb-4">
                   <Users size={14} className="text-gold/60" />
                   <p className="text-white/40 text-[9px] font-mono uppercase tracking-[0.4em]">The_Movement_Architects</p>
                </div>
-               <h3 className="text-4xl md:text-5xl font-heading font-black text-white uppercase tracking-tighter italic">
-                  Participating <span className="gold-gradient-text italic">Nodes</span>
+               <h3 className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter italic pr-4">
+                  Strategic <span className="gold-gradient-text italic">Alliance</span>
                </h3>
                <p className="text-white-dim text-lg font-light leading-relaxed italic mt-4 max-w-2xl border-l border-white/10 pl-6">
                   Two premier student organizations united by a shared belief in Sri Lanka's tech future.
@@ -186,7 +176,7 @@ export default function AboutPage() {
                       <div className="inline-block px-3 py-0.5 bg-gold/10 border border-gold/20 rounded-sm mb-6">
                         <span className="text-gold text-[8px] font-mono uppercase tracking-widest font-black">{community.role}</span>
                       </div>
-                      <p className="text-white-dim text-sm leading-relaxed font-light italic max-w-sm">
+                      <p className="text-white/70 text-sm leading-relaxed max-w-sm">
                         {community.caption}
                       </p>
                     </div>
@@ -201,7 +191,7 @@ export default function AboutPage() {
                      <Users size={14} className="text-gold/60" />
                      <p className="text-white/40 text-[9px] font-mono uppercase tracking-[0.4em]">The_Masterminds</p>
                   </div>
-                  <h3 className="text-4xl md:text-5xl font-heading font-black text-white uppercase tracking-tighter italic">
+                  <h3 className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter italic pr-4">
                      Organizing <span className="gold-gradient-text italic">Committee</span>
                   </h3>
                </FadeInUp>

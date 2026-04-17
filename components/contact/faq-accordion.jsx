@@ -92,7 +92,7 @@ export default function FAQAccordion() {
                 className="overflow-hidden"
               >
                 <div className="pb-8 pl-12">
-                   <p className="text-white-dim text-sm leading-relaxed font-light italic">
+                   <p className="text-white/60 text-sm leading-relaxed italic">
                      {faq.answer}
                    </p>
                    
