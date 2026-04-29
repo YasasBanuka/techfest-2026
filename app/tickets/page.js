@@ -1,9 +1,8 @@
 import TicketCard from "@/components/tickets/ticket-card";
-import RegisterForm from "@/components/tickets/register-form";
 import CTA from "@/components/sections/cta";
 import FadeInUp from "@/components/ui/fade-in-up";
 import { StaggerContainer, StaggerItem } from "@/components/ui/fade-in-up";
-import { TICKET_TIERS, PERKS, REGISTRATION_DEADLINE, EVENT_DATE } from "@/data/tickets";
+import { TICKET_TIERS, PERKS, REGISTRATION_DEADLINE, EVENT_DATE, TIERS_REVEALED } from "@/data/tickets";
 import SpeakerBackground from "@/components/speakers/speaker-background";
 import CyberModule from "@/components/ui/cyber-module";
 import { Activity, Clock, Users, Zap, Award, Globe, Shield, Terminal } from "lucide-react";
@@ -87,7 +86,7 @@ export default function TicketsPage() {
                    <p className="text-[8px] font-mono text-white/30 uppercase tracking-[0.4em] mb-2">Total_Capacity</p>
                    <div className="flex items-center gap-2 text-white font-heading font-black text-sm uppercase italic tracking-widest">
                       <Users size={12} className="text-gold/40" />
-                      1000+ ATTENDEES
+                      1500+ ATTENDEES
                    </div>
                 </div>
               </div>
@@ -108,11 +107,25 @@ export default function TicketsPage() {
                </h2>
             </FadeInUp>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {TICKET_TIERS.map((tier, i) => (
-                <TicketCard key={tier.id} tier={tier} index={i} />
-              ))}
-            </div>
+            {TIERS_REVEALED ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {TICKET_TIERS.map((tier, i) => (
+                  <TicketCard key={tier.id} tier={tier} index={i} />
+                ))}
+              </div>
+            ) : (
+              <CyberModule className="bg-white/[0.02] border-white/5 p-12 md:p-24 text-center flex flex-col items-center">
+                 <div className="w-20 h-20 rounded-full bg-gold/5 border border-gold/10 flex items-center justify-center text-gold/40 mb-8 animate-pulse">
+                    <Shield size={40} />
+                 </div>
+                 <h3 className="text-2xl md:text-4xl font-heading font-black text-white uppercase italic tracking-tighter mb-4">
+                    Access Protocols <span className="gold-gradient-text">Encrypted</span>
+                 </h3>
+                 <p className="text-white/40 text-lg italic max-w-xl mx-auto leading-relaxed">
+                    The integration tiers for TechFest 2026 are currently being finalized. Decrypted protocols will be released on this channel soon.
+                 </p>
+              </CyberModule>
+            )}
           </div>
         </section>
 
@@ -155,29 +168,6 @@ export default function TicketsPage() {
           </div>
         </section>
 
-        {/* ── 5. Intent Registration (Form) ── */}
-        <section id="register" className="py-20 md:py-40 px-6">
-          <div className="max-w-4xl mx-auto">
-            <FadeInUp className="text-center mb-16">
-               <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-gold/5 border border-gold/10 mb-6">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-                  <span className="text-[10px] font-mono text-gold uppercase tracking-[0.4em] font-black">Transmission_Channel: Open</span>
-               </div>
-               <h2 className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter italic mb-4 pr-4 leading-none">
-                  Secure Your <span className="gold-gradient-text italic">Spot</span>
-               </h2>
-               <p className="text-white/60 text-lg italic max-w-xl mx-auto border-l md:border-l-0 md:border-b-2 border-gold/10 pb-6">
-                  Register your intent now — ticket manifestation protocols will be encrypted and sent to your signal address soon.
-               </p>
-            </FadeInUp>
-
-            <CyberModule className="bg-white/[0.02] border-white/5 p-10 md:p-14 transition-all duration-1000 hover:border-gold/30">
-               <div className="relative z-10">
-                 <RegisterForm />
-               </div>
-            </CyberModule>
-          </div>
-        </section>
 
         <CTA />
       </div>

@@ -3,8 +3,9 @@
  * Ticket tiers and registration info for TechFest 2026.
  */
 
-export const REGISTRATION_DEADLINE = "November 30, 2026";
+export const REGISTRATION_DEADLINE = "November 01, 2026";
 export const EVENT_DATE = "November 07, 2026";
+export const TIERS_REVEALED = false;
 
 export const TICKET_TIERS = [
   {
@@ -15,7 +16,7 @@ export const TICKET_TIERS = [
     badge: "Most Popular",
     featured: true,
     cta: "Register Interest",
-    ctaLink: "#register",
+    ctaLink: "/auth/signup",
     external: false,
     url: "https://forms.google.com/your-form-here",
     description: "Full access to the main event — everything TechFest Sri Lanka has to offer.",
@@ -38,7 +39,7 @@ export const TICKET_TIERS = [
     badge: "Limited",
     featured: false,
     cta: "Join Waitlist",
-    ctaLink: "#register",
+    ctaLink: "/auth/signup",
     external: false,
     url: "https://forms.google.com/your-form-here",
     description: "Everything in General Admission, plus access to hands-on workshop sessions with industry experts.",

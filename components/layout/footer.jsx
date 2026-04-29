@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Linkedin, Instagram, Youtube } from "lucide-react";
+import { Linkedin, Instagram, Youtube, Facebook, Music2 } from "lucide-react";
 import FadeInUp from "@/components/ui/fade-in-up";
 
 const quickLinks = [
@@ -12,9 +12,11 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { name: "LinkedIn", href: "https://linkedin.com", Icon: Linkedin },
-  { name: "Instagram", href: "https://instagram.com", Icon: Instagram },
-  { name: "YouTube", href: "https://youtube.com", Icon: Youtube },
+  { name: "Facebook", href: "https://web.facebook.com/people/IEEE-Techfest-Sri-Lanka/61576197093667", Icon: Facebook },
+  { name: "Instagram", href: "https://www.instagram.com/techfestlk", Icon: Instagram },
+  { name: "LinkedIn", href: "https://www.linkedin.com/company/techfestlk", Icon: Linkedin },
+  { name: "TikTok", href: "https://www.tiktok.com/@ieee.techverse.sr", Icon: Music2 },
+  { name: "YouTube", href: "https://www.youtube.com/@ieeetechversesrilanka", Icon: Youtube },
 ];
 
 export default function Footer() {

@@ -24,7 +24,7 @@ export default function MemoryArchive() {
     setIsMobile(isTouchDevice());
   }, []);
 
-  const SCROLL_DISTANCE = isMobile ? 8000 : 22000;
+  const SCROLL_DISTANCE = isMobile ? 4000 : 8000;
 
   // Scene Refs
   const taglineRef = useRef(null);
@@ -77,7 +77,7 @@ export default function MemoryArchive() {
           pinSpacing: isMobile ? false : true,
           start: "top top",
           end: isMobile ? "+=3000" : `+=${SCROLL_DISTANCE}`, // Much shorter scroll requirement on mobile
-          scrub: isMobile ? 0.5 : 2, 
+          scrub: isMobile ? 0.5 : 1,
           onEnter: initAudio,
         }
       });
@@ -220,14 +220,14 @@ export default function MemoryArchive() {
 
         {/* Scene 1: Tagline */}
         <div ref={taglineRef} className="absolute inset-0 flex flex-col items-center justify-center z-[50]">
-          <h2 className="flex flex-col sm:flex-row gap-4 sm:gap-12 text-5xl sm:text-7xl lg:text-9xl font-heading font-black text-white uppercase tracking-tighter text-center">
+          <h2 className="flex flex-col sm:flex-row gap-4 sm:gap-8 lg:gap-12 text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-heading font-black text-white uppercase tracking-tighter text-center">
             {["Innovate", "Inspire", "Impact"].map((word, i) => (
-              <span 
-                key={word} 
+              <span
+                key={word}
                 data-text={word}
                 className="tagline-word glitch-tic inline-block opacity-0"
               >
-                {word === "Impact" ? (
+                {word === "Inspire" ? (
                   <span className="gold-gradient-text drop-shadow-[0_0_50px_rgba(255,179,0,0.3)]">{word}</span>
                 ) : word}
               </span>
@@ -286,7 +286,7 @@ export default function MemoryArchive() {
                   Archive_ID: TF25_REC_{i + 1} [STABLE]
                 </div>
 
-                <h3 
+                <h3
                   data-text={stat.stat}
                   className="tagline-word glitch-tic text-6xl sm:text-8xl lg:text-9xl font-heading font-black text-gold drop-shadow-glow leading-none mb-2"
                 >

@@ -33,7 +33,7 @@ export default function Modal({ isOpen, onClose, children, title }) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-hidden">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-hidden" data-lenis-prevent>
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -66,7 +66,7 @@ export default function Modal({ isOpen, onClose, children, title }) {
             </div>
 
             {/* Body */}
-            <div className="p-6 sm:p-8 overflow-y-auto max-h-[80vh] custom-scrollbar">
+            <div className="p-6 sm:p-8 overflow-y-auto max-h-[80vh] custom-scrollbar" data-lenis-prevent>
               {children}
             </div>
           </motion.div>

@@ -22,8 +22,11 @@ export default async function DashboardLayout({ children }) {
     .eq('id', user.id)
     .single()
 
-  const name = profile?.full_name || user.email
-  const initials = name
+  const fullName = profile?.full_name || user.user_metadata?.full_name || user.email
+  const firstName = fullName.includes('@') ? fullName.split('@')[0] : fullName.split(' ')[0]
+  const role = user.user_metadata?.role || 'Innovator'
+
+  const initials = (profile?.full_name || user.user_metadata?.full_name || firstName)
     .split(' ')
     .map(n => n[0])
     .join('')
@@ -54,8 +57,8 @@ export default async function DashboardLayout({ children }) {
               <div className="h-8 w-px bg-white/5" />
               <div className="flex items-center gap-3">
                  <div className="text-right">
-                    <p className="text-white text-[10px] font-bold tracking-tight">{name}</p>
-                    <p className="text-gold/60 text-[8px] font-mono uppercase tracking-widest">Operator</p>
+                    <p className="text-white text-[10px] font-bold tracking-tight">{firstName}</p>
+                    <p className="text-gold/60 text-[8px] font-mono uppercase tracking-widest">{role}</p>
                  </div>
                  <div className="w-8 h-8 rounded-full bg-navy-surface border border-gold/20 flex items-center justify-center text-[10px] font-black text-gold">
                     {initials}

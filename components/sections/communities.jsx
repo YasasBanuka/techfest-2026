@@ -51,7 +51,7 @@ export default function Communities() {
                     src={community.logo}
                     alt={`${community.name} logo`}
                     fill
-                    className="object-contain grayscale contrast-125 opacity-70 transition-all duration-700 ease-in-out md:group-hover:grayscale-0 md:group-hover:opacity-100 md:group-hover:drop-shadow-[0_0_20px_rgba(255,179,0,0.3)] touch:grayscale-0 touch:opacity-100"
+                    className="object-contain transition-all duration-700 opacity-100 grayscale-0 md:grayscale md:opacity-70 md:group-hover:grayscale-0 md:group-hover:opacity-100 md:group-hover:drop-shadow-[0_0_20px_rgba(255,179,0,0.3)]"
                   />
                 </div>
 

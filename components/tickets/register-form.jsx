@@ -6,7 +6,18 @@ import { REGISTER_FORM_SUBJECTS } from "@/data/tickets";
 import FadeInUp from "@/components/ui/fade-in-up";
 import { Terminal, Send, CheckCircle2, Loader2 } from "lucide-react";
 
-const initialState = { name: "", email: "", university: "", subject: REGISTER_FORM_SUBJECTS[0], whatsapp: "" };
+const initialState = { 
+  name: "", 
+  email: "", 
+  role: "Undergraduate",
+  university: "", 
+  schoolName: "",
+  grade: "",
+  company: "",
+  jobRole: "",
+  subject: REGISTER_FORM_SUBJECTS[0], 
+  whatsapp: "" 
+};
 
 /**
  * RegisterForm — Redesigned as a Noir 'Signal Transmission' portal.
@@ -87,17 +98,70 @@ export default function RegisterForm() {
           </div>
         </div>
 
-        {/* University + WhatsApp */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="group">
-            <label className="block text-white/30 text-[9px] font-mono uppercase tracking-[0.4em] mb-2 px-1">Origin_Academy</label>
-            <input type="text" name="university" value={form.university} onChange={handleChange} placeholder="University of Moratuwa" className={fieldClass("university")} />
+        {/* Role Selection */}
+        <div className="group">
+          <label className="block text-white/30 text-[9px] font-mono uppercase tracking-[0.4em] mb-2 px-1">Identity_Role</label>
+          <div className="relative">
+            <select name="role" value={form.role} onChange={handleChange} className={`${fieldClass("role")} appearance-none cursor-pointer pr-10`}>
+              <option value="Undergraduate" className="bg-navy-deeper">Undergraduate</option>
+              <option value="School Student" className="bg-navy-deeper">School Student</option>
+              <option value="Professional" className="bg-navy-deeper">Professional</option>
+            </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/20">
+              <Terminal size={14} />
+            </div>
           </div>
+        </div>
+
+        {/* Dynamic Fields Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {form.role === "Undergraduate" && (
+            <>
+              <div className="group">
+                <label className="block text-white/30 text-[9px] font-mono uppercase tracking-[0.4em] mb-2 px-1">Origin_Academy</label>
+                <input type="text" name="university" value={form.university} onChange={handleChange} placeholder="University of Moratuwa" className={fieldClass("university")} />
+              </div>
+              <div className="group">
+                <label className="block text-white/30 text-[9px] font-mono uppercase tracking-[0.4em] mb-2 px-1">Direct_Signal_Link</label>
+                <input type="tel" name="whatsapp" value={form.whatsapp} onChange={handleChange} placeholder="+94 77 000 0000" className={fieldClass("whatsapp")} />
+              </div>
+            </>
+          )}
+
+          {form.role === "School Student" && (
+            <>
+              <div className="group">
+                <label className="block text-white/30 text-[9px] font-mono uppercase tracking-[0.4em] mb-2 px-1">School_Name</label>
+                <input type="text" name="schoolName" value={form.schoolName} onChange={handleChange} placeholder="Royal College" className={fieldClass("schoolName")} />
+              </div>
+              <div className="group">
+                <label className="block text-white/30 text-[9px] font-mono uppercase tracking-[0.4em] mb-2 px-1">Grade_Level</label>
+                <input type="text" name="grade" value={form.grade} onChange={handleChange} placeholder="Grade 13" className={fieldClass("grade")} />
+              </div>
+            </>
+          )}
+
+          {form.role === "Professional" && (
+            <>
+              <div className="group">
+                <label className="block text-white/30 text-[9px] font-mono uppercase tracking-[0.4em] mb-2 px-1">Organization_Node</label>
+                <input type="text" name="company" value={form.company} onChange={handleChange} placeholder="TechVerse" className={fieldClass("company")} />
+              </div>
+              <div className="group">
+                <label className="block text-white/30 text-[9px] font-mono uppercase tracking-[0.4em] mb-2 px-1">Designation_Code</label>
+                <input type="text" name="jobRole" value={form.jobRole} onChange={handleChange} placeholder="Software Engineer" className={fieldClass("jobRole")} />
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* WhatsApp for non-undergraduates */}
+        {form.role !== "Undergraduate" && (
           <div className="group">
             <label className="block text-white/30 text-[9px] font-mono uppercase tracking-[0.4em] mb-2 px-1">Direct_Signal_Link</label>
             <input type="tel" name="whatsapp" value={form.whatsapp} onChange={handleChange} placeholder="+94 77 000 0000" className={fieldClass("whatsapp")} />
           </div>
-        </div>
+        )}
 
         {/* Ticket type */}
         <div className="group">

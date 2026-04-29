@@ -6,7 +6,7 @@
  * type: "keynote" | "workshop" | "panel" | "lightning"
  */
 
-export const IS_REVEALED = true;
+export const IS_REVEALED = false;
 
 export const SPEAKERS = [
   {

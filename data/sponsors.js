@@ -15,14 +15,14 @@ export const SPONSORS = [
     id: 2,
     name: "IEEE TechVerse",
     role: "Organizing Committee",
-    logo: "/images/sponsors/ieee_techverse.png",
+    logo: "/images/logos/techverse.png",
     tier: "title",
   },
   {
     id: 3,
     name: "SLSAC",
     role: "Official Co-Organizing Partner",
-    logo: "/images/sponsors/slsac.png",
+    logo: "/images/logos/slsac.png",
     tier: "platinum",
   },
   {
@@ -50,7 +50,8 @@ export const SPONSORS = [
     id: 7,
     name: "IEEE YPSL",
     role: "Community Partner",
-    logo: "/images/sponsors/ieee_ypsl.png",
+    logo: "/images/sponsors/ypsl.png",
     tier: "partner",
+    scale: 3
   },
 ];

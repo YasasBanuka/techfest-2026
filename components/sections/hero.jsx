@@ -89,7 +89,7 @@ export default function Hero() {
         {/* Main Heading (Glow effect) */}
         <motion.h1
           variants={itemVariants}
-          className="text-6xl sm:text-7xl lg:text-9xl font-heading font-black leading-[1] mb-6 tracking-tight uppercase"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-heading font-black leading-[1] mb-6 tracking-tight uppercase"
         >
           <span className="text-white block drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">TechFest</span>
           <span className="gold-gradient-text block drop-shadow-[0_0_50px_rgba(255,179,0,0.3)]">Sri Lanka</span>
@@ -98,9 +98,9 @@ export default function Hero() {
         {/* Tagline */}
         <motion.p
           variants={itemVariants}
-          className="text-lg sm:text-2xl text-white-muted max-w-3xl mx-auto mb-4 leading-relaxed font-light tracking-wide italic"
+          className="text-lg sm:text-xl lg:text-2xl text-white-muted max-w-3xl mx-auto mb-4 leading-relaxed font-light tracking-wide italic"
         >
-          {EVENT.tagline}
+          Innovate, <span className="text-gold font-bold">Inspire</span>, Impact
         </motion.p>
 
         {/* Sub-tagline with cyber styling */}

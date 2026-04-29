@@ -20,19 +20,21 @@ export default function IgnitionWrapper({ children, className = "" }) {
     const el = wrapperRef.current;
     if (!el) return;
 
+    const isMobile = window.innerWidth < 768;
+
     gsap.fromTo(el, 
       { 
         opacity: 0, 
-        y: 40,
-        filter: "brightness(0.5) blur(10px)",
-        scale: 0.98
+        y: isMobile ? 20 : 40,
+        filter: isMobile ? "brightness(0.5)" : "brightness(0.5) blur(10px)",
+        scale: isMobile ? 1 : 0.98
       },
       {
         opacity: 1,
         y: 0,
-        filter: "brightness(1) blur(0px)",
+        filter: isMobile ? "brightness(1)" : "brightness(1) blur(0px)",
         scale: 1,
-        duration: 1.2,
+        duration: isMobile ? 0.6 : 1.2,
         ease: "power4.out",
         scrollTrigger: {
           trigger: el,

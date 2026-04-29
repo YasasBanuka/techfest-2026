@@ -73,7 +73,7 @@ export default function CTA() {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  href="/tickets"
+                  href="/auth/signup"
                   className="inline-flex items-center justify-center bg-gold text-navy-deeper font-bold px-10 py-4 rounded-xl text-lg hover:bg-gold-bright hover:shadow-[0_0_40px_rgba(255,203,64,0.3)] transition-all duration-300 tracking-wide"
                 >
                   Register Interest Now

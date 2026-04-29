@@ -15,18 +15,21 @@ import CyberModule from "@/components/ui/cyber-module";
  * Logo displayed on a dark card with brightness filter so
  * coloured logos sit nicely on the navy background.
  */
-function SponsorTile({ name, role, logo }) {
+function SponsorTile({ name, role, logo, scale = 1 }) {
   return (
     <div className="flex-shrink-0 w-72 h-64 p-2 group">
       <CyberModule className="h-full flex flex-col items-center justify-center p-6 text-center">
         {/* Logo with Surreal Manifestation */}
-        <div className="relative w-44 h-20 mb-6 flex items-center justify-center group-hover:scale-105 transition-all duration-500">
+        <div 
+          className="relative w-44 h-20 mb-6 flex items-center justify-center group-hover:scale-105 transition-all duration-500"
+          style={{ transform: `scale(${scale})` }}
+        >
           {logo ? (
             <Image
               src={logo}
               alt={`${name} logo`}
               fill
-              className="object-contain grayscale contrast-125 opacity-70 transition-all duration-700 md:group-hover:grayscale-0 md:group-hover:opacity-100 md:group-hover:drop-shadow-[0_0_15px_rgba(255,179,0,0.2)] touch:grayscale-0 touch:opacity-100"
+              className="object-contain transition-all duration-700 opacity-100 grayscale-0 md:grayscale md:opacity-70 md:group-hover:grayscale-0 md:group-hover:opacity-100 md:group-hover:drop-shadow-[0_0_15px_rgba(255,179,0,0.2)]"
             />
           ) : (
             <span className="text-gold/40 font-heading font-black text-sm uppercase tracking-widest text-center">
@@ -91,6 +94,7 @@ export default function SponsorsCarousel() {
                   name={sponsor.name}
                   role={sponsor.role}
                   logo={sponsor.logo}
+                  scale={sponsor.scale || 1}
                 />
               ))}
             </motion.div>

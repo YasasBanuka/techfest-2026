@@ -24,7 +24,7 @@ export default function EtherealVoid() {
     
     // Performance optimization for mobile
     const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? 40 : 100;
+    const particleCount = isMobile ? 20 : 100;
     const mouseRadius = isMobile ? 180 : 250; 
     const useShadows = !isMobile; // Disable expensive shadows on mobile
 
@@ -152,7 +152,7 @@ export default function EtherealVoid() {
       {/* ── Layer 1: The Phantom Nebula (Consistent with Theme) ── */}
       <motion.div 
         className="absolute inset-0 z-[1]"
-        animate={{ 
+        animate={typeof window !== 'undefined' && window.innerWidth < 768 ? {} : { 
             scale: [1, 1.1, 1],
             opacity: [0.3, 0.5, 0.3]
         }}

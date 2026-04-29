@@ -12,8 +12,13 @@ export default function SignupPage() {
     email: "",
     password: "",
     phone: "",
-    university: "",
-    year: "1st Year",
+    role: "Undergraduate",
+    university: "", // For Undergraduates
+    year: "1st Year", // For Undergraduates
+    schoolName: "", // For Students
+    grade: "", // For Students
+    company: "", // For Professionals
+    designation: "", // For Professionals
     marketingConsent: true,
   });
 
@@ -46,8 +51,9 @@ export default function SignupPage() {
           data: {
             full_name: form.fullName,
             phone: form.phone,
-            university: form.university,
-            year_of_study: form.year,
+            role: form.role,
+            university: form.role === "Undergraduate" ? form.university : (form.role === "School Student" ? form.schoolName : form.company),
+            year_of_study: form.role === "Undergraduate" ? form.year : (form.role === "School Student" ? form.grade : form.designation),
             marketing_consent: form.marketingConsent,
           }
         },
@@ -202,41 +208,136 @@ export default function SignupPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* University */}
-            <div className="group">
-              <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
-                <Building2 size={12} className="text-gold/60" /> University / Institute
-              </label>
-              <input
-                type="text"
-                name="university"
-                value={form.university}
-                onChange={handleChange}
-                placeholder="e.g. University of Moratuwa"
-                className={inputClass}
-              />
-            </div>
-
-            {/* Year of Study */}
-            <div className="group">
-              <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
-                <GraduationCap size={12} className="text-gold/60" /> Year of Study
-              </label>
+          {/* Role Selection */}
+          <div className="group">
+            <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
+              <ShieldCheck size={12} className="text-gold/60" /> Identity Role
+            </label>
+            <div className="relative">
               <select
-                name="year"
-                value={form.year}
+                name="role"
+                value={form.role}
                 onChange={handleChange}
                 className={`${inputClass} cursor-pointer appearance-none pr-10`}
               >
-                <option value="1st Year" className="bg-navy-deeper">1st Year</option>
-                <option value="2nd Year" className="bg-navy-deeper">2nd Year</option>
-                <option value="3rd Year" className="bg-navy-deeper">3rd Year</option>
-                <option value="4th Year" className="bg-navy-deeper">4th Year</option>
-                <option value="Postgraduate" className="bg-navy-deeper">Postgraduate</option>
-                <option value="Industry Professional" className="bg-navy-deeper">Industry Professional</option>
+                <option value="Undergraduate" className="bg-navy-deeper">Undergraduate</option>
+                <option value="School Student" className="bg-navy-deeper">School Student</option>
+                <option value="Professional" className="bg-navy-deeper">Professional</option>
               </select>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/20">
+                <ArrowRight size={14} className="rotate-90" />
+              </div>
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Conditional Fields based on Role */}
+            {form.role === "Undergraduate" && (
+              <>
+                <div className="group">
+                  <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
+                    <Building2 size={12} className="text-gold/60" /> University / Institute
+                  </label>
+                  <input
+                    type="text"
+                    name="university"
+                    required
+                    value={form.university}
+                    onChange={handleChange}
+                    placeholder="e.g. University of Moratuwa"
+                    className={inputClass}
+                  />
+                </div>
+                <div className="group">
+                  <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
+                    <GraduationCap size={12} className="text-gold/60" /> Year of Study
+                  </label>
+                  <div className="relative">
+                    <select
+                      name="year"
+                      value={form.year}
+                      onChange={handleChange}
+                      className={`${inputClass} cursor-pointer appearance-none pr-10`}
+                    >
+                      <option value="1st Year" className="bg-navy-deeper">1st Year</option>
+                      <option value="2nd Year" className="bg-navy-deeper">2nd Year</option>
+                      <option value="3rd Year" className="bg-navy-deeper">3rd Year</option>
+                      <option value="4th Year" className="bg-navy-deeper">4th Year</option>
+                      <option value="Postgraduate" className="bg-navy-deeper">Postgraduate</option>
+                    </select>
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/20">
+                      <ArrowRight size={14} className="rotate-90" />
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {form.role === "School Student" && (
+              <>
+                <div className="group">
+                  <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
+                    <Building2 size={12} className="text-gold/60" /> School Name
+                  </label>
+                  <input
+                    type="text"
+                    name="schoolName"
+                    required
+                    value={form.schoolName}
+                    onChange={handleChange}
+                    placeholder="e.g. Royal College"
+                    className={inputClass}
+                  />
+                </div>
+                <div className="group">
+                  <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
+                    <GraduationCap size={12} className="text-gold/60" /> Grade / Year
+                  </label>
+                  <input
+                    type="text"
+                    name="grade"
+                    required
+                    value={form.grade}
+                    onChange={handleChange}
+                    placeholder="e.g. Grade 13"
+                    className={inputClass}
+                  />
+                </div>
+              </>
+            )}
+
+            {form.role === "Professional" && (
+              <>
+                <div className="group">
+                  <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
+                    <Building2 size={12} className="text-gold/60" /> Company / Organization
+                  </label>
+                  <input
+                    type="text"
+                    name="company"
+                    required
+                    value={form.company}
+                    onChange={handleChange}
+                    placeholder="e.g. TechVerse"
+                    className={inputClass}
+                  />
+                </div>
+                <div className="group">
+                  <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
+                    <GraduationCap size={12} className="text-gold/60" /> Designation / Job Role
+                  </label>
+                  <input
+                    type="text"
+                    name="designation"
+                    required
+                    value={form.designation}
+                    onChange={handleChange}
+                    placeholder="e.g. Software Engineer"
+                    className={inputClass}
+                  />
+                </div>
+              </>
+            )}
           </div>
 
           {/* Marketing Consent */}

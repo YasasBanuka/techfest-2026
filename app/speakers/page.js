@@ -15,7 +15,7 @@ export const metadata = {
 export default function SpeakersPage() {
   return (
     <main className="relative min-h-screen bg-navy-deeper overflow-hidden">
-      
+
       {/* ── Layer 1: Ethereal Background ── */}
       <SpeakerBackground />
 
@@ -28,14 +28,14 @@ export default function SpeakersPage() {
           ASSEMBLY_STATUS: {IS_REVEALED ? "[VERIFIED]" : "[ENCRYPTED]"}
         </div>
         <div className="absolute top-1/2 left-6 -translate-y-1/2 flex flex-col gap-8">
-           <div className="h-32 w-px bg-gradient-to-b from-transparent via-gold/40 to-transparent" />
-           <div className="h-32 w-px bg-gradient-to-b from-transparent via-gold/40 to-transparent" />
+          <div className="h-32 w-px bg-gradient-to-b from-transparent via-gold/40 to-transparent" />
+          <div className="h-32 w-px bg-gradient-to-b from-transparent via-gold/40 to-transparent" />
         </div>
       </div>
 
       {/* ── Content Wrapper ── */}
       <div className="relative z-20">
-        
+
         {/* ── Minimalist Header ── */}
         <section className="pt-32 pb-16 px-6">
           <div className="max-w-6xl mx-auto text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-10">
@@ -48,7 +48,7 @@ export default function SpeakersPage() {
                   The <span className="gold-gradient-text">Assembly</span>
                 </h1>
                 <p className="text-white/70 text-lg leading-relaxed italic border-l-2 border-gold/10 pl-6">
-                  {IS_REVEALED 
+                  {IS_REVEALED
                     ? "Meet the industry leaders and visionaries crafting the next chapter of innovation at TechFest 2026."
                     : "The decrypted dossiers of our speakers will be revealed soon. The assembly is currently being finalized."
                   }
