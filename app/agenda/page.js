@@ -5,7 +5,7 @@ import ScheduleTimeline from "@/components/agenda/schedule-timeline";
 import CTA from "@/components/sections/cta";
 import FadeInUp from "@/components/ui/fade-in-up";
 import { StaggerContainer, StaggerItem } from "@/components/ui/fade-in-up";
-import { AGENDA_DATE, VENUE } from "@/data/agenda";
+import { AGENDA_DATE, VENUE, AGENDA_REVEALED } from "@/data/agenda";
 import SpeakerBackground from "@/components/speakers/speaker-background";
 import CyberModule from "@/components/ui/cyber-module";
 
@@ -55,8 +55,10 @@ export default function AgendaPage() {
                  <div className="flex flex-col gap-1">
                     <span className="text-[9px] font-mono text-white/30 uppercase tracking-widest">Global_Status</span>
                     <div className="flex items-center gap-2">
-                       <ShieldCheck size={14} className="text-green-500/60" />
-                       <span className="text-lg font-heading font-black text-white uppercase italic tracking-tighter">Verified</span>
+                       <ShieldCheck size={14} className={AGENDA_REVEALED ? "text-green-500/60" : "text-gold/40"} />
+                       <span className="text-lg font-heading font-black text-white uppercase italic tracking-tighter">
+                         {AGENDA_REVEALED ? "Verified" : "Pending Sync"}
+                       </span>
                     </div>
                  </div>
                  <div className="w-px h-10 bg-white/10" />
@@ -96,7 +98,21 @@ export default function AgendaPage() {
         {/* ── The Chronicle Stream (Timeline) ── */}
         <section className="py-20 px-6 pb-32">
           <div className="max-w-6xl mx-auto">
-             <ScheduleTimeline />
+             {AGENDA_REVEALED ? (
+                <ScheduleTimeline />
+             ) : (
+                <CyberModule className="bg-white/[0.02] border-white/5 p-12 md:p-24 text-center flex flex-col items-center">
+                  <div className="w-20 h-20 rounded-full bg-gold/5 border border-gold/10 flex items-center justify-center text-gold/40 mb-8 animate-pulse">
+                     <Calendar size={40} />
+                  </div>
+                  <h3 className="text-2xl md:text-4xl font-heading font-black text-white uppercase italic tracking-tighter mb-4">
+                     Temporal Sequences <span className="gold-gradient-text">Encrypted</span>
+                  </h3>
+                  <p className="text-white/40 text-lg italic max-w-xl mx-auto leading-relaxed">
+                     The official agenda for TechFest 2026 is currently being synchronized. Decrypted temporal protocols will be manifested here soon.
+                  </p>
+                </CyberModule>
+             )}
           </div>
         </section>
 

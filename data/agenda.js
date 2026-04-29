@@ -9,6 +9,7 @@
 
 export const AGENDA_DATE = "November 07, 2026";
 export const VENUE = "TBA";
+export const AGENDA_REVEALED = false;
 
 export const SESSIONS = [
   {
