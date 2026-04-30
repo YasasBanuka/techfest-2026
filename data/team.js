@@ -64,7 +64,7 @@ export const TEAM_DATA = {
             team: "Program",
             featured: false,
             linkedin: "",
-            image: "",
+            image: "/images/team/hashan-maduwantha.png",
         },
 
         // Finance & Partnerships
@@ -131,7 +131,7 @@ export const TEAM_DATA = {
             team: "Public Visibility",
             featured: false,
             linkedin: "https://www.linkedin.com/in/nadun-manawadu-16823820b",
-            image: "",
+            image: "/images/team/nadun-manawadu.png",
         },
         {
             name: "Sehan Udayanga",
