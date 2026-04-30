@@ -1,17 +1,17 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Linkedin, Twitter, Building2, ExternalLink } from "lucide-react";
+import { X, Linkedin, Building2, GraduationCap, ShieldCheck } from "lucide-react";
 import { useEffect } from "react";
 import CyberModule from "@/components/ui/cyber-module";
 
 /**
- * SpeakerDetails — The Misty Manifestation
- * ───────────────────────────────────────
- * A surreal, atmospheric discovery modal that blurs into view.
- * Features a 'Decryption' scan-line and deep Noir shadows.
+ * TeamMemberModal — Archival Identity Dossier
+ * ──────────────────────────────────────────
+ * Immersive modal for Organizing Committee members.
+ * Features the same high-tech Noir aesthetics as the speaker dossiers.
  */
-export default function SpeakerDetails({ speaker, isOpen, onClose }) {
+export default function TeamMemberModal({ member, isOpen, onClose }) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -21,13 +21,15 @@ export default function SpeakerDetails({ speaker, isOpen, onClose }) {
     return () => { document.body.style.overflow = "unset"; };
   }, [isOpen]);
 
-  if (!speaker) return null;
+  if (!member) return null;
+
+  const initials = member.name.substring(0, 2).toUpperCase();
 
   return (
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 pb-12">
-          {/* Backdrop (Deep Misty Vignette) */}
+          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -49,7 +51,7 @@ export default function SpeakerDetails({ speaker, isOpen, onClose }) {
           >
             <CyberModule className="bg-navy-card/60 border-white/10 !p-0 overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.8)]">
 
-              {/* Internal Scan-line (One time pass on open) */}
+              {/* Internal Scan-line */}
               <motion.div
                 initial={{ top: "-100%" }}
                 animate={{ top: "200%" }}
@@ -69,15 +71,15 @@ export default function SpeakerDetails({ speaker, isOpen, onClose }) {
 
                 {/* ── Left: The Portrait ── */}
                 <div className="w-full md:w-[40%] bg-navy-surface/50 relative overflow-hidden flex-shrink-0 group/img h-[200px] md:h-auto">
-                  {speaker.photo ? (
+                  {member.image ? (
                     <img
-                      src={speaker.photo}
-                      alt={speaker.name}
+                      src={member.image}
+                      alt={member.name}
                       className="w-full h-full object-cover grayscale opacity-60 group-hover/img:opacity-100 group-hover/img:grayscale-0 transition-all duration-1000"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-white/5 text-9xl font-heading font-black">
-                      {speaker.initials}
+                      {initials}
                     </div>
                   )}
                   {/* Atmospheric Overlays */}
@@ -86,14 +88,13 @@ export default function SpeakerDetails({ speaker, isOpen, onClose }) {
 
                   {/* Photo Title Accent */}
                   <div className="absolute bottom-8 left-8">
-                    <p className="text-[10px] font-mono text-gold/60 uppercase tracking-[0.5em] mb-2">Primary_Asset</p>
-                    <p className="text-white text-xs font-bold tracking-widest">TF_0{speaker.id}</p>
+                    <p className="text-[10px] font-mono text-gold/60 uppercase tracking-[0.5em] mb-2">Member_Identity</p>
+                    <p className="text-white text-xs font-bold tracking-widest uppercase">{member.team}</p>
                   </div>
                 </div>
 
                 {/* ── Right: The Data Content ── */}
                 <div className="flex-1 flex flex-col p-8 md:p-14 overflow-y-auto overscroll-contain scrollbar-thin scrollbar-thumb-gold/20 scrollbar-track-transparent relative">
-
                   {/* Header */}
                   <div className="mb-10">
                     <motion.span
@@ -102,44 +103,42 @@ export default function SpeakerDetails({ speaker, isOpen, onClose }) {
                       transition={{ delay: 0.5 }}
                       className="inline-block text-[10px] font-black uppercase tracking-[0.4em] text-gold/60 mb-4"
                     >
-                      {speaker.type} Dossier
+                      OC_Member Dossier
                     </motion.span>
                     <h2 className="text-4xl md:text-6xl font-heading font-black text-white uppercase tracking-tighter leading-[0.9] mb-4">
-                      {speaker.name}
+                      {member.name}
                     </h2>
                     <div className="flex flex-wrap items-center gap-6">
-                      <p className="text-lg text-gold font-medium italic">{speaker.role}</p>
+                      <p className="text-lg text-gold font-medium italic">{member.role}</p>
                       <span className="w-1 h-1 rounded-full bg-white/20" />
                       <p className="text-white-dim text-sm uppercase tracking-widest flex items-center gap-2">
                         <Building2 size={16} className="text-gold/40" />
-                        {speaker.company}
+                        {member.university}
                       </p>
                     </div>
                   </div>
 
-                  {/* Biography (Noir Style) */}
+                  {/* Biography (Dummy Text for now) */}
                   <div className="flex-1 mb-12">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="h-px bg-white/10 flex-1" />
                       <span className="text-[10px] font-mono text-white/30 uppercase tracking-[0.3em]">Temporal_Summary</span>
                       <div className="h-px bg-white/10 w-12" />
                     </div>
-                    <div className="text-white-muted text-base md:text-lg leading-relaxed font-light first-letter:text-4xl first-letter:font-heading first-letter:font-black first-letter:text-gold first-letter:mr-1">
-                      {speaker.bio}
+                    <div className="text-white-muted text-base md:text-lg leading-relaxed font-light">
+                      A dedicated member of the TechFest Sri Lanka 2026 Organizing Committee.
+                      Contributing to the {member.team} team to ensure a seamless and impactful
+                      experience for all participants. Committed to fostering innovation and
+                      empowering the next generation of technology leaders in Sri Lanka.
                     </div>
                   </div>
 
                   {/* Links / Metadata */}
                   <div className="flex flex-wrap items-center justify-between gap-8 pt-8 border-t border-white/5">
                     <div className="flex items-center gap-4">
-                      {speaker.linkedin && (
-                        <a href={speaker.linkedin} target="_blank" className="w-10 h-10 flex items-center justify-center text-white/30 hover:text-gold transition-colors border border-white/5 rounded-full hover:border-gold/30">
+                      {member.linkedin && (
+                        <a href={member.linkedin} target="_blank" className="w-10 h-10 flex items-center justify-center text-white/30 hover:text-gold transition-colors border border-white/5 rounded-full hover:border-gold/30">
                           <Linkedin size={20} />
-                        </a>
-                      )}
-                      {speaker.twitter && (
-                        <a href={speaker.twitter} target="_blank" className="w-10 h-10 flex items-center justify-center text-white/30 hover:text-gold transition-colors border border-white/5 rounded-full hover:border-gold/30">
-                          <Twitter size={20} />
                         </a>
                       )}
                     </div>

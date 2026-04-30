@@ -40,20 +40,11 @@ export const TEAM_DATA = {
 
         // Program Team
         {
-            name: "Banula Balasooriya",
-            role: "Vice Chair - Program & Delivery",
-            university: "UOM",
-            team: "Program",
-            featured: true,
-            linkedin: "https://www.linkedin.com/in/banula-balasooriya-43897239a",
-            image: "/images/team/banula-balasooriya.png",
-        },
-        {
             name: "Amesh Abeykoon",
-            role: "Program",
+            role: "Vice Chair - Program & Delivery",
             university: "KDU",
             team: "Program",
-            featured: false,
+            featured: true,
             linkedin: "https://www.linkedin.com/in/amesh-abeykoon-910a312b3",
             image: "/images/team/amesh-abeykoon.png",
         },
@@ -65,6 +56,15 @@ export const TEAM_DATA = {
             featured: false,
             linkedin: "https://www.linkedin.com/in/saadhath-ahmed-370251188/",
             image: "/images/team/saadhath-ahmed.png",
+        },
+        {
+            name: "Hashan Maduwantha",
+            role: "Program",
+            university: "WUSL",
+            team: "Program",
+            featured: false,
+            linkedin: "",
+            image: "",
         },
 
         // Finance & Partnerships

@@ -170,7 +170,7 @@ export default function GalleryGrid({ photos }) {
                             {selectedPhoto.caption}
                          </h3>
                          <p className="text-white/60 text-xs italic leading-relaxed">
-                            Captured during the peak transformation protocol of TechFest 2026.
+                            Captured during the peak transformation protocol of TechFest Sri Lanka 2026.
                          </p>
                       </motion.div>
 
@@ -190,7 +190,7 @@ export default function GalleryGrid({ photos }) {
                             <Calendar size={14} className="text-gold/40" />
                             <div className="flex flex-col">
                                <span className="text-[8px] font-mono text-white/30 tracking-widest uppercase">CaptureDate</span>
-                               <span className="text-[10px] font-mono text-white tracking-widest uppercase">Oct 2026</span>
+                               <span className="text-[10px] font-mono text-white tracking-widest uppercase">Dec 20, 2025</span>
                             </div>
                          </div>
                          <div className="flex items-center gap-3">

@@ -153,7 +153,7 @@ export default function SponsorForm() {
             name="company"
             value={form.company}
             onChange={handleChange}
-            placeholder="e.g. TechVerse"
+            placeholder="e.g. IEEE TechVerse Sri Lanka"
             className={inputClass("company")}
           />
           {errors.company && <p className="text-red-400 text-[11px] mt-1.5 flex items-center gap-1"><span className="w-1 h-1 rounded-full bg-red-400" /> {errors.company}</p>}

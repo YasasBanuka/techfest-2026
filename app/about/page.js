@@ -15,7 +15,7 @@ import CyberModule from "@/components/ui/cyber-module";
 
 const COMMUNITIES = [
   {
-    name: "IEEE TechVerse",
+    name: "IEEE TechVerse Sri Lanka",
     role: "Organizing Committee",
     logo: "/images/logos/techverse.png",
     caption:
@@ -159,7 +159,7 @@ export default function AboutPage() {
                 <StaggerItem key={community.name}>
                   <CyberModule className="bg-white/[0.01] border-white/5 p-12 transition-all duration-700 hover:border-gold/30 group">
                     <div className="flex flex-col items-center text-center">
-                      <div className="relative w-48 h-28 mb-10 opacity-60 group-hover:opacity-100 transition-opacity duration-700">
+                      <div className="relative w-48 h-28 mb-10 opacity-100 md:opacity-60 group-hover:opacity-100 transition-opacity duration-700">
                         <Image
                           src={community.logo}
                           alt={`${community.name} logo`}

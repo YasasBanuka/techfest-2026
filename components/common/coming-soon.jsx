@@ -108,7 +108,7 @@ export default function ComingSoon() {
                 {/* TechFest Badge */}
                 <div className="mb-8 mt-10 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md shadow-xl text-white-dim text-xs font-semibold tracking-widest uppercase animate-pulse">
                     <span className="w-2 h-2 rounded-full bg-gold" />
-                    TechFest 2026 • Coming Soon
+                    TechFest Sri Lanka 2026 • Coming Soon
                 </div>
 
                 <h1 className="text-5xl md:text-8xl font-heading font-black text-white mb-6 leading-tight tracking-tighter">
@@ -118,7 +118,7 @@ export default function ComingSoon() {
 
                 <p className="max-w-2xl text-white-dim text-lg md:text-xl mb-16 leading-relaxed">
                     Prepare for the ultimate fusion of technology, innovation, and human ingenuity.
-                    The next iteration of TechFest is currently being engineered to blow your mind.
+                    The next iteration of TechFest Sri Lanka is currently being engineered to blow your mind.
                 </p>
 
                 {/* ── ⏱️ Premium Countdown ── */}

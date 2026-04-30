@@ -196,7 +196,7 @@ export default function SettingsPage() {
                 onChange={handleChange}
                 placeholder={
                   profile.role === "Undergraduate" ? "e.g. University of Moratuwa" :
-                  profile.role === "School Student" ? "e.g. Royal College" : "e.g. TechVerse"
+                  profile.role === "School Student" ? "e.g. Royal College" : "e.g. IEEE TechVerse Sri Lanka"
                 }
                 className={inputClass}
               />

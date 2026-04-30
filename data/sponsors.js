@@ -13,7 +13,7 @@ export const SPONSORS = [
   },
   {
     id: 2,
-    name: "IEEE TechVerse",
+    name: "IEEE TechVerse Sri Lanka",
     role: "Organizing Committee",
     logo: "/images/logos/techverse.png",
     tier: "title",

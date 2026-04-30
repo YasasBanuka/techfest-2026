@@ -11,7 +11,7 @@ import { Linkedin } from "lucide-react";
  * Features an arched top that complements a portrait image breaking out of the top.
  * Elegant glassmorphism base and unified LinkedIn footer.
  */
-export default function TeamCard({ member }) {
+export default function TeamCard({ member, onClick }) {
     const cardRef = useRef(null);
     const glowRef = useRef(null);
     const contentRef = useRef(null);
@@ -63,6 +63,7 @@ export default function TeamCard({ member }) {
             {/* ── Main Card Base ── */}
             <div
                 ref={cardRef}
+                onClick={onClick}
                 className="relative group bg-[#12171C]/80 backdrop-blur-xl rounded-2xl h-full flex flex-col p-[1px] cursor-pointer transition-all duration-500 hover:border-gold/40 hover:shadow-[0_0_40px_rgba(255,179,0,0.15)] border-transparent"
                 style={{
                     willChange: "transform",
@@ -100,7 +101,7 @@ export default function TeamCard({ member }) {
                     {/* ── The OUT-OF-BOUNDS Image ── */}
                     <div
                         ref={imageRef}
-                        className="absolute -top-[160px] left-1/2 -translate-x-1/2 w-[320px] h-[360px] z-10 pointer-events-none drop-shadow-[0_15px_15px_rgba(0,0,0,0.8)] opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+                        className="absolute -top-[160px] left-1/2 -translate-x-1/2 w-[320px] h-[360px] z-10 pointer-events-none drop-shadow-[0_15px_15px_rgba(0,0,0,0.8)] opacity-100 md:opacity-70 group-hover:opacity-100 transition-opacity duration-300"
                     >
                         {member.image ? (
                             <Image
@@ -151,8 +152,8 @@ export default function TeamCard({ member }) {
                             className="flex items-center justify-center gap-2 py-4 w-full text-white-dim hover:text-gold transition-colors duration-300"
                             aria-label={`LinkedIn profile for ${member.name}`}
                         >
-                            <Linkedin size={16} className="opacity-70 group-hover:opacity-100 transition-opacity" />
-                            <span className="text-xs font-medium tracking-wider uppercase opacity-80 group-hover:opacity-100 transition-opacity">Connect</span>
+                            <Linkedin size={16} className="opacity-100 md:opacity-70 group-hover:opacity-100 transition-opacity" />
+                            <span className="text-xs font-medium tracking-wider uppercase opacity-100 md:opacity-80 group-hover:opacity-100 transition-opacity">Connect</span>
                         </a>
                     </div>
                 </div>

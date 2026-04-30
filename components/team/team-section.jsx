@@ -1,12 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import TeamCard from "./team-card";
+import TeamMemberModal from "./team-member-modal";
 import { TEAM_DATA, TEAM_GROUPS_ORDER } from "@/data/team";
 
 export default function TeamSection() {
     // Directly use 2026 data as requested
     const currentTeam = TEAM_DATA["2026"] || [];
+    const [selectedMember, setSelectedMember] = useState(null);
 
     // Group and sort members for row-based layout
     const teamGroups = TEAM_GROUPS_ORDER.map(groupName => {
@@ -46,13 +49,22 @@ export default function TeamSection() {
                                     transition={{ duration: 0.5, delay: mIdx * 0.1 }}
                                     className="w-full max-w-[280px]"
                                 >
-                                    <TeamCard member={member} />
+                                    <TeamCard 
+                                        member={member} 
+                                        onClick={() => setSelectedMember(member)}
+                                    />
                                 </motion.div>
                             ))}
                         </div>
                     </motion.div>
                 ))}
             </div>
+
+            <TeamMemberModal 
+                member={selectedMember}
+                isOpen={!!selectedMember}
+                onClose={() => setSelectedMember(null)}
+            />
         </div>
     );
 }

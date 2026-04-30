@@ -145,7 +145,7 @@ export default function RegisterForm() {
             <>
               <div className="group">
                 <label className="block text-white/30 text-[9px] font-mono uppercase tracking-[0.4em] mb-2 px-1">Organization_Node</label>
-                <input type="text" name="company" value={form.company} onChange={handleChange} placeholder="TechVerse" className={fieldClass("company")} />
+                <input type="text" name="company" value={form.company} onChange={handleChange} placeholder="IEEE TechVerse Sri Lanka" className={fieldClass("company")} />
               </div>
               <div className="group">
                 <label className="block text-white/30 text-[9px] font-mono uppercase tracking-[0.4em] mb-2 px-1">Designation_Code</label>

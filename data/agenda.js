@@ -40,7 +40,7 @@ export const SESSIONS = [
     description: "Welcome speech, event overview, sponsor acknowledgement",
     type: "ceremony",
     track: "Main Stage",
-    speaker: { name: "Organizing Committee", role: "IEEE TechVerse" },
+    speaker: { name: "Organizing Committee", role: "IEEE TechVerse Sri Lanka" },
   },
   {
     id: 4,
@@ -143,7 +143,7 @@ export const SESSIONS = [
     description: "Official closing remarks, awards, sponsor recognition",
     type: "ceremony",
     track: "Main Stage",
-    speaker: { name: "Organizing Committee", role: "IEEE TechVerse" },
+    speaker: { name: "Organizing Committee", role: "IEEE TechVerse Sri Lanka" },
     featured: true,
   },
   {

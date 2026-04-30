@@ -45,7 +45,7 @@ export const TIMELINE = [
     year: "2025",
     title: "Where It All Began",
     description:
-      "TechFest Sri Lanka was born in 2025 — Sri Lanka's first student-led technology innovation festival of its kind. 700+ participants, 10 expert speakers, and 10+ stalls set the benchmark for what was possible.",
+      "TechFest Sri Lanka was born in 2025 — Sri Lanka's first student-led technology innovation festival of its kind. 500+ participants, 10 expert speakers, and 10+ stalls set the benchmark for what was possible.",
   },
   {
     year: "2026",

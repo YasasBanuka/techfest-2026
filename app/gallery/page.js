@@ -67,7 +67,7 @@ export default function GalleryPage() {
               <div className="flex items-center gap-8 border border-white/5 bg-white/[0.02] p-6 rounded-2xl backdrop-blur-md">
                  <div className="flex flex-col gap-1">
                     <span className="text-[9px] font-mono text-white/30 uppercase tracking-widest">Assets_Cached</span>
-                    <span className="text-3xl font-heading font-black text-gold">700+</span>
+                    <span className="text-3xl font-heading font-black text-gold">500+</span>
                  </div>
                  <div className="w-px h-10 bg-white/10" />
                  <div className="flex flex-col gap-1">

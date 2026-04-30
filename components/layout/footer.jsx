@@ -38,7 +38,7 @@ export default function Footer() {
               </Link>
               <p className="text-white-dim text-sm leading-relaxed">
                 Sri Lanka&apos;s premier technology innovation festival,
-                organized by IEEE TechVerse.
+                organized by IEEE TechVerse Sri Lanka.
               </p>
             </div>
 

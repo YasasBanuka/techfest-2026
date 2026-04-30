@@ -318,7 +318,7 @@ export default function SignupPage() {
                     required
                     value={form.company}
                     onChange={handleChange}
-                    placeholder="e.g. TechVerse"
+                    placeholder="e.g. IEEE TechVerse Sri Lanka"
                     className={inputClass}
                   />
                 </div>

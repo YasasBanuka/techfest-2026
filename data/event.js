@@ -26,7 +26,7 @@ export const STATS = [
 
 export const COMMUNITIES = [
   {
-    name: "IEEE TechVerse",
+    name: "IEEE TechVerse Sri Lanka",
     role: "Organizing Committee",
     logo: "/images/logos/techverse.png",
     url: "#",

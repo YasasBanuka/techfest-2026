@@ -4,7 +4,7 @@ import CyberModule from "@/components/ui/cyber-module";
 
 const COMMUNITIES = [
   {
-    name: "IEEE TechVerse",
+    name: "IEEE TechVerse Sri Lanka",
     role: "Organizing Committee",
     logo: "/images/logos/techverse.png",
     id: "TF_COM_01",
