@@ -19,12 +19,14 @@ export default function MemoryArchive() {
   const containerRef = useRef(null);
   const pinRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isMobileResolved, setIsMobileResolved] = useState(false);
 
   useEffect(() => {
     setIsMobile(isTouchDevice());
+    setIsMobileResolved(true); // signal that detection is done
   }, []);
 
-  const SCROLL_DISTANCE = isMobile ? 4000 : 8000;
+  const SCROLL_DISTANCE = 8000;
 
   // Scene Refs
   const taglineRef = useRef(null);
@@ -68,16 +70,98 @@ export default function MemoryArchive() {
     osc.stop(ctx.currentTime + 0.05);
   };
 
+  // ── Mobile: Simple entrance animation via IntersectionObserver ──
   useEffect(() => {
+    if (!isMobileResolved || !isMobile) return; // wait until detection is certain
+
+    // Immediately show tagline words with a staggered fade-in
+    const words = taglineRef.current?.querySelectorAll(".tagline-word");
+    if (!words) return;
+
+    // Reset initial state
+    gsap.set(taglineRef.current, { opacity: 1 });
+    gsap.set(words, { opacity: 0, y: 20 });
+    gsap.set(archiveTitleRef.current, { opacity: 0, y: 40 });
+    gsap.set(statsContainerRef.current, { opacity: 0 });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          observer.disconnect();
+
+          // Step 1: Reveal tagline words
+          gsap.to(words, {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.18,
+            ease: "power2.out",
+            onComplete: () => {
+              // Step 2: Fade out tagline, reveal archive title
+              gsap.to(taglineRef.current, {
+                opacity: 0,
+                duration: 0.5,
+                delay: 0.4,
+                ease: "power2.in",
+                onComplete: () => {
+                  gsap.to(archiveTitleRef.current, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "power3.out",
+                    onComplete: () => {
+                      // Step 3: Show stats one by one
+                      gsap.set(statsContainerRef.current, { opacity: 1 });
+                      IMPACT_STATS.forEach((_, i) => {
+                        const photo = photosRefs.current[i];
+                        const statWrapper = statsRefs.current[i];
+                        const delay = 0.6 + i * 1.4;
+
+                        gsap.to(archiveTitleRef.current, { opacity: 0, duration: 0.3, delay: 0.3 });
+                        gsap.fromTo(photo,
+                          { opacity: 0, scale: 1.1 },
+                          { opacity: 0.4, scale: 1, duration: 0.8, delay, ease: "power2.out" }
+                        );
+                        gsap.fromTo(statWrapper,
+                          { opacity: 0, y: 20 },
+                          { opacity: 1, y: 0, duration: 0.6, delay: delay + 0.2, ease: "expo.out" }
+                        );
+                        gsap.to([photo, statWrapper], {
+                          opacity: 0,
+                          duration: 0.5,
+                          delay: delay + 1.0,
+                          ease: "power2.in",
+                        });
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          });
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [isMobile, isMobileResolved]);
+
+  // ── Desktop: Full GSAP ScrollTrigger pinned experience ──
+  useEffect(() => {
+    if (!isMobileResolved || isMobile) return; // wait until detection is certain, skip on mobile
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          pin: isMobile ? false : true, // Disable expensive pinning on mobile
-          pinSpacing: isMobile ? false : true,
+          pin: true,
+          pinSpacing: true,
           start: "top top",
-          end: isMobile ? "+=3000" : `+=${SCROLL_DISTANCE}`, // Much shorter scroll requirement on mobile
-          scrub: isMobile ? 0.5 : 1,
+          end: `+=${SCROLL_DISTANCE}`,
+          scrub: 1,
           onEnter: initAudio,
         }
       });
@@ -87,13 +171,11 @@ export default function MemoryArchive() {
       // ─────────────────────────────────────────────────────
       const words = taglineRef.current.querySelectorAll(".tagline-word");
 
-      // Ensure everything is in its starting position immediately
       gsap.set(taglineRef.current, { opacity: 1, zIndex: 50 });
       gsap.set(archiveTitleRef.current, { opacity: 0, zIndex: 10, y: 100 });
       gsap.set(statsContainerRef.current, { opacity: 0, zIndex: 5 });
       gsap.set(mosaicRef.current, { opacity: 0, zIndex: 2 });
 
-      // Words are hidden at start of timeline
       tl.set(words, { opacity: 0, y: 30, filter: "blur(40px) brightness(0)", scale: 0.9 });
 
       words.forEach((word, i) => {
@@ -102,13 +184,12 @@ export default function MemoryArchive() {
           y: 0,
           filter: "blur(0px) brightness(1)",
           scale: 1,
-          duration: 3, // Significantly slower word reveal
+          duration: 3,
           ease: "power2.out",
           onStart: () => playCrunch(2000 - i * 500, "sawtooth"),
-        }, i === 0 ? "0.5" : ">-2"); // Deep overlap for smooth flow
+        }, i === 0 ? "0.5" : ">-2");
       });
 
-      // Massive hold on tagline to let the user breathe
       tl.to({}, { duration: 6 });
 
       // ─────────────────────────────────────────────────────
@@ -117,12 +198,11 @@ export default function MemoryArchive() {
       tl.to(taglineRef.current, {
         opacity: 0,
         filter: "blur(80px) brightness(8)",
-        duration: 4, // Very slow exposure-like dissolve
+        duration: 4,
         ease: "power2.inOut",
         onStart: () => playCrunch(400, "square")
       });
 
-      // Simultaneous appearance of Archive title
       tl.fromTo(archiveTitleRef.current,
         { opacity: 0, scale: 0.7, y: 150, filter: "blur(20px)" },
         {
@@ -131,13 +211,12 @@ export default function MemoryArchive() {
           y: 0,
           filter: "blur(0px)",
           zIndex: 60,
-          duration: 4, // Matching slow reveal
+          duration: 4,
           ease: "power3.out"
         },
-        "-=2.5" // Start during the tagline fade
+        "-=2.5"
       );
 
-      // Glitch Flash during breach
       tl.to(glitchOverlayRef.current, {
         opacity: 0.3,
         duration: 0.3,
@@ -146,10 +225,10 @@ export default function MemoryArchive() {
         ease: "none"
       }, "<");
 
-      tl.to({}, { duration: 6 }); // Deep hold on Archive title
+      tl.to({}, { duration: 6 });
 
       // ─────────────────────────────────────────────────────
-      // ACT 3: holographic Retrospective (Stats Reveal)
+      // ACT 3: Holographic Retrospective (Stats Reveal)
       // ─────────────────────────────────────────────────────
       tl.to(archiveTitleRef.current, { y: -200, opacity: 0, duration: 1.5, ease: "slow" });
 
@@ -157,55 +236,49 @@ export default function MemoryArchive() {
         const photo = photosRefs.current[i];
         const statWrapper = statsRefs.current[i];
 
-        // Ensure container is ready
         tl.set(statsContainerRef.current, { opacity: 1, zIndex: 70 }, "<");
 
-        // Flash background photo
         tl.fromTo(photo,
           { opacity: 0, scale: 1.3, filter: "brightness(2)" },
           { opacity: 0.45, scale: 1, filter: "brightness(0.5)", duration: 1.8, ease: "power2.out" }
         );
 
-        // HUD Stat Reveal
         tl.fromTo(statWrapper,
           { opacity: 0, y: 40, filter: "blur(20px)" },
           { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.5, ease: "expo.out" },
           "<0.3"
         );
 
-        tl.to({}, { duration: isMobile ? 2 : 5 });
+        tl.to({}, { duration: 5 });
 
-        // Dissolve stat
         tl.to([photo, statWrapper], { opacity: 0, y: -40, duration: 1.2, ease: "power2.in" });
       });
 
       // ─────────────────────────────────────────────────────
-      // ACT 4: Mosaic Dissolution (Desktop Only for Performance)
+      // ACT 4: Mosaic Dissolution
       // ─────────────────────────────────────────────────────
-      if (!isMobile) {
-        tl.set(mosaicRef.current, { opacity: 1, zIndex: 80, pointerEvents: "auto" });
-        tl.fromTo(mosaicRef.current,
-          { opacity: 0, scale: 0.8 },
-          { opacity: 1, scale: 1, duration: 2.5, ease: "power4.out" }
-        );
+      tl.set(mosaicRef.current, { opacity: 1, zIndex: 80, pointerEvents: "auto" });
+      tl.fromTo(mosaicRef.current,
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1, duration: 2.5, ease: "power4.out" }
+      );
 
-        tl.to({}, { duration: 5 });
+      tl.to({}, { duration: 5 });
 
-        tl.to(mosaicRef.current, {
-          opacity: 0,
-          filter: "blur(40px) brightness(4)",
-          scale: 1.5,
-          rotateX: 15,
-          duration: 2.5,
-          ease: "power2.in",
-          onStart: () => playCrunch(200, "sawtooth"),
-        });
-      }
+      tl.to(mosaicRef.current, {
+        opacity: 0,
+        filter: "blur(40px) brightness(4)",
+        scale: 1.5,
+        rotateX: 15,
+        duration: 2.5,
+        ease: "power2.in",
+        onStart: () => playCrunch(200, "sawtooth"),
+      });
 
     }, containerRef);
 
     return () => ctx.revert();
-  }, [isMobile]);
+  }, [isMobile, isMobileResolved]);
 
   return (
     <section ref={containerRef} className="relative w-full overflow-hidden bg-navy-deeper border-y border-white/5">
@@ -216,7 +289,7 @@ export default function MemoryArchive() {
         className="absolute inset-0 z-[100] pointer-events-none opacity-0 mix-blend-overlay bg-gold/20"
       />
 
-      <div ref={pinRef} className={`relative ${isMobile ? "min-h-[150vh]" : "h-screen"} flex items-center justify-center`}>
+      <div ref={pinRef} className={`relative ${isMobile ? "py-24 min-h-screen" : "h-screen"} flex items-center justify-center`}>
 
         {/* Scene 1: Tagline */}
         <div ref={taglineRef} className="absolute inset-0 flex flex-col items-center justify-center z-[50]">
