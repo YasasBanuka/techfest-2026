@@ -13,7 +13,7 @@ export default function SettingsPage() {
     role: "Undergraduate",
     // Undergraduate
     university: "",
-    year_of_study: "1st Year",
+    year_of_study: "",
     // School Student
     school_name: "",
     grade: "",
@@ -47,12 +47,14 @@ export default function SettingsPage() {
         .single();
 
       if (data) {
+        const loadedRole = data.role || user.user_metadata?.role || "Undergraduate";
         setProfile({
           full_name: data.full_name || "",
           phone: data.phone || "",
-          role: data.role || user.user_metadata?.role || "Undergraduate",
+          role: loadedRole,
           university: data.university || "",
-          year_of_study: data.year_of_study || "1st Year",
+          // Only default year_of_study to "1st Year" for Undergraduates
+          year_of_study: data.year_of_study || (loadedRole === "Undergraduate" ? "1st Year" : ""),
           school_name: data.school_name || "",
           grade: data.grade || "",
           company: data.company || "",

@@ -68,16 +68,14 @@ export default function SignupPage() {
             full_name: form.fullName,
             phone: form.phone,
             role: form.role,
-            // Undergraduate fields
-            university: form.university,
-            year_of_study: form.year,
-            // School Student fields
-            school_name: form.schoolName,
-            grade: form.grade,
-            // Professional fields
-            company: form.company,
-            designation: form.designation,
-            // Shared fields
+            // Only populate fields for the selected role — null out the rest
+            // so defaults from other roles don't bleed into the DB
+            university:    form.role === "Undergraduate"  ? form.university : null,
+            year_of_study: form.role === "Undergraduate"  ? form.year       : null,
+            school_name:   form.role === "School Student" ? form.schoolName  : null,
+            grade:         form.role === "School Student" ? form.grade       : null,
+            company:       form.role === "Professional"   ? form.company     : null,
+            designation:   form.role === "Professional"   ? form.designation : null,
             career_preference: form.careerPreference,
             marketing_consent: form.marketingConsent,
           },
