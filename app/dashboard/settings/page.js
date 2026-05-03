@@ -11,8 +11,16 @@ export default function SettingsPage() {
     full_name: "",
     phone: "",
     role: "Undergraduate",
+    // Undergraduate
     university: "",
     year_of_study: "1st Year",
+    // School Student
+    school_name: "",
+    grade: "",
+    // Professional
+    company: "",
+    designation: "",
+    // Shared
     career_preference: "Exploring Options",
     marketing_consent: true,
   });
@@ -45,6 +53,10 @@ export default function SettingsPage() {
           role: data.role || user.user_metadata?.role || "Undergraduate",
           university: data.university || "",
           year_of_study: data.year_of_study || "1st Year",
+          school_name: data.school_name || "",
+          grade: data.grade || "",
+          company: data.company || "",
+          designation: data.designation || "",
           career_preference: data.career_preference || "Exploring Options",
           marketing_consent: data.marketing_consent ?? true,
         });
@@ -72,11 +84,15 @@ export default function SettingsPage() {
 
     // 1. Update auth metadata (for role and display name)
     const { error: authError } = await supabase.auth.updateUser({
-      data: { 
+      data: {
         full_name: profile.full_name,
         role: profile.role,
         university: profile.university,
         year_of_study: profile.year_of_study,
+        school_name: profile.school_name,
+        grade: profile.grade,
+        company: profile.company,
+        designation: profile.designation,
         career_preference: profile.career_preference,
       }
     });
@@ -96,6 +112,10 @@ export default function SettingsPage() {
         role: profile.role,
         university: profile.university,
         year_of_study: profile.year_of_study,
+        school_name: profile.school_name,
+        grade: profile.grade,
+        company: profile.company,
+        designation: profile.designation,
         career_preference: profile.career_preference,
         marketing_consent: profile.marketing_consent,
         updated_at: new Date().toISOString(),
@@ -187,34 +207,53 @@ export default function SettingsPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Dynamic University/School/Company Field */}
+            {/* Role-specific Institution Field */}
             <div className="group">
               <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
-                <Building2 size={12} className="text-gold/60" /> 
-                {profile.role === "Undergraduate" ? "University / Institute" : 
+                <Building2 size={12} className="text-gold/60" />
+                {profile.role === "Undergraduate" ? "University / Institute" :
                  profile.role === "School Student" ? "School Name" : "Company / Organization"}
               </label>
-              <input
-                type="text"
-                name="university"
-                value={profile.university}
-                onChange={handleChange}
-                placeholder={
-                  profile.role === "Undergraduate" ? "e.g. University of Moratuwa" :
-                  profile.role === "School Student" ? "e.g. Royal College" : "e.g. IEEE TechVerse Sri Lanka"
-                }
-                className={inputClass}
-              />
+              {profile.role === "Undergraduate" && (
+                <input
+                  type="text"
+                  name="university"
+                  value={profile.university}
+                  onChange={handleChange}
+                  placeholder="e.g. University of Moratuwa"
+                  className={inputClass}
+                />
+              )}
+              {profile.role === "School Student" && (
+                <input
+                  type="text"
+                  name="school_name"
+                  value={profile.school_name}
+                  onChange={handleChange}
+                  placeholder="e.g. Royal College"
+                  className={inputClass}
+                />
+              )}
+              {profile.role === "Professional" && (
+                <input
+                  type="text"
+                  name="company"
+                  value={profile.company}
+                  onChange={handleChange}
+                  placeholder="e.g. IEEE TechVerse Sri Lanka"
+                  className={inputClass}
+                />
+              )}
             </div>
 
-            {/* Dynamic Year/Grade/Designation Field */}
+            {/* Role-specific Level/Position Field */}
             <div className="group">
               <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
-                <GraduationCap size={12} className="text-gold/60" /> 
-                {profile.role === "Undergraduate" ? "Year of Study" : 
+                <GraduationCap size={12} className="text-gold/60" />
+                {profile.role === "Undergraduate" ? "Year of Study" :
                  profile.role === "School Student" ? "Grade / Year" : "Designation / Job Role"}
               </label>
-              {profile.role === "Undergraduate" ? (
+              {profile.role === "Undergraduate" && (
                 <select
                   name="year_of_study"
                   value={profile.year_of_study}
@@ -227,18 +266,28 @@ export default function SettingsPage() {
                   <option value="4th Year" className="bg-navy-deeper">4th Year</option>
                   <option value="Postgraduate" className="bg-navy-deeper">Postgraduate</option>
                 </select>
-              ) : (
+              )}
+              {profile.role === "School Student" && (
                 <input
                   type="text"
-                  name="year_of_study"
-                  value={profile.year_of_study}
+                  name="grade"
+                  value={profile.grade}
                   onChange={handleChange}
-                  placeholder={
-                    profile.role === "School Student" ? "e.g. Grade 13" : "e.g. Software Engineer"
-                  }
+                  placeholder="e.g. Grade 13"
                   className={inputClass}
                 />
               )}
+              {profile.role === "Professional" && (
+                <input
+                  type="text"
+                  name="designation"
+                  value={profile.designation}
+                  onChange={handleChange}
+                  placeholder="e.g. Software Engineer"
+                  className={inputClass}
+                />
+              )}
+
             </div>
           </div>
 

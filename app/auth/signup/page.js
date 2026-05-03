@@ -55,21 +55,10 @@ export default function SignupPage() {
     setStatus("loading");
     setError(null);
 
-    // Build the "university" and "year_of_study" values based on role
-    // These map to the single shared columns in the profiles table
-    const universityValue =
-      form.role === "Undergraduate" ? form.university :
-      form.role === "School Student" ? form.schoolName :
-      form.company;
-
-    const yearOfStudyValue =
-      form.role === "Undergraduate" ? form.year :
-      form.role === "School Student" ? form.grade :
-      form.designation;
-
     try {
       // 1. Sign up user in Supabase Auth
-      // All metadata fields here are read by the DB trigger → profiles table
+      // Each metadata key maps directly to its own column in the profiles table
+      // The DB trigger (handle_new_user) reads all of these and writes to the correct columns
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: form.email,
         password: form.password,
@@ -79,8 +68,16 @@ export default function SignupPage() {
             full_name: form.fullName,
             phone: form.phone,
             role: form.role,
-            university: universityValue,
-            year_of_study: yearOfStudyValue,
+            // Undergraduate fields
+            university: form.university,
+            year_of_study: form.year,
+            // School Student fields
+            school_name: form.schoolName,
+            grade: form.grade,
+            // Professional fields
+            company: form.company,
+            designation: form.designation,
+            // Shared fields
             career_preference: form.careerPreference,
             marketing_consent: form.marketingConsent,
           },
