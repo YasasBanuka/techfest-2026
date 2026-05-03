@@ -2,9 +2,21 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { User, Mail, Lock, Phone, Building2, GraduationCap, ArrowRight, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { User, Mail, Lock, Phone, Building2, GraduationCap, ArrowRight, ShieldCheck, CheckCircle2, Compass } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
+
+const CAREER_PREFERENCES = [
+  "Exploring Options",
+  "Seeking Internship",
+  "Seeking Full-Time Job",
+  "Seeking Overseas Education",
+  "Seeking Scholarship / Funding",
+  "Building a Startup",
+  "Expanding Professional Network",
+  "Upskilling / Learning",
+];
 
 export default function SignupPage() {
   const [form, setForm] = useState({
@@ -13,19 +25,22 @@ export default function SignupPage() {
     password: "",
     phone: "",
     role: "Undergraduate",
-    university: "", // For Undergraduates
-    year: "1st Year", // For Undergraduates
-    schoolName: "", // For Students
-    grade: "", // For Students
-    company: "", // For Professionals
-    designation: "", // For Professionals
+    university: "",           // For Undergraduates
+    year: "1st Year",         // For Undergraduates
+    schoolName: "",           // For School Students
+    grade: "",                // For School Students
+    company: "",              // For Professionals
+    designation: "",          // For Professionals
+    careerPreference: "Exploring Options",
     marketingConsent: true,
   });
 
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [error, setError] = useState(null);
+  const [needsConfirmation, setNeedsConfirmation] = useState(false);
 
   const supabase = createClient();
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -40,9 +55,21 @@ export default function SignupPage() {
     setStatus("loading");
     setError(null);
 
+    // Build the "university" and "year_of_study" values based on role
+    // These map to the single shared columns in the profiles table
+    const universityValue =
+      form.role === "Undergraduate" ? form.university :
+      form.role === "School Student" ? form.schoolName :
+      form.company;
+
+    const yearOfStudyValue =
+      form.role === "Undergraduate" ? form.year :
+      form.role === "School Student" ? form.grade :
+      form.designation;
+
     try {
       // 1. Sign up user in Supabase Auth
-      // The profile is now created automatically by a DB trigger
+      // All metadata fields here are read by the DB trigger → profiles table
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: form.email,
         password: form.password,
@@ -52,10 +79,11 @@ export default function SignupPage() {
             full_name: form.fullName,
             phone: form.phone,
             role: form.role,
-            university: form.role === "Undergraduate" ? form.university : (form.role === "School Student" ? form.schoolName : form.company),
-            year_of_study: form.role === "Undergraduate" ? form.year : (form.role === "School Student" ? form.grade : form.designation),
+            university: universityValue,
+            year_of_study: yearOfStudyValue,
+            career_preference: form.careerPreference,
             marketing_consent: form.marketingConsent,
-          }
+          },
         },
       });
 
@@ -64,13 +92,13 @@ export default function SignupPage() {
       // 2. Sync to Resend Audiences (Optional marketing lead capture)
       if (authData?.user) {
         try {
-          await fetch('/api/marketing/sync', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              email: form.email, 
+          await fetch("/api/marketing/sync", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: form.email,
               name: form.fullName,
-              tags: ['innovator', form.year] 
+              tags: ["innovator", form.role, form.careerPreference],
             }),
           });
         } catch (syncError) {
@@ -78,21 +106,27 @@ export default function SignupPage() {
         }
       }
 
-      setStatus("success");
+      // If Supabase returned a session immediately, email confirmation is disabled
+      // → redirect straight to dashboard. Otherwise show the "check your email" screen.
+      if (authData?.session) {
+        router.push("/dashboard");
+        router.refresh();
+      } else {
+        setNeedsConfirmation(true);
+        setStatus("success");
+      }
     } catch (err) {
-      console.error("Signup error details:", {
-        message: err.message,
-        status: err.status,
-        name: err.name
-      });
+      console.error("Signup error:", { message: err.message, status: err.status });
       setError(err.message || "An unexpected error occurred. Please try again.");
       setStatus("error");
     }
   };
 
-  const inputClass = "w-full bg-navy-surface border border-navy-border rounded-xl px-4 py-3 text-white text-sm placeholder:text-white-dim outline-none transition-all duration-300 focus:border-gold/60 focus:shadow-[0_0_0_4px_rgba(255,203,64,0.1)] group-hover:border-navy-border/80";
+  const inputClass =
+    "w-full bg-navy-surface border border-navy-border rounded-xl px-4 py-3 text-white text-sm placeholder:text-white-dim outline-none transition-all duration-300 focus:border-gold/60 focus:shadow-[0_0_0_4px_rgba(255,203,64,0.1)] group-hover:border-navy-border/80";
 
-  if (status === "success") {
+  // ── Email confirmation screen (shown only when Supabase email confirm is ON) ──
+  if (status === "success" && needsConfirmation) {
     return (
       <div className="min-h-screen pt-32 pb-20 px-6 flex items-center justify-center hex-pattern">
         <motion.div
@@ -103,12 +137,15 @@ export default function SignupPage() {
           <div className="w-20 h-20 bg-gold/10 border border-gold/30 rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_40px_rgba(255,203,64,0.1)]">
             <CheckCircle2 size={40} className="text-gold" />
           </div>
-          <h1 className="text-3xl font-heading font-black text-white mb-4 italic uppercase tracking-tight">Confirm Your Email</h1>
+          <h1 className="text-3xl font-heading font-black text-white mb-4 italic uppercase tracking-tight">
+            Confirm Your Email
+          </h1>
           <p className="text-white-muted mb-8 leading-relaxed">
-            We've sent a magic link to <strong className="text-white">{form.email}</strong>. 
-            Please check your inbox (and spam folder) to verify your account and access the dashboard.
+            We&apos;ve sent a verification link to{" "}
+            <strong className="text-white">{form.email}</strong>. Please check your
+            inbox (and spam folder) to verify your account and access the dashboard.
           </p>
-          <Link 
+          <Link
             href="/auth/login"
             className="inline-flex items-center gap-2 text-gold font-heading font-bold uppercase text-sm tracking-widest hover:translate-x-2 transition-transform"
           >
@@ -119,6 +156,7 @@ export default function SignupPage() {
     );
   }
 
+  // ── Main signup form ──
   return (
     <div className="min-h-screen pt-32 pb-20 px-6 flex items-center justify-center hex-pattern">
       <motion.div
@@ -130,7 +168,9 @@ export default function SignupPage() {
           <h1 className="text-4xl font-heading font-black text-white mb-2 italic uppercase tracking-tighter">
             Join <span className="gold-gradient-text">TechFest 2026</span>
           </h1>
-          <p className="text-white-muted text-sm tracking-wide uppercase">Create your innovator account</p>
+          <p className="text-white-muted text-sm tracking-wide uppercase">
+            Create your innovator account
+          </p>
         </div>
 
         {error && (
@@ -141,8 +181,9 @@ export default function SignupPage() {
         )}
 
         <form onSubmit={handleSignup} className="space-y-6">
+
+          {/* ── Row 1: Full Name + Email ── */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Full Name */}
             <div className="group">
               <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
                 <User size={12} className="text-gold/60" /> Full Name
@@ -157,8 +198,6 @@ export default function SignupPage() {
                 className={inputClass}
               />
             </div>
-
-            {/* Email */}
             <div className="group">
               <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
                 <Mail size={12} className="text-gold/60" /> Email Address
@@ -175,8 +214,8 @@ export default function SignupPage() {
             </div>
           </div>
 
+          {/* ── Row 2: Password + Phone ── */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Password */}
             <div className="group">
               <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
                 <Lock size={12} className="text-gold/60" /> Password
@@ -185,14 +224,13 @@ export default function SignupPage() {
                 type="password"
                 name="password"
                 required
+                minLength={6}
                 value={form.password}
                 onChange={handleChange}
                 placeholder="Min. 6 characters"
                 className={inputClass}
               />
             </div>
-
-            {/* Phone */}
             <div className="group">
               <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
                 <Phone size={12} className="text-gold/60" /> Phone Number
@@ -208,7 +246,7 @@ export default function SignupPage() {
             </div>
           </div>
 
-          {/* Role Selection */}
+          {/* ── Row 3: Identity Role ── */}
           <div className="group">
             <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
               <ShieldCheck size={12} className="text-gold/60" /> Identity Role
@@ -230,8 +268,8 @@ export default function SignupPage() {
             </div>
           </div>
 
+          {/* ── Row 4: Role-specific fields ── */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Conditional Fields based on Role */}
             {form.role === "Undergraduate" && (
               <>
                 <div className="group">
@@ -340,7 +378,31 @@ export default function SignupPage() {
             )}
           </div>
 
-          {/* Marketing Consent */}
+          {/* ── Row 5: Career Preference ── */}
+          <div className="group">
+            <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
+              <Compass size={12} className="text-gold/60" /> Career Preference
+            </label>
+            <div className="relative">
+              <select
+                name="careerPreference"
+                value={form.careerPreference}
+                onChange={handleChange}
+                className={`${inputClass} cursor-pointer appearance-none pr-10`}
+              >
+                {CAREER_PREFERENCES.map((pref) => (
+                  <option key={pref} value={pref} className="bg-navy-deeper">
+                    {pref}
+                  </option>
+                ))}
+              </select>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/20">
+                <ArrowRight size={14} className="rotate-90" />
+              </div>
+            </div>
+          </div>
+
+          {/* ── Marketing Consent ── */}
           <div className="flex items-center gap-3 pt-2">
             <input
               type="checkbox"
@@ -350,12 +412,15 @@ export default function SignupPage() {
               onChange={handleChange}
               className="w-4 h-4 rounded border-navy-border bg-navy-surface text-gold focus:ring-gold/20 cursor-pointer"
             />
-            <label htmlFor="marketingConsent" className="text-xs text-white-muted cursor-pointer hover:text-white transition-colors">
+            <label
+              htmlFor="marketingConsent"
+              className="text-xs text-white-muted cursor-pointer hover:text-white transition-colors"
+            >
               I agree to receive updates about TechFest 2026 and future events.
             </label>
           </div>
 
-          {/* Submit Button */}
+          {/* ── Submit ── */}
           <button
             type="submit"
             disabled={status === "loading"}
@@ -363,9 +428,18 @@ export default function SignupPage() {
           >
             {status === "loading" ? (
               <>
-                <svg className="animate-spin h-5 w-5 text-navy-deeper" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <svg
+                  className="animate-spin h-5 w-5 text-navy-deeper"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
                 </svg>
                 <span>Creating Account...</span>
               </>
@@ -381,7 +455,10 @@ export default function SignupPage() {
         <div className="mt-8 text-center border-t border-navy-border/50 pt-8">
           <p className="text-white-muted text-sm">
             Already registered?{" "}
-            <Link href="/auth/login" className="text-gold hover:text-gold-bright font-bold underline underline-offset-4 decoration-gold/30">
+            <Link
+              href="/auth/login"
+              className="text-gold hover:text-gold-bright font-bold underline underline-offset-4 decoration-gold/30"
+            >
               Back to Login
             </Link>
           </p>
@@ -390,7 +467,7 @@ export default function SignupPage() {
         <div className="flex items-center justify-center gap-4 text-white-dim text-[10px] uppercase tracking-widest mt-8">
           <span className="h-px w-8 bg-navy-border" />
           <span className="flex items-center gap-1">
-            <ShieldCheck size={10} /> Secure & Encrypted
+            <ShieldCheck size={10} /> Secure &amp; Encrypted
           </span>
           <span className="h-px w-8 bg-navy-border" />
         </div>

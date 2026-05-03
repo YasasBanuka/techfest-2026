@@ -1,14 +1,16 @@
 -- 1. Create PROFILES table (extending auth.users)
 CREATE TABLE public.profiles (
-  id          UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-  full_name   TEXT NOT NULL,
-  email       TEXT NOT NULL UNIQUE,
-  phone       TEXT,
-  university  TEXT,
-  year_of_study TEXT,
+  id                UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  full_name         TEXT NOT NULL,
+  email             TEXT NOT NULL UNIQUE,
+  phone             TEXT,
+  role              TEXT DEFAULT 'Undergraduate',       -- Undergraduate | School Student | Professional
+  university        TEXT,                               -- Stores university / school / company depending on role
+  year_of_study     TEXT,                               -- Stores year / grade / designation depending on role
+  career_preference TEXT DEFAULT 'Exploring Options',   -- Career goal selected at signup
   marketing_consent BOOLEAN DEFAULT true,
-  created_at  TIMESTAMPTZ DEFAULT NOW(),
-  updated_at  TIMESTAMPTZ DEFAULT NOW()
+  created_at        TIMESTAMPTZ DEFAULT NOW(),
+  updated_at        TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- 2. Create CV_SUBMISSIONS table
@@ -79,14 +81,20 @@ CREATE POLICY "Users can view own payments" ON public.payments
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.profiles (id, full_name, email, phone, university, year_of_study, marketing_consent)
+  INSERT INTO public.profiles (
+    id, full_name, email, phone,
+    role, university, year_of_study,
+    career_preference, marketing_consent
+  )
   VALUES (
     NEW.id,
     NEW.raw_user_meta_data->>'full_name',
     NEW.email,
     NEW.raw_user_meta_data->>'phone',
+    COALESCE(NEW.raw_user_meta_data->>'role', 'Undergraduate'),
     NEW.raw_user_meta_data->>'university',
     NEW.raw_user_meta_data->>'year_of_study',
+    COALESCE(NEW.raw_user_meta_data->>'career_preference', 'Exploring Options'),
     COALESCE((NEW.raw_user_meta_data->>'marketing_consent')::boolean, true)
   );
   RETURN NEW;
@@ -105,7 +113,7 @@ CREATE OR REPLACE FUNCTION public.handle_new_user_lead()
 RETURNS TRIGGER AS $$
 BEGIN
   INSERT INTO public.marketing_leads (email, full_name, source, tags)
-  VALUES (NEW.email, NEW.full_name, 'signup', ARRAY['innovator', NEW.year_of_study])
+  VALUES (NEW.email, NEW.full_name, 'signup', ARRAY['innovator', NEW.role, NEW.career_preference])
   ON CONFLICT (email) DO NOTHING;
   RETURN NEW;
 END;
@@ -115,3 +123,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 CREATE OR REPLACE TRIGGER on_profile_created
   AFTER INSERT ON public.profiles
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user_lead();
+
+-- --- MIGRATION: Run this if the table already exists ---
+-- ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS role TEXT DEFAULT 'Undergraduate';
+-- ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS career_preference TEXT DEFAULT 'Exploring Options';

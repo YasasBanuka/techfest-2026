@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { User, Phone, Building2, GraduationCap, Save, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { User, Phone, Building2, GraduationCap, Save, ShieldCheck, CheckCircle2, Compass } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
@@ -13,6 +13,7 @@ export default function SettingsPage() {
     role: "Undergraduate",
     university: "",
     year_of_study: "1st Year",
+    career_preference: "Exploring Options",
     marketing_consent: true,
   });
 
@@ -41,9 +42,10 @@ export default function SettingsPage() {
         setProfile({
           full_name: data.full_name || "",
           phone: data.phone || "",
-          role: user.user_metadata?.role || "Undergraduate",
+          role: data.role || user.user_metadata?.role || "Undergraduate",
           university: data.university || "",
           year_of_study: data.year_of_study || "1st Year",
+          career_preference: data.career_preference || "Exploring Options",
           marketing_consent: data.marketing_consent ?? true,
         });
       }
@@ -74,7 +76,8 @@ export default function SettingsPage() {
         full_name: profile.full_name,
         role: profile.role,
         university: profile.university,
-        year_of_study: profile.year_of_study
+        year_of_study: profile.year_of_study,
+        career_preference: profile.career_preference,
       }
     });
 
@@ -90,8 +93,10 @@ export default function SettingsPage() {
       .update({
         full_name: profile.full_name,
         phone: profile.phone,
+        role: profile.role,
         university: profile.university,
         year_of_study: profile.year_of_study,
+        career_preference: profile.career_preference,
         marketing_consent: profile.marketing_consent,
         updated_at: new Date().toISOString(),
       })
@@ -237,6 +242,35 @@ export default function SettingsPage() {
             </div>
           </div>
 
+          {/* Career Preference */}
+          <div className="group">
+            <label className="flex items-center gap-2 text-white-muted text-[10px] uppercase tracking-[0.2em] mb-2 font-black">
+              <Compass size={12} className="text-gold/60" /> Career Preference
+            </label>
+            <div className="relative">
+              <select
+                name="career_preference"
+                value={profile.career_preference}
+                onChange={handleChange}
+                className={`${inputClass} cursor-pointer appearance-none pr-10`}
+              >
+                {[
+                  "Exploring Options",
+                  "Seeking Internship",
+                  "Seeking Full-Time Job",
+                  "Seeking Overseas Education",
+                  "Seeking Scholarship / Funding",
+                  "Building a Startup",
+                  "Expanding Professional Network",
+                  "Upskilling / Learning",
+                ].map((pref) => (
+                  <option key={pref} value={pref} className="bg-navy-deeper">{pref}</option>
+                ))}
+              </select>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 text-xs">▼</div>
+            </div>
+          </div>
+
           <div className="pt-4 border-t border-navy-border/50">
             <div className="flex items-center gap-3">
               <input
@@ -253,6 +287,7 @@ export default function SettingsPage() {
             </div>
           </div>
         </div>
+
 
         {/* Action Bar */}
         <div className="flex items-center justify-between gap-4">
