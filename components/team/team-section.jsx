@@ -26,24 +26,11 @@ export default function TeamSection() {
   return (
     <div className="w-full">
 
-      {/* ── Content: Member Grid / List ── */}
+      {/* ── Content: Member Grid ── */}
       <div className="relative">
-
-        {/* Desktop: Compact card grid */}
-        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {currentTeam.map((member, i) => (
-            <DesktopCard
-              key={`${member.name}-${i}`}
-              member={member}
-              onClick={() => setSelectedMember(member)}
-            />
-          ))}
-        </div>
-
-        {/* Mobile: Compact list rows */}
-        <div className="flex flex-col gap-3 sm:hidden">
-          {currentTeam.map((member, i) => (
-            <MobileRow
+            <MemberCard
               key={`${member.name}-${i}`}
               member={member}
               onClick={() => setSelectedMember(member)}
@@ -62,33 +49,33 @@ export default function TeamSection() {
 }
 
 /* ──────────────────────────────────────────────
-   Desktop Card — compact, no tall portrait overflow
+   Member Card — fully responsive
    ────────────────────────────────────────────── */
-function DesktopCard({ member, onClick }) {
+function MemberCard({ member, onClick }) {
   const initials = member.name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
 
   return (
     <button
       onClick={onClick}
-      className={`group relative w-full text-left bg-navy-card border rounded-2xl overflow-hidden transition-all duration-400 focus:outline-none focus:ring-2 focus:ring-gold/40
+      className={`group relative w-full text-left bg-navy-card border rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-400 focus:outline-none focus:ring-2 focus:ring-gold/40
         ${member.featured 
           ? "border-gold/30 hover:border-gold shadow-[0_0_15px_rgba(255,179,0,0.05)] hover:shadow-[0_0_30px_rgba(255,179,0,0.15)]" 
           : "border-navy-border hover:border-gold/40 hover:shadow-[0_0_30px_rgba(255,179,0,0.1)]"
         }
       `}
     >
-      {/* Photo area — fixed height, no overflow breakout */}
-      <div className="relative h-[180px] w-full bg-navy-surface overflow-hidden">
+      {/* Photo area — adaptive height */}
+      <div className="relative aspect-[3/4] sm:h-[180px] sm:aspect-auto w-full bg-navy-surface overflow-hidden">
         {member.image ? (
           <Image
             src={member.image}
             alt={member.name}
             fill
             className="object-cover object-top grayscale opacity-70 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500"
-            sizes="(max-width: 768px) 100vw, 280px"
+            sizes="(max-width: 640px) 50vw, 280px"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-4xl font-heading font-black text-white/10">
+          <div className="w-full h-full flex items-center justify-center text-3xl sm:text-4xl font-heading font-black text-white/10">
             {initials}
           </div>
         )}
@@ -97,13 +84,14 @@ function DesktopCard({ member, onClick }) {
       </div>
 
       {/* Info */}
-      <div className="px-5 py-4">
-        <h3 className="text-white font-heading font-bold text-base leading-tight mb-1 group-hover:text-gold transition-colors duration-300 truncate">
+      <div className="px-3 py-3 sm:px-5 sm:py-4">
+        <h3 className="text-white font-heading font-bold text-sm sm:text-base leading-tight mb-1 group-hover:text-gold transition-colors duration-300 truncate">
           {member.name}
         </h3>
-        <p className="text-white-muted text-xs leading-snug mb-3 truncate">{member.role}</p>
-        <div className="flex items-center justify-between">
-          <span className="text-[10px] font-mono text-white-dim bg-navy-deeper/60 border border-navy-border rounded-md px-2 py-1 uppercase tracking-wider truncate max-w-[120px]">
+        <p className="text-white-muted text-[10px] sm:text-xs leading-snug mb-2 sm:mb-3 truncate">{member.role}</p>
+        
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+          <span className="text-[9px] sm:text-[10px] font-mono text-white-dim bg-navy-deeper/60 border border-navy-border rounded sm:rounded-md px-1.5 py-1 sm:px-2 uppercase tracking-wider truncate w-max max-w-full">
             {member.university}
           </span>
           {member.linkedin && (
@@ -112,7 +100,7 @@ function DesktopCard({ member, onClick }) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={e => e.stopPropagation()}
-              className="text-white-dim hover:text-gold transition-colors p-1"
+              className="hidden sm:block text-white-dim hover:text-gold transition-colors p-1"
               aria-label={`LinkedIn – ${member.name}`}
             >
               <Linkedin size={14} />
@@ -120,53 +108,6 @@ function DesktopCard({ member, onClick }) {
           )}
         </div>
       </div>
-    </button>
-  );
-}
-
-/* ──────────────────────────────────────────────
-   Mobile Row — horizontal compact list item
-   ────────────────────────────────────────────── */
-function MobileRow({ member, onClick }) {
-  const initials = member.name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
-
-  return (
-    <button
-      onClick={onClick}
-      className={`group w-full flex items-center gap-4 bg-navy-card border rounded-xl px-4 py-3 active:bg-navy-surface transition-colors duration-150 text-left focus:outline-none focus:ring-2 focus:ring-gold/30
-        ${member.featured ? "border-gold/20" : "border-navy-border"}
-      `}
-    >
-      {/* Avatar */}
-      <div className="relative flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden bg-navy-surface border border-navy-border">
-        {member.image ? (
-          <Image
-            src={member.image}
-            alt={member.name}
-            fill
-            className="object-cover object-top grayscale"
-            sizes="48px"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-sm font-heading font-black text-white/30">
-            {initials}
-          </div>
-        )}
-      </div>
-
-      {/* Text */}
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-0.5">
-          <span className="text-white font-bold text-sm truncate">{member.name}</span>
-        </div>
-        <p className={`text-xs truncate ${member.featured ? "text-gold/80" : "text-white-muted"}`}>
-          {member.role}
-        </p>
-        <p className="text-white-dim text-[10px] font-mono uppercase tracking-wider truncate mt-0.5">{member.university}</p>
-      </div>
-
-      {/* Chevron */}
-      <ChevronRight size={14} className="text-white/20 group-active:text-gold flex-shrink-0 transition-colors" />
     </button>
   );
 }
