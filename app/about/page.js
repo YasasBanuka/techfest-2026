@@ -47,7 +47,7 @@ export default function AboutPage() {
       <SpeakerBackground />
 
       {/* ── Layer 2: HUD Decorative Annotations ── */}
-      <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden opacity-30 font-mono text-[8px] uppercase tracking-[0.4em] text-gold/40 hidden md:block">
+      <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden opacity-30 font-mono text-[8px] uppercase tracking-[0.4em] text-gold/40 hidden xl:block">
         <div className="absolute top-60 left-10 rotate-90 origin-left">
           ORIGIN_PROTOCOL: [0x7A_MANIFEST]
         </div>
@@ -68,8 +68,8 @@ export default function AboutPage() {
                        System Genesis
                     </p>
                  </div>
-                  <h1 className="text-5xl sm:text-7xl md:text-8xl font-heading font-black text-white uppercase tracking-tighter leading-none mt-6 mb-10 pr-4">
-                     Our <span className="gold-gradient-text">Identity</span>
+                  <h1 className="text-5xl sm:text-7xl md:text-8xl font-heading font-black text-white uppercase tracking-tighter leading-[1.1] mt-6 mb-10 pr-4">
+                     Our <span className="gold-gradient-text block sm:inline">Identity</span>
                   </h1>
                  <div className="max-w-2xl">
                     <p className="text-white/70 text-lg leading-relaxed italic border-l-2 border-gold/10 pl-6">
@@ -127,8 +127,8 @@ export default function AboutPage() {
                   <Shield size={14} className="text-gold/60" />
                   <p className="text-white/40 text-[9px] font-mono uppercase tracking-[0.4em]">Core_Guiding_Principles</p>
                </div>
-               <h3 className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter italic pr-4">
-                  Fundamental <span className="gold-gradient-text italic">Protocols</span>
+               <h3 className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter leading-[1.1] italic pr-4">
+                  Fundamental <span className="gold-gradient-text italic block sm:inline">Protocols</span>
                </h3>
             </FadeInUp>
             <CoreValues />
@@ -146,8 +146,8 @@ export default function AboutPage() {
                   <Users size={14} className="text-gold/60" />
                   <p className="text-white/40 text-[9px] font-mono uppercase tracking-[0.4em]">The_Movement_Architects</p>
                </div>
-               <h3 className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter italic pr-4">
-                  Strategic <span className="gold-gradient-text italic">Alliance</span>
+               <h3 className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter leading-[1.1] italic pr-4">
+                  Strategic <span className="gold-gradient-text italic block sm:inline">Alliance</span>
                </h3>
                <p className="text-white-dim text-lg font-light leading-relaxed italic mt-4 max-w-2xl border-l border-white/10 pl-6">
                   Two premier student organizations united by a shared belief in Sri Lanka's tech future.
@@ -191,8 +191,8 @@ export default function AboutPage() {
                      <Users size={14} className="text-gold/60" />
                      <p className="text-white/40 text-[9px] font-mono uppercase tracking-[0.4em]">The_Masterminds</p>
                   </div>
-                  <h3 className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter italic pr-4">
-                     Organizing <span className="gold-gradient-text italic">Committee</span>
+                  <h3 className="text-5xl md:text-7xl font-heading font-black text-white uppercase tracking-tighter leading-[1.1] italic pr-4">
+                     Organizing <span className="gold-gradient-text italic block sm:inline">Committee</span>
                   </h3>
                </FadeInUp>
                <TeamSection />
