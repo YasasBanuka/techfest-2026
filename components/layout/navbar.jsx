@@ -60,6 +60,16 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // ── Mobile menu scroll lock ──
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [isMobileMenuOpen]);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${scrolled
@@ -195,23 +205,13 @@ export default function Navbar() {
             <li className="pt-4 border-t border-navy-border flex flex-col gap-3">
               <Link
                 href="/tickets"
-                className="block text-center bg-gold text-navy-deeper font-bold py-3 rounded-lg hover:bg-gold-bright transition-all duration-300"
+                className="block text-center bg-gold text-navy-deeper font-bold py-3 rounded-lg active:opacity-80 transition-opacity"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Get Tickets
               </Link>
-              
-              {/* Audio Toggle for Mobile */}
-              <button
-                onClick={() => {
-                  audioRef.current?.toggle();
-                  setIsAudioPlaying(!isAudioPlaying);
-                }}
-                className="flex items-center justify-center gap-3 py-3 rounded-lg border border-gold/20 text-gold font-bold transition-all active:scale-95"
-              >
-                {isAudioPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
-                {isAudioPlaying ? "Mute Atmosphere" : "Unmute Atmosphere"}
-              </button>
+
+              {/* Audio toggle intentionally hidden on mobile — no audio on touch devices */}
 
               {!loading && (
                 user ? (

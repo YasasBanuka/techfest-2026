@@ -11,24 +11,21 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * MemoryArchive — A Surreal Journey through History
  * ────────────────────────────────────────────────
- * A unified pinned sequence that reconstructs past excellence
- * and transitions into the future through high-tech surrealism.
+ * Desktop: Full pinned GSAP scroll sequence with cinematic acts.
+ * Mobile:  Static, accessible layout — stats grid + gallery mosaic.
+ *          No GSAP, no AudioContext, no scroll pinning.
  */
-
 export default function MemoryArchive() {
   const containerRef = useRef(null);
-  const pinRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isMobileResolved, setIsMobileResolved] = useState(false);
+  const [isMobile, setIsMobile] = useState(null);
 
   useEffect(() => {
     setIsMobile(isTouchDevice());
-    setIsMobileResolved(true); // signal that detection is done
   }, []);
 
   const SCROLL_DISTANCE = 8000;
 
-  // Scene Refs
+  // Scene Refs (desktop only)
   const taglineRef = useRef(null);
   const archiveTitleRef = useRef(null);
   const statsContainerRef = useRef(null);
@@ -37,7 +34,7 @@ export default function MemoryArchive() {
   const mosaicRef = useRef(null);
   const glitchOverlayRef = useRef(null);
 
-  // Audio Context for the 'Data-Crunch'
+  // Audio Context — desktop only
   const audioCtxRef = useRef(null);
 
   const initAudio = () => {
@@ -49,9 +46,7 @@ export default function MemoryArchive() {
   const playCrunch = (freq = 1500, type = "square") => {
     if (!audioCtxRef.current) return;
     const ctx = audioCtxRef.current;
-
-    // Resume if suspended (browser policy)
-    if (ctx.state === 'suspended') ctx.resume();
+    if (ctx.state === "suspended") ctx.resume();
 
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -59,99 +54,18 @@ export default function MemoryArchive() {
     osc.type = type;
     osc.frequency.setValueAtTime(freq, ctx.currentTime);
     osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.05);
-
     gain.gain.setValueAtTime(0.1, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
 
     osc.connect(gain);
     gain.connect(ctx.destination);
-
     osc.start();
     osc.stop(ctx.currentTime + 0.05);
   };
 
-  // ── Mobile: Simple entrance animation via IntersectionObserver ──
-  useEffect(() => {
-    if (!isMobileResolved || !isMobile) return; // wait until detection is certain
-
-    // Immediately show tagline words with a staggered fade-in
-    const words = taglineRef.current?.querySelectorAll(".tagline-word");
-    if (!words) return;
-
-    // Reset initial state
-    gsap.set(taglineRef.current, { opacity: 1 });
-    gsap.set(words, { opacity: 0, y: 20 });
-    gsap.set(archiveTitleRef.current, { opacity: 0, y: 40 });
-    gsap.set(statsContainerRef.current, { opacity: 0 });
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          observer.disconnect();
-
-          // Step 1: Reveal tagline words
-          gsap.to(words, {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.18,
-            ease: "power2.out",
-            onComplete: () => {
-              // Step 2: Fade out tagline, reveal archive title
-              gsap.to(taglineRef.current, {
-                opacity: 0,
-                duration: 0.5,
-                delay: 0.4,
-                ease: "power2.in",
-                onComplete: () => {
-                  gsap.to(archiveTitleRef.current, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.6,
-                    ease: "power3.out",
-                    onComplete: () => {
-                      // Step 3: Show stats one by one
-                      gsap.set(statsContainerRef.current, { opacity: 1 });
-                      IMPACT_STATS.forEach((_, i) => {
-                        const photo = photosRefs.current[i];
-                        const statWrapper = statsRefs.current[i];
-                        const delay = 0.6 + i * 1.4;
-
-                        gsap.to(archiveTitleRef.current, { opacity: 0, duration: 0.3, delay: 0.3 });
-                        gsap.fromTo(photo,
-                          { opacity: 0, scale: 1.1 },
-                          { opacity: 0.4, scale: 1, duration: 0.8, delay, ease: "power2.out" }
-                        );
-                        gsap.fromTo(statWrapper,
-                          { opacity: 0, y: 20 },
-                          { opacity: 1, y: 0, duration: 0.6, delay: delay + 0.2, ease: "expo.out" }
-                        );
-                        gsap.to([photo, statWrapper], {
-                          opacity: 0,
-                          duration: 0.5,
-                          delay: delay + 1.0,
-                          ease: "power2.in",
-                        });
-                      });
-                    }
-                  });
-                }
-              });
-            }
-          });
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    if (containerRef.current) observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, [isMobile, isMobileResolved]);
-
   // ── Desktop: Full GSAP ScrollTrigger pinned experience ──
   useEffect(() => {
-    if (!isMobileResolved || isMobile) return; // wait until detection is certain, skip on mobile
+    if (isMobile === null || isMobile) return;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
@@ -193,7 +107,7 @@ export default function MemoryArchive() {
       tl.to({}, { duration: 6 });
 
       // ─────────────────────────────────────────────────────
-      // ACT 2: The Breach (Dissolve Tagline → Archive Title)
+      // ACT 2: The Breach
       // ─────────────────────────────────────────────────────
       tl.to(taglineRef.current, {
         opacity: 0,
@@ -278,18 +192,84 @@ export default function MemoryArchive() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [isMobile, isMobileResolved]);
+  }, [isMobile]);
 
+  // ── Mobile: Static accessible layout ──
+  if (isMobile) {
+    return (
+      <section className="relative w-full bg-navy-deeper border-y border-white/5 py-20 px-6">
+        {/* Section header */}
+        <div className="text-center mb-14">
+          <p className="text-gold text-xs uppercase tracking-[0.6em] mb-3 font-black opacity-60">Memory Sequence</p>
+          <h2 className="text-5xl font-heading font-black uppercase tracking-tighter leading-none">
+            <span className="gold-gradient-text">2025</span>
+          </h2>
+          <p className="mt-4 text-white-muted text-sm leading-relaxed max-w-xs mx-auto">
+            Innovate · Inspire · Impact
+          </p>
+          <div className="h-px w-24 bg-gold/20 mx-auto mt-6" />
+        </div>
+
+        {/* Stats grid — simple cards, no animation */}
+        <div className="grid grid-cols-1 gap-6 max-w-sm mx-auto mb-14">
+          {IMPACT_STATS.map((stat, i) => (
+            <div key={i} className="relative overflow-hidden rounded-2xl border border-white/5 bg-navy-card">
+              {/* Background photo */}
+              <img
+                src={stat.src}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover grayscale opacity-20"
+              />
+              <div className="absolute inset-0 bg-navy-deeper/70" />
+
+              {/* Stat content */}
+              <div className="relative z-10 p-6 flex flex-col gap-1 border-l-2 border-gold/50">
+                <span className="text-[10px] font-mono text-gold/40 uppercase tracking-widest mb-1">
+                  Archive_ID: TF25_REC_{i + 1}
+                </span>
+                <span className="text-5xl font-heading font-black text-gold leading-none">
+                  {stat.stat}
+                </span>
+                <span className="text-sm text-white uppercase tracking-[0.3em] font-light">
+                  {stat.label}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Gallery mosaic */}
+        <div className="grid grid-cols-4 gap-1 w-full max-w-sm mx-auto">
+          {GALLERY_2025.slice(0, 8).map((img, i) => (
+            <div key={i} className="aspect-square overflow-hidden border border-white/5 bg-white/5 rounded-sm">
+              <img src={img.src} alt="" aria-hidden="true" className="w-full h-full object-cover opacity-60 grayscale" />
+            </div>
+          ))}
+        </div>
+        <p className="mt-8 text-white/30 text-[10px] uppercase tracking-[0.8em] font-black text-center">
+          Archival Cycle Complete
+        </p>
+      </section>
+    );
+  }
+
+  // ── SSR / unresolved ──
+  if (isMobile === null) {
+    return <section className="relative w-full bg-navy-deeper h-screen" />;
+  }
+
+  // ── Desktop: Full GSAP sequence ──
   return (
     <section ref={containerRef} className="relative w-full overflow-hidden bg-navy-deeper border-y border-white/5">
 
-      {/* ── Global Glitch Overlay (Localized) ── */}
+      {/* ── Global Glitch Overlay ── */}
       <div
         ref={glitchOverlayRef}
         className="absolute inset-0 z-[100] pointer-events-none opacity-0 mix-blend-overlay bg-gold/20"
       />
 
-      <div ref={pinRef} className={`relative ${isMobile ? "py-24 min-h-screen" : "h-screen"} flex items-center justify-center`}>
+      <div className="relative h-screen flex items-center justify-center">
 
         {/* Scene 1: Tagline */}
         <div ref={taglineRef} className="absolute inset-0 flex flex-col items-center justify-center z-[50]">
@@ -310,7 +290,6 @@ export default function MemoryArchive() {
 
         {/* Scene 2: Archive Title */}
         <div ref={archiveTitleRef} className="absolute inset-0 flex flex-col items-center justify-center z-[10] opacity-0 pointer-events-none">
-          {/* Subtle Cyber-Blue Data-Grid behind the year */}
           <div className="absolute w-[600px] h-[300px] bg-cyan-950/10 border border-cyan-500/5 backdrop-blur-[2px] -z-10 rounded-[4rem] flex flex-wrap gap-1 p-2 overflow-hidden opacity-40">
             {Array.from({ length: 100 }).map((_, i) => (
               <div key={i} className="w-1 h-1 bg-cyan-400/20 rounded-full" />
@@ -322,7 +301,6 @@ export default function MemoryArchive() {
             <h2 className="text-6xl sm:text-8xl lg:text-[13rem] font-heading font-black uppercase tracking-tighter leading-none text-outline-amber relative z-10">
               2025
             </h2>
-            {/* Shimmering fill overlay */}
             <h2 className="absolute inset-0 text-6xl sm:text-8xl lg:text-[13rem] font-heading font-black uppercase tracking-tighter leading-none text-gold/10 blur-[2px] animate-pulse">
               2025
             </h2>
@@ -339,7 +317,6 @@ export default function MemoryArchive() {
         <div ref={statsContainerRef} className="absolute inset-0 z-[5] opacity-0 pointer-events-none">
           {IMPACT_STATS.map((stat, i) => (
             <div key={i} className="absolute inset-0 flex items-center justify-center">
-              {/* Background Flash Photo */}
               <div
                 ref={el => photosRefs.current[i] = el}
                 className="absolute inset-0 opacity-0"
@@ -348,12 +325,10 @@ export default function MemoryArchive() {
                 <div className="absolute inset-0 bg-navy-deeper/80" />
               </div>
 
-              {/* HUD Stat */}
               <div
                 ref={el => statsRefs.current[i] = el}
                 className="relative z-10 flex flex-col items-start px-10 border-l border-gold/40 opacity-0"
               >
-                {/* HUD Annotations (Cyber-Blue) */}
                 <div className="text-[10px] font-mono text-cyan-400/50 mb-4 tracking-widest uppercase flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                   Archive_ID: TF25_REC_{i + 1} [STABLE]
@@ -369,7 +344,6 @@ export default function MemoryArchive() {
                   {stat.label}
                 </p>
 
-                {/* Sub-annotation HUD */}
                 <div className="mt-8 text-[9px] font-mono text-cyan-400/30 uppercase max-w-[200px] leading-relaxed">
                   {">"} Retrieval completed: 2025_impact_metadata.bin <br />
                   {">"} Coordinate: TF_SRI_LANKA_01
@@ -382,7 +356,7 @@ export default function MemoryArchive() {
         {/* Scene 4: Mosaic Dissolve */}
         <div ref={mosaicRef} className="absolute inset-0 flex flex-col items-center justify-center z-2 opacity-0 pointer-events-none px-6">
           <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-1 w-full max-w-7xl">
-            {GALLERY_2025.slice(0, isMobile ? 8 : 16).map((img, i) => (
+            {GALLERY_2025.slice(0, 16).map((img, i) => (
               <div key={i} className="aspect-square overflow-hidden border border-white/5 bg-white/5">
                 <img src={img.src} alt="" className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity grayscale active-grayscale-none" />
               </div>
@@ -398,11 +372,7 @@ export default function MemoryArchive() {
           -webkit-text-stroke: 1px rgba(255, 179, 0, 0.3);
           color: transparent;
         }
-        .stroke-amber {
-          text-shadow: 0 0 50px rgba(255, 179, 0, 0.1);
-        }
 
-        /* ── Cyber Glitch Text Effect ── */
         .tagline-word {
           position: relative;
           display: inline-block;
@@ -440,7 +410,6 @@ export default function MemoryArchive() {
           transform: translate(2px, 0);
         }
 
-        /* Continuous subtle 'tic' for all unlocked words */
         .glitch-tic {
           animation: glitch-tic 5s step-end infinite;
         }

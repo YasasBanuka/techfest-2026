@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const PARTICLE_COUNT = 90;
 const MAX_DISTANCE = 160;
@@ -12,16 +12,20 @@ export default function PlexusCanvas() {
     const canvasRef = useRef(null);
     const animRef = useRef(null);
     const particlesRef = useRef([]);
+    const [isMobile, setIsMobile] = useState(null);
 
     useEffect(() => {
+        setIsMobile(window.innerWidth < 768 || "ontouchstart" in window || navigator.maxTouchPoints > 0);
+    }, []);
+
+    useEffect(() => {
+        if (isMobile === null) return;
+        // Mobile: no canvas, no RAF — return early
+        if (isMobile) return;
+
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext("2d");
-
-        // Dynamic particle count for performance
-        const isMobile = window.innerWidth < 768;
-        const count = isMobile ? 35 : PARTICLE_COUNT;
-        const maxDist = isMobile ? 100 : MAX_DISTANCE;
 
         function resize() {
             canvas.width = window.innerWidth;
@@ -30,7 +34,7 @@ export default function PlexusCanvas() {
         resize();
         window.addEventListener("resize", resize);
 
-        particlesRef.current = Array.from({ length: count }, () => ({
+        particlesRef.current = Array.from({ length: PARTICLE_COUNT }, () => ({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
             vx: (Math.random() - 0.5) * SPEED * 2,
@@ -59,8 +63,8 @@ export default function PlexusCanvas() {
                     const dy = particles[i].y - particles[j].y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (dist < maxDist) {
-                        const opacity = (1 - dist / maxDist) * 0.55;
+                    if (dist < MAX_DISTANCE) {
+                        const opacity = (1 - dist / MAX_DISTANCE) * 0.55;
                         ctx.beginPath();
                         ctx.strokeStyle = `rgba(${COLOR}, ${opacity})`;
                         ctx.lineWidth = 1;
@@ -71,11 +75,11 @@ export default function PlexusCanvas() {
                 }
             }
 
-            // Draw dots — brighter
+            // Draw dots
             for (const p of particles) {
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, PARTICLE_RADIUS, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${COLOR}, 0.85)`; // was 0.5
+                ctx.fillStyle = `rgba(${COLOR}, 0.85)`;
                 ctx.fill();
             }
 
@@ -88,7 +92,10 @@ export default function PlexusCanvas() {
             cancelAnimationFrame(animRef.current);
             window.removeEventListener("resize", resize);
         };
-    }, []);
+    }, [isMobile]);
+
+    // Mobile: no canvas rendered at all
+    if (isMobile) return null;
 
     return (
         <canvas

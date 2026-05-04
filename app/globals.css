@@ -128,3 +128,36 @@ h6 {
 .hex-pattern {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50V18L28 2l28 16v32L28 66zm0-6l22-12.7V24.7L28 12 6 24.7v22.6L28 60z' fill='%23ffcb40' fill-opacity='0.04'/%3E%3C/svg%3E");
 }
+
+/* ═══════════════════════════════════════════
+   Accessibility: Reduced Motion
+   Strips ALL animations/transitions for users
+   who prefer reduced motion in OS settings.
+   ═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   Mobile Performance: Strip will-change hints
+   that cause unnecessary GPU layer promotion
+   ═══════════════════════════════════════════ */
+@media (max-width: 767px) {
+  * {
+    will-change: auto !important;
+  }
+
+  /* Ensure nothing stays invisible due to JS-animation initial states */
+  .js-hidden-mobile {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

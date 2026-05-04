@@ -6,27 +6,35 @@ import { motion } from "framer-motion";
 /**
  * EtherealVoid — The 'Dark Matter' Edition
  * ──────────────────────────────────────
- * A surreal, high-elegance interactive background where 'Embers' swarm 
- * the cursor (Attraction) and react to clicks (Shockwave).
+ * Desktop: Surreal interactive background where 'Embers' swarm
+ *          the cursor (Attraction) and react to clicks (Shockwave).
+ * Mobile:  Static gradient glow — no canvas, no RAF, no JS overhead.
  */
 export default function EtherealVoid() {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: -1000, y: -1000 });
   const isClickingRef = useRef(false);
+  const [isMobile, setIsMobile] = useState(null); // null = not yet resolved
 
   useEffect(() => {
+    setIsMobile(window.innerWidth < 768 || "ontouchstart" in window || navigator.maxTouchPoints > 0);
+  }, []);
+
+  useEffect(() => {
+    // Don't run until mobile detection is resolved
+    if (isMobile === null) return;
+    // Skip canvas entirely on mobile
+    if (isMobile) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
     let animationFrameId;
     let particles = [];
-    
-    // Performance optimization for mobile
-    const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? 20 : 100;
-    const mouseRadius = isMobile ? 180 : 250; 
-    const useShadows = !isMobile; // Disable expensive shadows on mobile
+
+    const particleCount = 100;
+    const mouseRadius = 250;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -47,7 +55,7 @@ export default function EtherealVoid() {
         this.vx = this.baseVx;
         this.vy = this.baseVy;
         this.opacity = Math.random() * 0.6 + 0.4;
-        this.color = "255, 179, 0"; 
+        this.color = "255, 179, 0";
       }
 
       update(mouse, clicking) {
@@ -56,18 +64,18 @@ export default function EtherealVoid() {
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < mouseRadius) {
-            const force = Math.pow((mouseRadius - distance) / mouseRadius, 2);
-            const directionX = (dx / distance) * force * 0.6;
-            const directionY = (dy / distance) * force * 0.6;
-            
-            this.vx += directionX;
-            this.vy += directionY;
+          const force = Math.pow((mouseRadius - distance) / mouseRadius, 2);
+          const directionX = (dx / distance) * force * 0.6;
+          const directionY = (dy / distance) * force * 0.6;
 
-            if (clicking && distance < 180) {
-               const pushForce = Math.pow((180 - distance) / 180, 2) * 15;
-               this.vx -= (dx / distance) * pushForce;
-               this.vy -= (dy / distance) * pushForce;
-            }
+          this.vx += directionX;
+          this.vy += directionY;
+
+          if (clicking && distance < 180) {
+            const pushForce = Math.pow((180 - distance) / 180, 2) * 15;
+            this.vx -= (dx / distance) * pushForce;
+            this.vy -= (dy / distance) * pushForce;
+          }
         }
 
         this.vx *= 0.95;
@@ -85,19 +93,12 @@ export default function EtherealVoid() {
 
       draw() {
         ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
-        
-        if (useShadows) {
-          ctx.shadowBlur = 15;
-          ctx.shadowColor = `rgb(${this.color})`;
-        }
-
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = `rgb(${this.color})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
-
-        if (useShadows) {
-          ctx.shadowBlur = 0; // Reset for performance
-        }
+        ctx.shadowBlur = 0;
       }
     }
 
@@ -119,20 +120,15 @@ export default function EtherealVoid() {
     };
 
     const handleMouseMove = (e) => {
-        if (!isMobile) {
-            mouseRef.current = { x: e.clientX, y: e.clientY };
-        }
+      mouseRef.current = { x: e.clientX, y: e.clientY };
     };
-
-    const handleMouseDown = () => { if (!isMobile) isClickingRef.current = true; };
-    const handleMouseUp = () => { if (!isMobile) isClickingRef.current = false; };
+    const handleMouseDown = () => { isClickingRef.current = true; };
+    const handleMouseUp = () => { isClickingRef.current = false; };
 
     window.addEventListener("resize", resize);
-    if (!isMobile) {
-        window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("mousedown", handleMouseDown);
-        window.addEventListener("mouseup", handleMouseUp);
-    }
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
 
     init();
     animate();
@@ -144,17 +140,35 @@ export default function EtherealVoid() {
       window.removeEventListener("mouseup", handleMouseUp);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [isMobile]);
 
+  // ── Mobile: Static gradient background (no JS overhead) ──
+  if (isMobile) {
+    return (
+      <div className="absolute inset-0 pointer-events-none z-[1] overflow-hidden bg-navy-deeper">
+        {/* Static ambient glow — same colours, zero cost */}
+        <div className="absolute top-1/4 left-1/4 w-[60%] h-[60%] bg-gold/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[50%] h-[50%] bg-cyan-500/5 rounded-full blur-[100px]" />
+        <div className="absolute inset-0 opacity-[0.03] hex-pattern z-[4]" />
+      </div>
+    );
+  }
+
+  // ── Not yet resolved (SSR / initial paint) ──
+  if (isMobile === null) {
+    return <div className="absolute inset-0 bg-navy-deeper z-[1]" />;
+  }
+
+  // ── Desktop: Full interactive canvas ──
   return (
     <div className="absolute inset-0 pointer-events-auto z-[1] overflow-hidden bg-navy-deeper">
-      
-      {/* ── Layer 1: The Phantom Nebula (Consistent with Theme) ── */}
-      <motion.div 
+
+      {/* ── Layer 1: The Phantom Nebula ── */}
+      <motion.div
         className="absolute inset-0 z-[1]"
-        animate={typeof window !== 'undefined' && window.innerWidth < 768 ? {} : { 
-            scale: [1, 1.1, 1],
-            opacity: [0.3, 0.5, 0.3]
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.3, 0.5, 0.3]
         }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       >

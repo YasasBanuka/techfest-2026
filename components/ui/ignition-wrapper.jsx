@@ -9,9 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * IgnitionWrapper
  * ───────────────
- * A high-performance GSAP ScrollTrigger wrapper that 'ignites' content.
- * As a section enters the viewport, it scales specifically and glows,
- * symbolizing the 'light in the dark' concept.
+ * Desktop: GSAP ScrollTrigger brightness + blur + y-slide reveal.
+ * Mobile:  Children are immediately visible — no GSAP, no scroll hooks.
  */
 export default function IgnitionWrapper({ children, className = "" }) {
   const wrapperRef = useRef(null);
@@ -20,21 +19,23 @@ export default function IgnitionWrapper({ children, className = "" }) {
     const el = wrapperRef.current;
     if (!el) return;
 
-    const isMobile = window.innerWidth < 768;
+    // Skip all animation on mobile — content is immediately visible
+    const isMobile = window.innerWidth < 768 || "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    if (isMobile) return;
 
-    gsap.fromTo(el, 
-      { 
-        opacity: 0, 
-        y: isMobile ? 20 : 40,
-        filter: isMobile ? "brightness(0.5)" : "brightness(0.5) blur(10px)",
-        scale: isMobile ? 1 : 0.98
+    gsap.fromTo(el,
+      {
+        opacity: 0,
+        y: 40,
+        filter: "brightness(0.5) blur(10px)",
+        scale: 0.98
       },
       {
         opacity: 1,
         y: 0,
-        filter: isMobile ? "brightness(1)" : "brightness(1) blur(0px)",
+        filter: "brightness(1) blur(0px)",
         scale: 1,
-        duration: isMobile ? 0.6 : 1.2,
+        duration: 1.2,
         ease: "power4.out",
         scrollTrigger: {
           trigger: el,
