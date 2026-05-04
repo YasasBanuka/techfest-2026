@@ -69,12 +69,12 @@ export default function TeamMemberModal({ member, isOpen, onClose }) {
                 <div className="flex flex-col sm:flex-row">
 
                   {/* Photo */}
-                  <div className="w-full sm:w-[40%] relative h-[200px] sm:h-auto flex-shrink-0 overflow-hidden">
+                  <div className="w-full md:w-[40%] bg-navy-surface/50 relative overflow-hidden flex-shrink-0 group/img h-[200px] md:h-auto">
                     {member.image ? (
                       <img
                         src={member.image}
                         alt={member.name}
-                        className="w-full h-full object-cover object-top grayscale opacity-70"
+                        className="w-full h-full object-cover object-top opacity-100 transition-all duration-1000"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-white/5 text-8xl font-heading font-black">

@@ -71,7 +71,7 @@ function MemberCard({ member, onClick }) {
             src={member.image}
             alt={member.name}
             fill
-            className="object-cover object-top grayscale opacity-70 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500"
+            className="object-cover object-top opacity-100 grayscale-0 lg:grayscale lg:opacity-70 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500"
             sizes="(max-width: 640px) 50vw, 280px"
           />
         ) : (
